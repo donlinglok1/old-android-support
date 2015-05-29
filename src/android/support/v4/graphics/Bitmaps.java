@@ -24,9 +24,6 @@ import android.view.View;
  * @version 1.0.0
  */
 public class Bitmaps {
-	private Bitmaps() {
-	}
-
 	public static Bitmap getBitmap(final String path, final boolean isExif) {
 		Bitmap result = null;
 		final BitmapFactory.Options options = new BitmapFactory.Options();

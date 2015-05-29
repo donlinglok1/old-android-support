@@ -72,9 +72,7 @@ public class HttpDownloadTask extends AsyncTask<String, String, String> {
 					Strings.SLASH));
 			file.mkdirs();
 			final File outputFile = new File(file, output);
-			if (outputFile.exists()) {
-				// outputFile.delete();
-			} else {
+			if (!outputFile.exists()) {
 				final HttpURLConnection httpURLConnection = (HttpURLConnection) new URL(
 						url).openConnection();
 				httpURLConnection.setRequestMethod("GET");

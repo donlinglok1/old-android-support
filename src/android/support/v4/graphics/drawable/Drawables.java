@@ -19,21 +19,18 @@ import android.support.v4.widget.TypedValue;
  * @version 1.0.0
  */
 public class Drawables {
-	private Drawables() {
-	}
-
 	public static Bitmap drawable2Bitmap(final Drawable drawable) {
+		Bitmap result = null;
 		if (drawable instanceof BitmapDrawable) {
-			return ((BitmapDrawable) drawable).getBitmap();
+			result = ((BitmapDrawable) drawable).getBitmap();
+		} else {
+			result = Bitmap.createBitmap(drawable.getIntrinsicWidth(),
+					drawable.getIntrinsicHeight(), Config.RGB_565);
+			final Canvas canvas = new Canvas(result);
+			drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+			drawable.draw(canvas);
 		}
-
-		final Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(),
-				drawable.getIntrinsicHeight(), Config.RGB_565);
-		final Canvas canvas = new Canvas(bitmap);
-		drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
-		drawable.draw(canvas);
-
-		return bitmap;
+		return result;
 	}
 
 	public static Drawable getDrawable(final Context context, final int resid,

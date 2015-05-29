@@ -28,11 +28,11 @@ public final class Files {
 	private Files() {
 	}
 
-	public static void zip(final String[] files, final String zipFile)
+	public static void zip(final String[] files, final String output)
 			throws IOException {
 		BufferedInputStream origin = null;
 		final ZipOutputStream out = new ZipOutputStream(
-				new BufferedOutputStream(new FileOutputStream(zipFile)));
+				new BufferedOutputStream(new FileOutputStream(output)));
 		try {
 			final byte data[] = new byte[1024];
 

@@ -3,7 +3,6 @@ package android.support.v4.util;
 import java.util.Iterator;
 
 import android.graphics.Bitmap;
-import android.support.v4.util.LruCache;
 
 /*
  * Copyright (c) 2014 Kenneth Tu <don.ling.lok@gmail.com>
