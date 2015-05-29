@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lint>
+    <issue id="Assert">
+        <ignore path="src/android/support/v4/security/Base64.java" />
+    </issue>
+    <issue id="ContentDescription" severity="ignore" />
+    <issue id="IconDensities" severity="ignore" />
+    <issue id="IconMissingDensityFolder" severity="ignore" />
+    <issue id="InflateParams">
+        <ignore path="src/android/support/v4/widget/RefreshableView.java" />
+        <ignore path="src/android/support/v4/widget/RefreshableView.java" />
+    </issue>
+    <issue id="Instantiatable" severity="ignore" />
+    <issue id="Registered">
+        <ignore path="src/android/support/v4/net/SocketClientService.java" />
+        <ignore path="src/android/support/v4/net/SocketClientService_0511.java" />
+    </issue>
+    <issue id="TrulyRandom" severity="ignore" />
+    <issue id="UnusedResources" severity="ignore" />
+</lint>
