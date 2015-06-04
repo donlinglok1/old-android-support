@@ -3,8 +3,8 @@ package android.support.v4.os.storage;
 import java.io.File;
 import java.io.FileInputStream;
 
-import android.os.AsyncTask;
-import android.support.v4.security.Strings;
+import android.support.v4.lang.Strings;
+import android.support.v4.util.AsyncTask;
 
 import com.jcraft.jsch.Channel;
 import com.jcraft.jsch.ChannelSftp;

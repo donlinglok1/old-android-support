@@ -1,7 +1,7 @@
 package android.support.v4.database.sqlite;
 
 import android.database.Cursor;
-import android.os.AsyncTask;
+import android.support.v4.util.AsyncTask;
 
 /*
  * Copyright (c) 2014 Kenneth Tu <don.ling.lok@gmail.com>

@@ -9,9 +9,9 @@ import java.net.URL;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.os.AsyncTask;
 import android.os.Environment;
-import android.support.v4.security.Strings;
+import android.support.v4.lang.Strings;
+import android.support.v4.util.AsyncTask;
 
 public class HttpDownloadTask extends AsyncTask<String, String, String> {
 	final private transient Context context;

@@ -4,8 +4,8 @@ import java.io.FileOutputStream;
 import java.util.ArrayList;
 
 import android.graphics.Bitmap;
-import android.os.AsyncTask;
 import android.support.v4.os.storage.Files;
+import android.support.v4.util.AsyncTask;
 
 public class ImageZipTask extends AsyncTask<Void, Void, String> {
 	private transient final ArrayList<String> imageArrayList;

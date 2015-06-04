@@ -1,8 +1,8 @@
 package android.support.v4.os.storage;
 
 import android.content.Context;
-import android.os.AsyncTask;
-import android.support.v4.security.Strings;
+import android.support.v4.lang.Strings;
+import android.support.v4.util.AsyncTask;
 
 public class AssetsCopyTask extends AsyncTask<Void, Void, String> {
 	private transient final Context context;

@@ -71,9 +71,9 @@ public class SQLiteOpenHelpers extends SQLiteOpenHelper {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
-	 * 
+	 *
 	 * android.database.sqlite.SQLiteOpenHelper#onCreate(android.database.sqlite
 	 * .SQLiteDatabase)
 	 */
@@ -83,9 +83,9 @@ public class SQLiteOpenHelpers extends SQLiteOpenHelper {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
-	 * 
+	 *
 	 * android.database.sqlite.SQLiteOpenHelper#onUpgrade(android.database.sqlite
 	 * .SQLiteDatabase, int, int)
 	 */

@@ -3,7 +3,7 @@ package android.support.v4.graphics;
 import java.lang.ref.WeakReference;
 
 import android.graphics.Bitmap;
-import android.os.AsyncTask;
+import android.support.v4.util.AsyncTask;
 import android.view.View;
 import android.widget.ImageView;
 

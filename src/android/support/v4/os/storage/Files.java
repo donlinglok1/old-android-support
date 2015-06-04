@@ -14,7 +14,7 @@ import java.util.zip.ZipOutputStream;
 import android.content.Context;
 import android.content.res.AssetManager;
 import android.os.Environment;
-import android.support.v4.security.Strings;
+import android.support.v4.lang.Strings;
 
 /*
  * Copyright (c) 2014 Kenneth Tu <don.ling.lok@gmail.com>
