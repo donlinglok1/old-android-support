@@ -19,36 +19,22 @@ import android.support.v4.widget.TypedValue;
  * @version 1.0.0
  */
 public class Drawables {
-	public static Bitmap drawable2Bitmap(final Drawable drawable) {
-		Bitmap result = null;
-		if (drawable instanceof BitmapDrawable) {
-			result = ((BitmapDrawable) drawable).getBitmap();
-		} else {
-			result = Bitmap.createBitmap(drawable.getIntrinsicWidth(),
-					drawable.getIntrinsicHeight(), Config.RGB_565);
-			final Canvas canvas = new Canvas(result);
-			drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
-			drawable.draw(canvas);
-		}
-		return result;
+	public static Drawable getDrawable(final Context baseContext,
+			final int resid, final int size) {
+		return getDrawable(baseContext, resid, size, size);
 	}
 
-	public static Drawable getDrawable(final Context context, final int resid,
-			final int size) {
-		return getDrawable(context, resid, size, size);
-	}
-
-	public static Drawable getDrawable(final Context context, final int resid,
-			final int width, final int heigth) {
+	public static Drawable getDrawable(final Context baseContext,
+			final int resid, final int width, final int heigth) {
 		Drawable result = null;
 		try {
-			result = new BitmapDrawable(context.getResources(),
+			result = new BitmapDrawable(baseContext.getResources(),
 					Bitmap.createScaledBitmap(
-							drawable2Bitmap(getDrawable(context, resid)),
+							drawable2Bitmap(getDrawable(baseContext, resid)),
 							width, heigth, true));
 		} catch (final Exception exception) {
-			result = new BitmapDrawable(context.getResources(),
-					Bitmap.createScaledBitmap(drawable2Bitmap(context
+			result = new BitmapDrawable(baseContext.getResources(),
+					Bitmap.createScaledBitmap(drawable2Bitmap(baseContext
 							.getResources().getDrawable(resid)), width, heigth,
 							true));
 		}
@@ -56,7 +42,8 @@ public class Drawables {
 	}
 
 	@SuppressWarnings("deprecation")
-	public static Drawable getDrawable(final Context context, final int resId) {
+	public static Drawable getDrawable(final Context baseContext,
+			final int resId) {
 		final BitmapFactory.Options options = new BitmapFactory.Options();
 		options.inPurgeable = true;
 		options.inInputShareable = true;
@@ -72,12 +59,28 @@ public class Drawables {
 		}
 
 		return new BitmapDrawable(BitmapFactory.decodeResource(
-				context.getResources(), resId, options));
+				baseContext.getResources(), resId, options));
+	}
+
+	public static Bitmap drawable2Bitmap(final Drawable drawable) {
+		if (drawable instanceof BitmapDrawable) {
+			return ((BitmapDrawable) drawable).getBitmap();
+		}
+
+		final Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(),
+				drawable.getIntrinsicHeight(), Config.RGB_565);
+		final Canvas canvas = new Canvas(bitmap);
+		drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+		drawable.draw(canvas);
+
+		return bitmap;
 	}
 
 	public static int dp2px(final int dipValue) {
-		return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
-				dipValue, Resources.getSystem().getDisplayMetrics());
+		final int result = (int) TypedValue.applyDimension(
+				TypedValue.COMPLEX_UNIT_DIP, dipValue, Resources.getSystem()
+						.getDisplayMetrics());
+		return result;
 	}
 
 }

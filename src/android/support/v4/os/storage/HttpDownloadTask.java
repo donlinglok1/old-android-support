@@ -97,7 +97,7 @@ public class HttpDownloadTask extends AsyncTask<String, String, String> {
 			}
 			callback.onSuccess(outputFile);
 		} catch (final Exception exception) {
-			// exception.printStackTrace();
+			exception.printStackTrace();
 			callback.onFail(exception);
 		}
 

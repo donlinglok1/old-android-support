@@ -1,7 +1,6 @@
 package android.support.v4.net.http;
 
 import net.minidev.json.JSONObject;
-import android.support.v4.lang.Strings;
 
 /*
  * Copyright (c) 2014 Kenneth Tu <don.ling.lok@gmail.com>
@@ -34,14 +33,13 @@ public class HttpPostsThread extends Thread {
 	public void run() {
 		try {
 			if (isGzip) {
-				callback.onReturn(HttpPosts.postJson(url,
-						Strings.valueOf(dateObject)));
+				callback.onReturn(HttpPosts.postBody(url, dateObject.toString()));
 			} else {
-				callback.onReturn(HttpPosts.postJsonNoGzip(url,
-						Strings.valueOf(dateObject)));
+				callback.onReturn(HttpPosts.postBodyNoGzip(url,
+						dateObject.toString()));
 			}
 		} catch (final Exception exception) {
-			// exception.printStackTrace();
+			exception.printStackTrace();
 		}
 	}
 }

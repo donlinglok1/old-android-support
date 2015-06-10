@@ -1,7 +1,6 @@
 package android.support.v4.net.http;
 
 import net.minidev.json.JSONObject;
-import android.support.v4.lang.Strings;
 import android.support.v4.util.AsyncTask;
 
 /*
@@ -36,13 +35,12 @@ public class HttpPostsTask extends AsyncTask<Void, Void, String> {
 		String result = null;
 		try {
 			if (isGzip) {
-				result = HttpPosts.postJson(url, Strings.valueOf(dateObject));
+				result = HttpPosts.postBody(url, dateObject.toString());
 			} else {
-				result = HttpPosts.postJsonNoGzip(url,
-						Strings.valueOf(dateObject));
+				result = HttpPosts.postBodyNoGzip(url, dateObject.toString());
 			}
 		} catch (final Exception exception) {
-			// exception.printStackTrace();
+			exception.printStackTrace();
 		}
 		return result;
 	}

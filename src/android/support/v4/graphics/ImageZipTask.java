@@ -44,12 +44,12 @@ public class ImageZipTask extends AsyncTask<Void, Void, String> {
 				bitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
 				fileStrings.add(imgPath);
 			} catch (final Exception exception) {
-				// exception.printStackTrace();
+				exception.printStackTrace();
 			} finally {
 				try {
 					out.close();
 				} catch (final Exception exception) {
-					// exception.printStackTrace();
+					exception.printStackTrace();
 				}
 			}
 		}
@@ -58,7 +58,7 @@ public class ImageZipTask extends AsyncTask<Void, Void, String> {
 			Files.zip(fileStrings.toArray(new String[fileStrings.size()]),
 					uploadFilePath);
 		} catch (final Exception exception) {
-			// exception.printStackTrace();
+			exception.printStackTrace();
 		}
 
 		return uploadFilePath;

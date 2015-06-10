@@ -14,7 +14,9 @@ import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.DESKeySpec;
 
+import net.minidev.json.JSONArray;
 import net.minidev.json.JSONObject;
+import net.minidev.json.JSONValue;
 
 /*
  * Copyright (c) 2014 Kenneth Tu <don.ling.lok@gmail.com>
@@ -122,7 +124,34 @@ public final class Strings {
 
 	private final static String DES = fString(UPPD, UPPE, UPPS);
 
-	private Strings() {
+	public static JSONArray joinJSONArray(final JSONArray firstArray,
+			final JSONArray secArray) {
+		final StringBuffer buffer = new StringBuffer();
+
+		int len = firstArray.size();
+		for (int i = 0; i < len; i++) {
+			final JSONObject obj1 = (JSONObject) firstArray.get(i);
+			if (i == len - 1) {
+				buffer.append(valueOf(obj1));
+			} else {
+				buffer.append(valueOf(obj1)).append(Strings.COMMA);
+			}
+		}
+		len = secArray.size();
+		if (len > 0) {
+			buffer.append(Strings.COMMA);
+		}
+		for (int i = 0; i < len; i++) {
+			final JSONObject obj1 = (JSONObject) secArray.get(i);
+			if (i == len - 1) {
+				buffer.append(valueOf(obj1));
+			} else {
+				buffer.append(valueOf(obj1)).append(Strings.COMMA);
+			}
+		}
+		buffer.insert(0, Character.valueOf('[')).append(Character.valueOf(']'));
+		return (JSONArray) JSONValue.parse(valueOf(buffer));
+
 	}
 
 	public static JSONObject exceptionToJSONObject(final Exception exception) {
@@ -197,7 +226,7 @@ public final class Strings {
 		for (final String word : words) {
 			queryBuffer.append(word);
 		}
-		return Strings.valueOf(queryBuffer);
+		return valueOf(queryBuffer);
 	}
 
 	public static String compress(final String str) throws IOException {

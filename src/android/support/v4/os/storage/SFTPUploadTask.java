@@ -31,10 +31,6 @@ public class SFTPUploadTask extends AsyncTask<Void, Void, String> {
 	private final transient SftpProgressMonitor monitor;
 	private transient int uploadTry = 3;
 
-	// public interface SFTPUploadTaskCallback {
-	// void onReturn(Boolean result);
-	// }
-
 	public SFTPUploadTask(final String sftpHost, final String sftpUser,
 			final String sftpPass, final String dir, final String path,
 			final SftpProgressMonitor monitor) {
@@ -78,7 +74,7 @@ public class SFTPUploadTask extends AsyncTask<Void, Void, String> {
 			channel.disconnect();
 			session.disconnect();
 		} catch (final Exception exception) {
-			// exception.printStackTrace();
+			exception.printStackTrace();
 			if (uploadTry > 0) {
 				doInBackground(params);
 				uploadTry--;

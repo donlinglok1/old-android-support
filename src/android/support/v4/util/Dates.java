@@ -32,9 +32,6 @@ public final class Dates {
 
 	private static Date myTime;
 
-	private Dates() {
-	}
-
 	public static void setTime(final Date date) {
 		myTime = new Date();
 		myTime.setTime(date.getTime());
@@ -46,32 +43,6 @@ public final class Dates {
 			calendar.setTime(myTime);
 		}
 		return calendar;
-	}
-
-	public static boolean isToday(final Date date) {
-		return isToday(date, 0);
-	}
-
-	public static boolean isToday(final Date date, final int allowance) {
-		final Calendar calendar = getInstance();
-		calendar.add(Calendar.HOUR, allowance);
-		return isSameDay(date, calendar.getTime());
-	}
-
-	public static boolean isSameDay(final Date date1, final Date date2) {
-		boolean result = false;
-		if (null != date1 && null != date2) {
-			final Calendar calendar1 = getInstance();
-			calendar1.setTime(date1);
-			final Calendar calendar2 = getInstance();
-			calendar2.setTime(date2);
-			result = calendar1.get(Calendar.ERA) == calendar2.get(Calendar.ERA)
-					&& calendar1.get(Calendar.YEAR) == calendar2
-							.get(Calendar.YEAR)
-					&& calendar1.get(Calendar.DAY_OF_YEAR) == calendar2
-							.get(Calendar.DAY_OF_YEAR);
-		}
-		return result;
 	}
 
 	public static String format(final String formFormat, final String toFormat,
@@ -114,6 +85,32 @@ public final class Dates {
 		calendar.setTime(date);
 		return new SimpleDateFormat(formFormat, Locale.US).format(calendar
 				.getTime());
+	}
+
+	public static boolean isToday(final Date date) {
+		return isToday(date, 0);
+	}
+
+	public static boolean isToday(final Date date, final int allowance) {
+		final Calendar calendar = getInstance();
+		calendar.add(Calendar.HOUR, allowance);
+		return isSameDay(date, calendar.getTime());
+	}
+
+	public static boolean isSameDay(final Date date1, final Date date2) {
+		boolean result = false;
+		if (null != date1 && null != date2) {
+			final Calendar calendar1 = getInstance();
+			calendar1.setTime(date1);
+			final Calendar calendar2 = getInstance();
+			calendar2.setTime(date2);
+			result = calendar1.get(Calendar.ERA) == calendar2.get(Calendar.ERA)
+					&& calendar1.get(Calendar.YEAR) == calendar2
+							.get(Calendar.YEAR)
+					&& calendar1.get(Calendar.DAY_OF_YEAR) == calendar2
+							.get(Calendar.DAY_OF_YEAR);
+		}
+		return result;
 	}
 
 	public static String now() {

@@ -65,7 +65,7 @@ public class Bitmaps {
 				result = softBitmap.get();
 			}
 		} catch (final FileNotFoundException exception) {
-			// exception.printStackTrace();
+			exception.printStackTrace();
 		}
 		return result;
 	}
@@ -154,7 +154,7 @@ public class Bitmaps {
 				options.inSampleSize = computeSampleSize(options,
 						minSideLength, width * heigth);
 			} catch (final IOException exception) {
-				// exception.printStackTrace();
+				exception.printStackTrace();
 			}
 
 			options.inJustDecodeBounds = false;
@@ -178,7 +178,7 @@ public class Bitmaps {
 					bitmap);
 			result = softBitmap.get();
 		} catch (final Exception exception) {
-			// exception.printStackTrace();
+			exception.printStackTrace();
 		}
 		return result;
 	}
@@ -307,7 +307,7 @@ public class Bitmaps {
 				break;
 			}
 		} catch (final IOException exception) {
-			// exception.printStackTrace();
+			exception.printStackTrace();
 		}
 		return result;
 	}

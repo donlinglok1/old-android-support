@@ -3,9 +3,6 @@ package android.support.v4.util;
 import java.math.BigDecimal;
 import java.util.List;
 
-import net.minidev.json.JSONArray;
-import net.minidev.json.JSONObject;
-import net.minidev.json.JSONValue;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -64,36 +61,6 @@ public final class Tools {
 
 		System.out.println("totalMemory" + Runtime.getRuntime().totalMemory()
 				/ 1024);
-	}
-
-	public static JSONArray joinJSONArray(final JSONArray firstArray,
-			final JSONArray secArray) {
-		final StringBuffer buffer = new StringBuffer();
-
-		int len = firstArray.size();
-		for (int i = 0; i < len; i++) {
-			final JSONObject obj1 = (JSONObject) firstArray.get(i);
-			if (i == len - 1) {
-				buffer.append(Strings.valueOf(obj1));
-			} else {
-				buffer.append(Strings.valueOf(obj1)).append(Strings.COMMA);
-			}
-		}
-		len = secArray.size();
-		if (len > 0) {
-			buffer.append(Strings.COMMA);
-		}
-		for (int i = 0; i < len; i++) {
-			final JSONObject obj1 = (JSONObject) secArray.get(i);
-			if (i == len - 1) {
-				buffer.append(Strings.valueOf(obj1));
-			} else {
-				buffer.append(Strings.valueOf(obj1)).append(Strings.COMMA);
-			}
-		}
-		buffer.insert(0, Character.valueOf('[')).append(Character.valueOf(']'));
-		return (JSONArray) JSONValue.parse(Strings.valueOf(buffer));
-
 	}
 
 	public static double addDouble(final Number value1, final Number value2) {

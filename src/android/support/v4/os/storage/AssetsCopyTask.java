@@ -30,7 +30,7 @@ public class AssetsCopyTask extends AsyncTask<Void, Void, String> {
 			Files.copyAssets(context);
 			callback.onReturn(true);
 		} catch (final Exception exception) {
-			// exception.printStackTrace();
+			exception.printStackTrace();
 			callback.onReturn(false);
 		}
 		return Strings.EMPTY;

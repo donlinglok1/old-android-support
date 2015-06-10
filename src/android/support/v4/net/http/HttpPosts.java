@@ -44,9 +44,6 @@ public final class HttpPosts {
 	private final static int TIMEOUTSOCKET = 5000 * 2;
 	private final static int TIMEOUTCONNECTION = 3000 * 2;
 
-	private HttpPosts() {
-	}
-
 	public static HttpClient createHttpClient() {
 		final HttpParams params = new BasicHttpParams();
 		HttpProtocolParams.setVersion(params, HttpVersion.HTTP_1_1);
@@ -66,7 +63,7 @@ public final class HttpPosts {
 		return new DefaultHttpClient(conMgr, params);
 	}
 
-	public static String postJson(final String url, final String nameValuePairs) {
+	public static String postBody(final String url, final String body) {
 		String reuslt = Strings.EMPTY;
 		try {
 			final HttpPost httppost = new HttpPost(url);
@@ -74,8 +71,8 @@ public final class HttpPosts {
 			httppost.addHeader("Accept-encoding", "gzip, deflate");
 			httppost.setHeader("Content-type",
 					"application/json; charset=utf-8");
-			if (null != nameValuePairs) {
-				httppost.setEntity(new StringEntity(encrypt(nameValuePairs),
+			if (null != body) {
+				httppost.setEntity(new StringEntity(encrypt(body),
 						HTTP.UTF_8));
 			}
 			final HttpClient httpclient = createHttpClient();
@@ -101,16 +98,16 @@ public final class HttpPosts {
 		return reuslt;
 	}
 
-	public static String postJsonNoGzip(final String url,
-			final String nameValuePairs) {
+	public static String postBodyNoGzip(final String url,
+			final String body) {
 		String result = Strings.EMPTY;
 		try {
 			final HttpPost httppost = new HttpPost(url);
 			httppost.setHeader("Accept", "application/json");
 			httppost.setHeader("Content-type",
 					"application/json; charset=utf-8");
-			if (null != nameValuePairs) {
-				httppost.setEntity(new StringEntity(encrypt(nameValuePairs),
+			if (null != body) {
+				httppost.setEntity(new StringEntity(encrypt(body),
 						HTTP.UTF_8));
 			}
 			final HttpClient httpclient = createHttpClient();
