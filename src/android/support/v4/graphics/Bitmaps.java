@@ -239,7 +239,7 @@ public class Bitmaps {
 		return result;
 	}
 
-	private final static int INITIALSIZELIMIT = 8;
+	private static final int INITIALSIZELIMIT = 8;
 
 	public static int computeSampleSize(final BitmapFactory.Options options,
 			final int minSideLength, final double maxNumOfPixels)

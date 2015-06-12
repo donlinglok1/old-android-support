@@ -1097,7 +1097,7 @@ public class LinkedList<E> extends AbstractSequentialList<E> implements
 		return a;
 	}
 
-	private final static long serialVersionUID = 876323262645176354L;
+	private static final long serialVersionUID = 876323262645176354L;
 
 	/**
 	 * Save the state of this <tt>LinkedList</tt> instance to a stream (that is,

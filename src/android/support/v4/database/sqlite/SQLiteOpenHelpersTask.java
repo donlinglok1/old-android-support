@@ -12,12 +12,12 @@ import android.support.v4.util.AsyncTask;
  * @version 1.0.0
  */
 public class SQLiteOpenHelpersTask extends AsyncTask<Void, Void, String> {
-	private final transient String query;
-	private final transient SQLiteCallback callback;
+	private  transient final String query;
+	private  transient final SQLiteCallback callback;
 
-	public final static int EXE = 0;
-	public final static int RAW = 1;
-	private final transient int taskType;
+	public static final int EXE = 0;
+	public static final int RAW = 1;
+	private  transient final int taskType;
 
 	public interface SQLiteCallback {
 		void onReturn(Cursor result);
@@ -33,7 +33,7 @@ public class SQLiteOpenHelpersTask extends AsyncTask<Void, Void, String> {
 		this.taskType = taskType;
 	}
 
-	private final transient SQLiteOpenHelpers sqLiteOpenHelpers;
+	private  transient final SQLiteOpenHelpers sqLiteOpenHelpers;
 
 	@Override
 	protected String doInBackground(final Void... params) {

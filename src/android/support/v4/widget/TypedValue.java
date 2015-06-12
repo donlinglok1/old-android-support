@@ -24,158 +24,158 @@ import android.util.DisplayMetrics;
  */
 public class TypedValue {
 	/** The value contains no data. */
-	public final static int TYPE_NULL = 0x00;
+	public static final int TYPE_NULL = 0x00;
 
 	/** The <var>data</var> field holds a resource identifier. */
-	public final static int TYPE_REFERENCE = 0x01;
+	public static final int TYPE_REFERENCE = 0x01;
 	/**
 	 * The <var>data</var> field holds an attribute resource identifier
 	 * (referencing an attribute in the current theme style, not a resource
 	 * entry).
 	 */
-	public final static int TYPE_ATTRIBUTE = 0x02;
+	public static final int TYPE_ATTRIBUTE = 0x02;
 	/**
 	 * The <var>string</var> field holds string data. In addition, if
 	 * <var>data</var> is non-zero then it is the string block index of the
 	 * string and <var>assetCookie</var> is the set of assets the string came
 	 * from.
 	 */
-	public final static int TYPE_STRING = 0x03;
+	public static final int TYPE_STRING = 0x03;
 	/** The <var>data</var> field holds an IEEE 754 floating point number. */
-	public final static int TYPE_FLOAT = 0x04;
+	public static final int TYPE_FLOAT = 0x04;
 	/**
 	 * The <var>data</var> field holds a complex number encoding a dimension
 	 * value.
 	 */
-	public final static int TYPE_DIMENSION = 0x05;
+	public static final int TYPE_DIMENSION = 0x05;
 	/**
 	 * The <var>data</var> field holds a complex number encoding a fraction of a
 	 * container.
 	 */
-	public final static int TYPE_FRACTION = 0x06;
+	public static final int TYPE_FRACTION = 0x06;
 
 	/**
 	 * Identifies the start of plain integer values. Any type value from this to
 	 * {@link #TYPE_LAST_INT} means the <var>data</var> field holds a generic
 	 * integer value.
 	 */
-	public final static int TYPE_FIRST_INT = 0x10;
+	public static final int TYPE_FIRST_INT = 0x10;
 
 	/**
 	 * The <var>data</var> field holds a number that was originally specified in
 	 * decimal.
 	 */
-	public final static int TYPE_INT_DEC = 0x10;
+	public static final int TYPE_INT_DEC = 0x10;
 	/**
 	 * The <var>data</var> field holds a number that was originally specified in
 	 * hexadecimal (0xn).
 	 */
-	public final static int TYPE_INT_HEX = 0x11;
+	public static final int TYPE_INT_HEX = 0x11;
 	/**
 	 * The <var>data</var> field holds 0 or 1 that was originally specified as
 	 * "false" or "true".
 	 */
-	public final static int TYPE_INT_BOOLEAN = 0x12;
+	public static final int TYPE_INT_BOOLEAN = 0x12;
 
 	/**
 	 * Identifies the start of integer values that were specified as color
 	 * constants (starting with '#').
 	 */
-	public final static int TYPE_FIRST_COLOR_INT = 0x1c;
+	public static final int TYPE_FIRST_COLOR_INT = 0x1c;
 
 	/**
 	 * The <var>data</var> field holds a color that was originally specified as
 	 * #aarrggbb.
 	 */
-	public final static int TYPE_INT_COLOR_ARGB8 = 0x1c;
+	public static final int TYPE_INT_COLOR_ARGB8 = 0x1c;
 	/**
 	 * The <var>data</var> field holds a color that was originally specified as
 	 * #rrggbb.
 	 */
-	public final static int TYPE_INT_COLOR_RGB8 = 0x1d;
+	public static final int TYPE_INT_COLOR_RGB8 = 0x1d;
 	/**
 	 * The <var>data</var> field holds a color that was originally specified as
 	 * #argb.
 	 */
-	public final static int TYPE_INT_COLOR_ARGB4 = 0x1e;
+	public static final int TYPE_INT_COLOR_ARGB4 = 0x1e;
 	/**
 	 * The <var>data</var> field holds a color that was originally specified as
 	 * #rgb.
 	 */
-	public final static int TYPE_INT_COLOR_RGB4 = 0x1f;
+	public static final int TYPE_INT_COLOR_RGB4 = 0x1f;
 
 	/**
 	 * Identifies the end of integer values that were specified as color
 	 * constants.
 	 */
-	public final static int TYPE_LAST_COLOR_INT = 0x1f;
+	public static final int TYPE_LAST_COLOR_INT = 0x1f;
 
 	/** Identifies the end of plain integer values. */
-	public final static int TYPE_LAST_INT = 0x1f;
+	public static final int TYPE_LAST_INT = 0x1f;
 
 	/* ------------------------------------------------------------ */
 
 	/** Complex data: bit location of unit information. */
-	public final static int COMPLEX_UNIT_SHIFT = 0;
+	public static final int COMPLEX_UNIT_SHIFT = 0;
 	/**
 	 * Complex data: mask to extract unit information (after shifting by
 	 * {@link #COMPLEX_UNIT_SHIFT}). This gives us 16 possible types, as defined
 	 * below.
 	 */
-	public final static int COMPLEX_UNIT_MASK = 0xf;
+	public static final int COMPLEX_UNIT_MASK = 0xf;
 
 	/** {@link #TYPE_DIMENSION} complex unit: Value is raw pixels. */
-	public final static int COMPLEX_UNIT_PX = 0;
+	public static final int COMPLEX_UNIT_PX = 0;
 	/**
 	 * {@link #TYPE_DIMENSION} complex unit: Value is Device Independent Pixels.
 	 */
-	public final static int COMPLEX_UNIT_DIP = 1;
+	public static final int COMPLEX_UNIT_DIP = 1;
 	/** {@link #TYPE_DIMENSION} complex unit: Value is a scaled pixel. */
-	public final static int COMPLEX_UNIT_SP = 2;
+	public static final int COMPLEX_UNIT_SP = 2;
 	/** {@link #TYPE_DIMENSION} complex unit: Value is in points. */
-	public final static int COMPLEX_UNIT_PT = 3;
+	public static final int COMPLEX_UNIT_PT = 3;
 	/** {@link #TYPE_DIMENSION} complex unit: Value is in inches. */
-	public final static int COMPLEX_UNIT_IN = 4;
+	public static final int COMPLEX_UNIT_IN = 4;
 	/** {@link #TYPE_DIMENSION} complex unit: Value is in millimeters. */
-	public final static int COMPLEX_UNIT_MM = 5;
+	public static final int COMPLEX_UNIT_MM = 5;
 
 	/**
 	 * {@link #TYPE_FRACTION} complex unit: A basic fraction of the overall
 	 * size.
 	 */
-	public final static int COMPLEX_UNIT_FRACTION = 0;
+	public static final int COMPLEX_UNIT_FRACTION = 0;
 	/** {@link #TYPE_FRACTION} complex unit: A fraction of the parent size. */
-	public final static int COMPLEX_UNIT_FRACTION_PARENT = 1;
+	public static final int COMPLEX_UNIT_FRACTION_PARENT = 1;
 
 	/**
 	 * Complex data: where the radix information is, telling where the decimal
 	 * place appears in the mantissa.
 	 */
-	public final static int COMPLEX_RADIX_SHIFT = 4;
+	public static final int COMPLEX_RADIX_SHIFT = 4;
 	/**
 	 * Complex data: mask to extract radix information (after shifting by
 	 * {@link #COMPLEX_RADIX_SHIFT}). This give us 4 possible fixed point
 	 * representations as defined below.
 	 */
-	public final static int COMPLEX_RADIX_MASK = 0x3;
+	public static final int COMPLEX_RADIX_MASK = 0x3;
 
 	/** Complex data: the mantissa is an integral number -- i.e., 0xnnnnnn.0 */
-	public final static int COMPLEX_RADIX_23p0 = 0;
+	public static final int COMPLEX_RADIX_23p0 = 0;
 	/** Complex data: the mantissa magnitude is 16 bits -- i.e, 0xnnnn.nn */
-	public final static int COMPLEX_RADIX_16p7 = 1;
+	public static final int COMPLEX_RADIX_16p7 = 1;
 	/** Complex data: the mantissa magnitude is 8 bits -- i.e, 0xnn.nnnn */
-	public final static int COMPLEX_RADIX_8p15 = 2;
+	public static final int COMPLEX_RADIX_8p15 = 2;
 	/** Complex data: the mantissa magnitude is 0 bits -- i.e, 0x0.nnnnnn */
-	public final static int COMPLEX_RADIX_0p23 = 3;
+	public static final int COMPLEX_RADIX_0p23 = 3;
 
 	/** Complex data: bit location of mantissa information. */
-	public final static int COMPLEX_MANTISSA_SHIFT = 8;
+	public static final int COMPLEX_MANTISSA_SHIFT = 8;
 	/**
 	 * Complex data: mask to extract mantissa information (after shifting by
 	 * {@link #COMPLEX_MANTISSA_SHIFT}). This gives us 23 bits of precision; the
 	 * top bit is the sign.
 	 */
-	public final static int COMPLEX_MANTISSA_MASK = 0xffffff;
+	public static final int COMPLEX_MANTISSA_MASK = 0xffffff;
 
 	/* ------------------------------------------------------------ */
 
@@ -184,13 +184,13 @@ public class TypedValue {
 	 * treated as the system's default density value:
 	 * {@link DisplayMetrics#DENSITY_DEFAULT}.
 	 */
-	public final static int DENSITY_DEFAULT = 0;
+	public static final int DENSITY_DEFAULT = 0;
 
 	/**
 	 * If {@link #density} is equal to this value, then there is no density
 	 * associated with the resource and it should not be scaled.
 	 */
-	public final static int DENSITY_NONE = 0xffff;
+	public static final int DENSITY_NONE = 0xffff;
 
 	/* ------------------------------------------------------------ */
 
@@ -237,8 +237,8 @@ public class TypedValue {
 		return Float.intBitsToFloat(data);
 	}
 
-	private final static float MANTISSA_MULT = 1.0f / (1 << TypedValue.COMPLEX_MANTISSA_SHIFT);
-	private final static float[] RADIX_MULTS = new float[] {
+	private static final float MANTISSA_MULT = 1.0f / (1 << TypedValue.COMPLEX_MANTISSA_SHIFT);
+	private static final float[] RADIX_MULTS = new float[] {
 			1.0f * MANTISSA_MULT, 1.0f / (1 << 7) * MANTISSA_MULT,
 			1.0f / (1 << 15) * MANTISSA_MULT, 1.0f / (1 << 23) * MANTISSA_MULT };
 
@@ -465,9 +465,9 @@ public class TypedValue {
 		return coerceToString(t, data);
 	}
 
-	private final static String[] DIMENSION_UNIT_STRS = new String[] { "px",
+	private static final String[] DIMENSION_UNIT_STRS = new String[] { "px",
 			"dip", "sp", "pt", "in", "mm" };
-	private final static String[] FRACTION_UNIT_STRS = new String[] { "%", "%p" };
+	private static final String[] FRACTION_UNIT_STRS = new String[] { "%", "%p" };
 
 	/**
 	 * Perform type conversion as per {@link #coerceToString()} on an explicitly
@@ -481,7 +481,7 @@ public class TypedValue {
 	 * @return String The coerced string value. If the value is null or the type
 	 *         is not known, null is returned.
 	 */
-	public final static String coerceToString(final int type, final int data) {
+	public static final String coerceToString(final int type, final int data) {
 		switch (type) {
 		case TYPE_NULL:
 			return null;

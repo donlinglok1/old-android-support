@@ -56,7 +56,7 @@ public final class Files {
 		}
 	}
 
-	private final static String[] NOCOPYFILE = { "fonts", "googlemap",
+	private static final String[] NOCOPYFILE = { "fonts", "googlemap",
 			"images", "offlinemap", "sounds", "webkit",
 			"crashlytics-build.properties", "icudt46l.zip" };
 

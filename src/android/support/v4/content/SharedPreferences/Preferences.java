@@ -16,7 +16,7 @@ import android.support.v4.lang.Strings;
  * @version 1.0.0
  */
 public final class Preferences {
-	public final static String SHAREDPREFERENCESNAME = "SharedPreference";
+	public static final String SHAREDPREFERENCESNAME = "SharedPreference";
 
 	private Preferences() {
 	}

@@ -47,17 +47,14 @@ public class SocketServer {
 		this.encryptSizeLimit = encryptSizeLimit;
 	}
 
-	private transient ServerCallback callback;
-
-	/**
-	 * Default Value = 10;
-	 */
-	public void setServerCallback(final ServerCallback callback) {
-		this.callback = callback;
+	public interface ServerCallback {
+		void onClientConnected(Sockets result);
 	}
 
-	public interface ServerCallback {
-		void connected(Sockets result);
+	private transient ServerCallback callback;
+
+	public void setServerCallback(final ServerCallback callback) {
+		this.callback = callback;
 	}
 
 	public void onStartCommand() {
@@ -71,58 +68,55 @@ public class SocketServer {
 			exception.printStackTrace();
 		}
 
-		while (true) {
+		while (null != serverSocket) {
 			try {
-				Thread.sleep(100);
+				Thread.sleep(10);
 				final Sockets socket = serverSocket.accept();
-				socket.setReceiveBufferSize(16 * 1024);
-				socket.setSendBufferSize(16 * 1024);
-				socket.setSoLinger(true, 0);
+				socket.setReceiveBufferSize(8 * 1024);
+				socket.setSendBufferSize(8 * 1024);
+				// socket.setSoLinger(true, 0);
 				socket.setTcpNoDelay(true);
 				socket.setKeepAlive(true);
-				socket.setOOBInline(true);
+				socket.setOOBInline(false);
 				socket.setTrafficClass(0x04 | 0x10);
 				socket.setPerformancePreferences(1, 3, 2);
 				socket.setSoTimeout(30 * 1000);
 
-				callback.connected(socket);
+				callback.onClientConnected(socket);
 			} catch (final Exception exception) {
 				exception.printStackTrace();
-				try {
-					serverSocket.close();
-				} catch (final IOException e1) {
-					e1.printStackTrace();
-				}
+				// try {
+				// serverSocket.close();
+				// } catch (final IOException e1) {
+				// e1.printStackTrace();
+				// }
 			}
 		}
 	}
 
-	public void sendMessages(final Sockets socket, final String message) {
-		try {
-			if (null != socket && socket.isConnected()
-					&& !socket.isOutputShutdown()) {
-				final OutputStream out = new BufferedOutputStream(
-						socket.getOutputStream());
-				final PrintWriter writer = new PrintWriter(
-						new OutputStreamWriter(out, "UTF-8"));
+	public void sendMessages(final Sockets socket, final String message)
+			throws IOException {
+		if (null != socket && !socket.isOutputShutdown()
+				&& socket.isConnected()) {
+			final OutputStream out = new BufferedOutputStream(
+					socket.getOutputStream());
+			final PrintWriter writer = new PrintWriter(new OutputStreamWriter(
+					out, "UTF-8"));
 
-				if (message.length() >= encryptSizeLimit) {
-					try {
-						writer.println(Strings.encrypt(message, encryptionKey));
-						System.out.println("[" + Dates.now() + "]" + "_Send_"
-								+ message + "_" + message.length() + "_"
-								+ socket.getRemoteSocketAddress() + "_"
-								+ socket.getTag());
-					} catch (final Exception exception) {
-						exception.printStackTrace();
-					}
-				} else {
-					writer.println(message);
+			if (message.length() >= encryptSizeLimit) {
+				try {
+					writer.println(Strings.encrypt(message, encryptionKey));
+					System.out.println("[" + Dates.now() + "]" + "_Send_"
+							+ message + "_" + message.length() + "_"
+							+ socket.getRemoteSocketAddress() + "_"
+							+ socket.getTag());
+				} catch (final Exception exception) {
+					exception.printStackTrace();
 				}
-				writer.flush();
+			} else {
+				writer.println(message);
 			}
-		} catch (final Exception exception) {
-			exception.printStackTrace();
+			writer.flush();
 		}
 	}
 

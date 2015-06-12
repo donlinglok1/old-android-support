@@ -75,14 +75,14 @@ public class SocketServerThread extends Thread {
 	private transient Timer timeoutTimer;
 
 	public void setTimeoutTimer() {
-		final int timeInteravl = 1000 * 3;
+		final int timeInteravl = 1000 * 15;
 		timeoutTimer = new Timer();
 		timeoutTimer.scheduleAtFixedRate(KeepAlive, 0, timeInteravl);
 	}
 
 	private transient int keepAliveTimeoutCount;
 
-	private final transient TimerTask KeepAlive = new TimerTask() {
+	private  transient final TimerTask KeepAlive = new TimerTask() {
 		@Override
 		public void run() {
 			try {

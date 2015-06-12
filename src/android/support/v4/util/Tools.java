@@ -79,7 +79,7 @@ public final class Tools {
 		return bigDecimal1.subtract(bigDecimal2).doubleValue();
 	}
 
-	private final static double RATIO_LIMIT = 1.0;
+	private static final double RATIO_LIMIT = 1.0;
 
 	public static double calculateBeaconAccuracy(final int txPower,
 			final double rssi) {
@@ -95,7 +95,7 @@ public final class Tools {
 		return result;
 	}
 
-	private final static double EARTH_RADIUS = 6378137.0;
+	private static final double EARTH_RADIUS = 6378137.0;
 
 	public static double latlng2m(final Double lat_a, final Double lng_a,
 			final Double lat_b, final Double lng_b) {

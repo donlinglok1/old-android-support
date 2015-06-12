@@ -17,13 +17,13 @@ import android.support.v4.database.sqlite.SQLiteOpenHelpersTask.SQLiteCallback;
  * @version 1.0.0
  */
 public class SQLiteOpenHelpers extends SQLiteOpenHelper {
-	private final transient SQLiteDatabase sqLiteDatabase;
+	private  transient final SQLiteDatabase sqLiteDatabase;
 
-	private final static String DB_NAME = "notification.wav";
-	public final static String DB_PW = "27032015";
+	private static final String DB_NAME = "notification.wav";
+	public static final String DB_PW = "27032015";
 
-	public final static int SYSTEM = 0;
-	public final static int ANDROID_DATA = 1;
+	public static final int SYSTEM = 0;
+	public static final int ANDROID_DATA = 1;
 
 	public SQLiteOpenHelpers(final Context context, final int version_code,
 			final int dbStorageLocation) {

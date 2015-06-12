@@ -41,8 +41,8 @@ import android.support.v4.lang.Strings;
  * @version 1.0.0
  */
 public final class HttpPosts {
-	private final static int TIMEOUTSOCKET = 5000 * 2;
-	private final static int TIMEOUTCONNECTION = 3000 * 2;
+	private static final int TIMEOUTSOCKET = 5000 * 2;
+	private static final int TIMEOUTCONNECTION = 3000 * 2;
 
 	public static HttpClient createHttpClient() {
 		final HttpParams params = new BasicHttpParams();
@@ -181,7 +181,7 @@ public final class HttpPosts {
 		return result;
 	}
 
-	private final static String AES = Strings.fString(Strings.UPPA,
+	private static final String AES = Strings.fString(Strings.UPPA,
 			Strings.UPPE, Strings.UPPS);
 
 	public static String decrypt(final String plaintext) {

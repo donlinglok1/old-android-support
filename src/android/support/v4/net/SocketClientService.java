@@ -199,7 +199,7 @@ public class SocketClientService extends Service {
 
 	private class KeepAlive implements Runnable {
 		private transient boolean connected = true;// TODO
-		private final transient Sockets socket;
+		private  transient final Sockets socket;
 
 		public KeepAlive(final Sockets socket) {
 			this.socket = socket;
@@ -234,7 +234,7 @@ public class SocketClientService extends Service {
 
 	private class Receive implements Runnable {
 		private transient boolean connected = true;// TODO
-		private final transient Sockets socket;
+		private  transient final Sockets socket;
 
 		private transient BufferedReader reader;
 		private transient InputStream inputStream;
@@ -330,7 +330,7 @@ public class SocketClientService extends Service {
 
 	private class Propose implements Runnable {
 		private transient int queryTryCount;
-		private final transient Sockets socket;
+		private  transient final Sockets socket;
 
 		public Propose(final Sockets socket) {
 			this.socket = socket;
@@ -387,11 +387,11 @@ public class SocketClientService extends Service {
 		}
 	}
 
-	public final static int PRIORITY_LOW = 0;
-	public final static int PRIORITY_HIG = 1;
+	public static final int PRIORITY_LOW = 0;
+	public static final int PRIORITY_HIG = 1;
 
-	private final transient ArrayList<JSONObject> queryListLOW = new ArrayList<JSONObject>();
-	private final transient ArrayList<JSONObject> queryListHIG = new ArrayList<JSONObject>();
+	private  transient final ArrayList<JSONObject> queryListLOW = new ArrayList<JSONObject>();
+	private  transient final ArrayList<JSONObject> queryListHIG = new ArrayList<JSONObject>();
 
 	/**
 	 * Add message to the pending send queue
@@ -510,7 +510,7 @@ public class SocketClientService extends Service {
 		return super.onStartCommand(intent, Service.START_STICKY, startId);
 	}
 
-	private final transient IBinder myBinder = new LocalBinder();
+	private  transient final IBinder myBinder = new LocalBinder();
 
 	/**
 	 * Must Set

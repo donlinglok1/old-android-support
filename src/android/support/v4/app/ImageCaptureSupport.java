@@ -6,6 +6,7 @@ import java.io.IOException;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -13,33 +14,22 @@ import android.provider.MediaStore;
 
 public class ImageCaptureSupport extends Activity {
 	private transient Activity context;
-	private Context baseContext;
-	public final static String IMAGE_PATH = "ImageFilePath";
-	public final static int CAP_REQUESTCODE = 6260;
+	private transient Context baseContext;
 
-	private transient String filePath;
+	private transient String tempFilePath;
+	private static final String TEMP_PATH = "ImageFilePath";
+	private static final int TEMP_CODE = 6260;
+
+	public static final String IMAGE_PATH = "image_path";
 
 	@Override
 	protected void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		context = ImageCaptureSupport.this;
+
+		context = this;
 		baseContext = getApplicationContext();
 
-		if (savedInstanceState != null) {
-			filePath = savedInstanceState.getString(IMAGE_PATH);
-
-			final File mFile = new File(IMAGE_PATH);
-			if (mFile.exists()) {
-				final Intent rsl = new Intent();
-				rsl.putExtra(IMAGE_PATH, filePath);
-				setResult(Activity.RESULT_OK, rsl);
-				finish();
-			}
-		}
-
 		if (savedInstanceState == null) {
-			final long ts = System.currentTimeMillis();
-
 			String filePath = "/Android/data/" + context.getPackageName()
 					+ "/temp/ImageCaptureSupport/";
 			if (Environment.getExternalStorageState().equals(
@@ -60,22 +50,30 @@ public class ImageCaptureSupport extends Activity {
 				} catch (final IOException e) {
 				}
 			}
-
-			filePath = filePath + ts + ".jpg";
-			final File out = new File(filePath);
-
+			tempFilePath = filePath + System.currentTimeMillis() + ".jpg";
 			final Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-			intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(out)); // set
-			startActivityForResult(intent, CAP_REQUESTCODE);
+			intent.putExtra(MediaStore.EXTRA_OUTPUT,
+					Uri.fromFile(new File(tempFilePath)));
+			startActivityForResult(intent, TEMP_CODE);
+		} else {
+			tempFilePath = savedInstanceState.getString(TEMP_PATH);
+
+			final File mFile = new File(TEMP_PATH);
+			if (mFile.exists()) {
+				final Intent intent = new Intent();
+				intent.putExtra(IMAGE_PATH, tempFilePath);
+				setResult(Activity.RESULT_OK, intent);
+				finish();
+			}
 		}
 	}
 
 	@Override
 	public void onActivityResult(final int requestCode, final int resultCode,
 			final Intent intent) {
-		if (Activity.RESULT_OK == resultCode && CAP_REQUESTCODE == requestCode) {
+		if (TEMP_CODE == requestCode && resultCode == Activity.RESULT_OK) {
 			final Intent intent2 = new Intent();
-			intent2.putExtra(IMAGE_PATH, filePath);
+			intent2.putExtra(IMAGE_PATH, tempFilePath);
 			context.setResult(Activity.RESULT_OK, intent2);
 			context.finish();
 		} else {
@@ -86,20 +84,22 @@ public class ImageCaptureSupport extends Activity {
 	@Override
 	protected void onSaveInstanceState(final Bundle outState) {
 		super.onSaveInstanceState(outState);
-		outState.putString(IMAGE_PATH, filePath);
+		outState.putString(TEMP_PATH, tempFilePath);
 	}
 
-	// @Override
-	// protected void onDestroy() {
-	// super.onDestroy();
-	// }
-	// @Override
-	// public void onConfigurationChanged(final Configuration newConfig) {
-	// super.onConfigurationChanged(newConfig);
-	// }
-	//
-	// @Override
-	// protected void onRestoreInstanceState(final Bundle savedInstanceState) {
-	// super.onRestoreInstanceState(savedInstanceState);
-	// }
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+	}
+
+	@Override
+	public void onConfigurationChanged(final Configuration newConfig) {
+		super.onConfigurationChanged(newConfig);
+	}
+
+	@Override
+	protected void onRestoreInstanceState(final Bundle savedInstanceState) {
+		super.onRestoreInstanceState(savedInstanceState);
+
+	}
 }

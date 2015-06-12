@@ -139,12 +139,12 @@ public class SocketClient {
 						socket[i] = new Sockets(
 								InetAddress.getByName(serverIpAddress),
 								serverPort);
-						socket[i].setReceiveBufferSize(16 * 1024);
-						socket[i].setSendBufferSize(16 * 1024);
-						socket[i].setSoLinger(true, 0);
+						socket[i].setReceiveBufferSize(8 * 1024);
+						socket[i].setSendBufferSize(8 * 1024);
+						// socket[i].setSoLinger(true, 0);
 						socket[i].setTcpNoDelay(true);
 						socket[i].setKeepAlive(true);
-						socket[i].setOOBInline(true);
+						socket[i].setOOBInline(false);
 						socket[i].setTrafficClass(0x04 | 0x10);
 						socket[i].setPerformancePreferences(1, 3, 2);
 						final JSONObject jsonObject = new JSONObject();
@@ -195,7 +195,7 @@ public class SocketClient {
 
 	private class KeepAlive implements Runnable {
 		private transient boolean connected = true;// TODO
-		private final transient Sockets socket;
+		private transient final Sockets socket;
 
 		public KeepAlive(final Sockets socket) {
 			this.socket = socket;
@@ -230,7 +230,7 @@ public class SocketClient {
 
 	private class Receive implements Runnable {
 		private transient boolean connected = true;// TODO
-		private final transient Sockets socket;
+		private transient final Sockets socket;
 
 		private transient BufferedReader reader;
 		private transient InputStream inputStream;
@@ -326,7 +326,7 @@ public class SocketClient {
 
 	private class Propose implements Runnable {
 		private transient int queryTryCount;
-		private final transient Sockets socket;
+		private transient final Sockets socket;
 
 		public Propose(final Sockets socket) {
 			this.socket = socket;
@@ -383,11 +383,11 @@ public class SocketClient {
 		}
 	}
 
-	public final static int PRIORITY_LOW = 0;
-	public final static int PRIORITY_HIG = 1;
+	public static final int PRIORITY_LOW = 0;
+	public static final int PRIORITY_HIG = 1;
 
-	private final transient ArrayList<JSONObject> queryListLOW = new ArrayList<JSONObject>();
-	private final transient ArrayList<JSONObject> queryListHIG = new ArrayList<JSONObject>();
+	private transient final ArrayList<JSONObject> queryListLOW = new ArrayList<JSONObject>();
+	private transient final ArrayList<JSONObject> queryListHIG = new ArrayList<JSONObject>();
 
 	/**
 	 * Add message to the pending send queue

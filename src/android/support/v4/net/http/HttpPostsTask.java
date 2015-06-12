@@ -1,6 +1,7 @@
 package android.support.v4.net.http;
 
 import net.minidev.json.JSONObject;
+import android.support.v4.lang.Strings;
 import android.support.v4.util.AsyncTask;
 
 /*
@@ -12,10 +13,10 @@ import android.support.v4.util.AsyncTask;
  * @version 1.0.0
  */
 public class HttpPostsTask extends AsyncTask<Void, Void, String> {
-	private final transient JSONObject dateObject;
-	private final transient String url;
-	private final transient HttpPostsTaskCallback callback;
-	private final transient boolean isGzip;
+	private  transient final JSONObject dateObject;
+	private  transient final String url;
+	private  transient final HttpPostsTaskCallback callback;
+	private  transient final boolean isGzip;
 
 	public interface HttpPostsTaskCallback {
 		void onReturn(String result);
@@ -35,9 +36,10 @@ public class HttpPostsTask extends AsyncTask<Void, Void, String> {
 		String result = null;
 		try {
 			if (isGzip) {
-				result = HttpPosts.postBody(url, dateObject.toString());
+				result = HttpPosts.postBody(url, Strings.valueOf(dateObject));
 			} else {
-				result = HttpPosts.postBodyNoGzip(url, dateObject.toString());
+				result = HttpPosts.postBodyNoGzip(url,
+						Strings.valueOf(dateObject));
 			}
 		} catch (final Exception exception) {
 			exception.printStackTrace();
