@@ -99,7 +99,7 @@ public class ImageFetcher extends ImageResizer {
 					if (BuildConfig.DEBUG) {
 						Log.d(TAG, "HTTP cache initialized");
 					}
-				} catch (final IOException e) {
+				} catch (final IOException exception) {
 					mHttpDiskCache = null;
 				}
 			}
@@ -118,8 +118,8 @@ public class ImageFetcher extends ImageResizer {
 					if (BuildConfig.DEBUG) {
 						Log.d(TAG, "HTTP cache cleared");
 					}
-				} catch (final IOException e) {
-					Log.e(TAG, "clearCacheInternal - " + e);
+				} catch (final IOException exception) {
+					Log.e(TAG, "clearCacheInternal - " + exception);
 				}
 				mHttpDiskCache = null;
 				mHttpDiskCacheStarting = true;
@@ -138,8 +138,8 @@ public class ImageFetcher extends ImageResizer {
 					if (BuildConfig.DEBUG) {
 						Log.d(TAG, "HTTP cache flushed");
 					}
-				} catch (final IOException e) {
-					Log.e(TAG, "flush - " + e);
+				} catch (final IOException exception) {
+					Log.e(TAG, "flush - " + exception);
 				}
 			}
 		}
@@ -158,8 +158,8 @@ public class ImageFetcher extends ImageResizer {
 							Log.d(TAG, "HTTP cache closed");
 						}
 					}
-				} catch (final IOException e) {
-					Log.e(TAG, "closeCacheInternal - " + e);
+				} catch (final IOException exception) {
+					Log.e(TAG, "closeCacheInternal - " + exception);
 				}
 			}
 		}
@@ -203,7 +203,7 @@ public class ImageFetcher extends ImageResizer {
 			while (mHttpDiskCacheStarting) {
 				try {
 					mHttpDiskCacheLock.wait();
-				} catch (final InterruptedException e) {
+				} catch (final InterruptedException exception) {
 				}
 			}
 
@@ -232,15 +232,15 @@ public class ImageFetcher extends ImageResizer {
 								.getInputStream(DISK_CACHE_INDEX);
 						fileDescriptor = fileInputStream.getFD();
 					}
-				} catch (final IOException e) {
-					Log.e(TAG, "processBitmap - " + e);
-				} catch (final IllegalStateException e) {
-					Log.e(TAG, "processBitmap - " + e);
+				} catch (final IOException exception) {
+					Log.e(TAG, "processBitmap - " + exception);
+				} catch (final IllegalStateException exception) {
+					Log.e(TAG, "processBitmap - " + exception);
 				} finally {
 					if (fileDescriptor == null && fileInputStream != null) {
 						try {
 							fileInputStream.close();
-						} catch (final IOException e) {
+						} catch (final IOException exception) {
 						}
 					}
 				}
@@ -255,7 +255,7 @@ public class ImageFetcher extends ImageResizer {
 		if (fileInputStream != null) {
 			try {
 				fileInputStream.close();
-			} catch (final IOException e) {
+			} catch (final IOException exception) {
 			}
 		}
 		return bitmap;
@@ -292,8 +292,8 @@ public class ImageFetcher extends ImageResizer {
 				out.write(b);
 			}
 			return true;
-		} catch (final IOException e) {
-			Log.e(TAG, "Error in downloadBitmap - " + e);
+		} catch (final IOException exception) {
+			Log.e(TAG, "Error in downloadBitmap - " + exception);
 		} finally {
 			if (urlConnection != null) {
 				urlConnection.disconnect();
@@ -305,7 +305,7 @@ public class ImageFetcher extends ImageResizer {
 				if (in != null) {
 					in.close();
 				}
-			} catch (final IOException e) {
+			} catch (final IOException exception) {
 			}
 		}
 		return false;

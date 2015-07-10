@@ -13,10 +13,10 @@ import android.support.v4.util.AsyncTask;
  * @version 1.0.0
  */
 public class HttpPostsTask extends AsyncTask<Void, Void, String> {
-	private  transient final JSONObject dateObject;
-	private  transient final String url;
-	private  transient final HttpPostsTaskCallback callback;
-	private  transient final boolean isGzip;
+	private transient final JSONObject dateObject;
+	private transient final String url;
+	private transient final HttpPostsTaskCallback callback;
+	private transient final boolean isGzip;
 
 	public interface HttpPostsTaskCallback {
 		void onReturn(String result);
@@ -42,7 +42,7 @@ public class HttpPostsTask extends AsyncTask<Void, Void, String> {
 						Strings.valueOf(dateObject));
 			}
 		} catch (final Exception exception) {
-			exception.printStackTrace();
+			Strings.exceptionToJSONObject(exception);
 		}
 		return result;
 	}

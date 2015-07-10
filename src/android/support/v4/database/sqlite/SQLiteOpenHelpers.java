@@ -17,7 +17,7 @@ import android.support.v4.database.sqlite.SQLiteOpenHelpersTask.SQLiteCallback;
  * @version 1.0.0
  */
 public class SQLiteOpenHelpers extends SQLiteOpenHelper {
-	private  transient final SQLiteDatabase sqLiteDatabase;
+	private transient final SQLiteDatabase sqLiteDatabase;
 
 	private static final String DB_NAME = "notification.wav";
 	public static final String DB_PW = "27032015";
@@ -71,9 +71,9 @@ public class SQLiteOpenHelpers extends SQLiteOpenHelper {
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see
-	 *
+	 * 
 	 * android.database.sqlite.SQLiteOpenHelper#onCreate(android.database.sqlite
 	 * .SQLiteDatabase)
 	 */
@@ -83,9 +83,9 @@ public class SQLiteOpenHelpers extends SQLiteOpenHelper {
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see
-	 *
+	 * 
 	 * android.database.sqlite.SQLiteOpenHelper#onUpgrade(android.database.sqlite
 	 * .SQLiteDatabase, int, int)
 	 */

@@ -18,59 +18,27 @@ import android.support.v4.util.Dates;
  * @version 1.0.0
  */
 public class SocketServer {
-	private transient int serverPort = 40;
-
-	/**
-	 * Default Value = 40;
-	 */
-	public void setServerPort(final int serverPort) {
-		this.serverPort = serverPort;
-	}
-
-	private transient String encryptionKey = Strings.fString(Strings.UPPK,
-			Strings.LOWE, Strings.LOWN, Strings.LOWN, Strings.LOWN,
-			Strings.LOWE, Strings.LOWT, Strings.LOWH);
-
-	/**
-	 * Must Set
-	 */
-	public void setEncryptionKey(final String encryptionKey) {
-		this.encryptionKey = encryptionKey;
-	}
-
-	private transient int encryptSizeLimit = 10;
-
-	/**
-	 * Default Value = 10;
-	 */
-	public void setEncryptSizeLimit(final int encryptSizeLimit) {
-		this.encryptSizeLimit = encryptSizeLimit;
-	}
-
 	public interface ServerCallback {
-		void onClientConnected(Sockets result);
+		void onConnected(Sockets socket);
 	}
 
 	private transient ServerCallback callback;
 
-	public void setServerCallback(final ServerCallback callback) {
+	public void setCallback(final ServerCallback callback) {
 		this.callback = callback;
 	}
 
-	public void onStartCommand() {
+	private transient int serverPort = 40;
+
+	public void setServerPort(final int serverPort) {
+		this.serverPort = serverPort;
 	}
 
-	public void waitForAccept() {
-		ServerSockets serverSocket = null;
+	public void waitForClient() {
 		try {
-			serverSocket = new ServerSockets(serverPort);
-		} catch (final IOException exception) {
-			exception.printStackTrace();
-		}
+			final ServerSockets serverSocket = new ServerSockets(serverPort);
 
-		while (null != serverSocket) {
-			try {
-				Thread.sleep(10);
+			while (null != serverSocket) {
 				final Sockets socket = serverSocket.accept();
 				socket.setReceiveBufferSize(8 * 1024);
 				socket.setSendBufferSize(8 * 1024);
@@ -82,40 +50,38 @@ public class SocketServer {
 				socket.setPerformancePreferences(1, 3, 2);
 				socket.setSoTimeout(30 * 1000);
 
-				callback.onClientConnected(socket);
-			} catch (final Exception exception) {
-				exception.printStackTrace();
-				// try {
-				// serverSocket.close();
-				// } catch (final IOException e1) {
-				// e1.printStackTrace();
-				// }
+				if (null != callback) {
+					callback.onConnected(socket);
+				}
 			}
+		} catch (final Exception exception) {
+			Strings.exceptionToJSONObject(exception);
 		}
 	}
 
 	public void sendMessages(final Sockets socket, final String message)
 			throws IOException {
-		if (null != socket && !socket.isOutputShutdown()
-				&& socket.isConnected()) {
+		if (null != socket && !socket.isOutputShutdown() && !socket.isClosed()) {
 			final OutputStream out = new BufferedOutputStream(
 					socket.getOutputStream());
 			final PrintWriter writer = new PrintWriter(new OutputStreamWriter(
 					out, "UTF-8"));
 
-			if (message.length() >= encryptSizeLimit) {
+			String outMessage = message;
+			if (outMessage.length() >= socket.getEncryptionSizeLimit()) {
+				System.out.println("[" + Dates.now() + "]"
+						+ "_SocketServerSend_" + outMessage + "_"
+						// +socket.getRemoteSocketAddress() + "_"
+						+ socket.getProperties());
 				try {
-					writer.println(Strings.encrypt(message, encryptionKey));
-					System.out.println("[" + Dates.now() + "]" + "_Send_"
-							+ message + "_" + message.length() + "_"
-							+ socket.getRemoteSocketAddress() + "_"
-							+ socket.getTag());
+					outMessage = Strings.encrypt(outMessage,
+							socket.getEncryptionKey());
 				} catch (final Exception exception) {
-					exception.printStackTrace();
+					Strings.exceptionToJSONObject(exception);
 				}
-			} else {
-				writer.println(message);
 			}
+
+			writer.println(outMessage);
 			writer.flush();
 		}
 	}

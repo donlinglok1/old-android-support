@@ -291,7 +291,7 @@ public abstract class ImageWorker {
 				while (mPauseWork && !isCancelled()) {
 					try {
 						mPauseWorkLock.wait();
-					} catch (final InterruptedException e) {
+					} catch (final InterruptedException exception) {
 					}
 				}
 			}

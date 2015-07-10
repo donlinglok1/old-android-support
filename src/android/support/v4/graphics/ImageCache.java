@@ -243,9 +243,9 @@ public class ImageCache {
 							if (BuildConfig.DEBUG) {
 								Log.d(TAG, "Disk cache initialized");
 							}
-						} catch (final IOException e) {
+						} catch (final IOException exception) {
 							mCacheParams.diskCacheDir = null;
-							Log.e(TAG, "initDiskCache - " + e);
+							Log.e(TAG, "initDiskCache - " + exception);
 						}
 					}
 				}
@@ -301,16 +301,16 @@ public class ImageCache {
 					} else {
 						snapshot.getInputStream(DISK_CACHE_INDEX).close();
 					}
-				} catch (final IOException e) {
-					Log.e(TAG, "addBitmapToCache - " + e);
-				} catch (final Exception e) {
-					Log.e(TAG, "addBitmapToCache - " + e);
+				} catch (final IOException exception) {
+					Log.e(TAG, "addBitmapToCache - " + exception);
+				} catch (final Exception exception) {
+					Log.e(TAG, "addBitmapToCache - " + exception);
 				} finally {
 					try {
 						if (out != null) {
 							out.close();
 						}
-					} catch (final IOException e) {
+					} catch (final IOException exception) {
 					}
 				}
 			}
@@ -357,7 +357,7 @@ public class ImageCache {
 			while (mDiskCacheStarting) {
 				try {
 					mDiskCacheLock.wait();
-				} catch (final InterruptedException e) {
+				} catch (final InterruptedException exception) {
 				}
 			}
 			if (mDiskLruCache != null) {
@@ -383,14 +383,14 @@ public class ImageCache {
 											Integer.MAX_VALUE, this);
 						}
 					}
-				} catch (final IOException e) {
-					Log.e(TAG, "getBitmapFromDiskCache - " + e);
+				} catch (final IOException exception) {
+					Log.e(TAG, "getBitmapFromDiskCache - " + exception);
 				} finally {
 					try {
 						if (inputStream != null) {
 							inputStream.close();
 						}
-					} catch (final IOException e) {
+					} catch (final IOException exception) {
 					}
 				}
 			}
@@ -462,8 +462,8 @@ public class ImageCache {
 					if (BuildConfig.DEBUG) {
 						Log.d(TAG, "Disk cache cleared");
 					}
-				} catch (final IOException e) {
-					Log.e(TAG, "clearCache - " + e);
+				} catch (final IOException exception) {
+					Log.e(TAG, "clearCache - " + exception);
 				}
 				mDiskLruCache = null;
 				initDiskCache();
@@ -484,8 +484,8 @@ public class ImageCache {
 					if (BuildConfig.DEBUG) {
 						Log.d(TAG, "Disk cache flushed");
 					}
-				} catch (final IOException e) {
-					Log.e(TAG, "flush - " + e);
+				} catch (final IOException exception) {
+					Log.e(TAG, "flush - " + exception);
 				}
 			}
 		}
@@ -507,8 +507,8 @@ public class ImageCache {
 							Log.d(TAG, "Disk cache closed");
 						}
 					}
-				} catch (final IOException e) {
-					Log.e(TAG, "close - " + e);
+				} catch (final IOException exception) {
+					Log.e(TAG, "close - " + exception);
 				}
 			}
 		}
@@ -637,7 +637,7 @@ public class ImageCache {
 			final MessageDigest mDigest = MessageDigest.getInstance("MD5");
 			mDigest.update(key.getBytes());
 			cacheKey = bytesToHexString(mDigest.digest());
-		} catch (final NoSuchAlgorithmException e) {
+		} catch (final NoSuchAlgorithmException exception) {
 			cacheKey = String.valueOf(key.hashCode());
 		}
 		return cacheKey;

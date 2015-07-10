@@ -27,22 +27,48 @@ public class Sockets extends Socket {
 		super(socketImpl);
 	}
 
-	public Sockets() throws SocketException {
-		super();
+	private transient String idString;
+
+	public void setIdString(final String idString) {
+		this.idString = idString;
 	}
 
-	private transient JSONObject tag = new JSONObject();
-
-	public void setTag(final JSONObject Tag) {
-		tag = Tag;
+	public String getIdString() {
+		return idString;
 	}
 
-	public JSONObject getTag() {
-		return tag;
+	private transient JSONObject propertiesObject = new JSONObject();
+
+	public void setProperties(final JSONObject propertiesObject) {
+		this.propertiesObject = propertiesObject;
 	}
 
-	public static final String KEEPALIVE = Strings.LOWK;
-	public static final String KEEPALIVE_REACTION = Strings.LOWT;
+	public JSONObject getProperties() {
+		return propertiesObject;
+	}
+
+	private transient final String encryptionKey = Strings.fString(
+			Strings.UPPK, Strings.LOWE, Strings.LOWN, Strings.LOWN,
+			Strings.LOWN, Strings.LOWE, Strings.LOWT, Strings.LOWH);
+
+	// public void setEncryptionKey(final String encryptionKey) {
+	// this.encryptionKey = encryptionKey;
+	// }
+
+	public String getEncryptionKey() {
+		return encryptionKey;
+	}
+
+	private transient final int encryptSizeLimit = 10;
+
+	// public void setencryptSizeLimit(final int encryptSizeLimit) {
+	// this.encryptSizeLimit = encryptSizeLimit;
+	// }
+
+	public int getEncryptionSizeLimit() {
+		return encryptSizeLimit;
+	}
+
 	public static final String MSG_CODE = Strings.fString(Strings.LOWC,
 			Strings.LOWO, Strings.LOWD, Strings.LOWE);
 	public static final String ACTION = Strings.fString(Strings.UPPA,
@@ -51,12 +77,10 @@ public class Sockets extends Socket {
 	public static final String RETURN = Strings.fString(Strings.UPPR,
 			Strings.UPPE, Strings.UPPT, Strings.UPPU, Strings.UPPR,
 			Strings.UPPN);
-	public static final String DUPLICATE_LOGIN = Strings.fString(Strings.UPPD,
-			Strings.UPPU, Strings.UPPP, Strings.UPPL, Strings.UPPO,
-			Strings.UPPG);
+	public static final String KEEPALIVE = Strings.LOWK;
+	public static final String KEEPALIVE_REACTION = Strings.LOWT;
 	public static final String DISCONNECT = Strings.fString(Strings.UPPD,
 			Strings.UPPI, Strings.UPPS, Strings.UPPC, Strings.UPPO,
 			Strings.UPPN);
-	public static final String ID = Strings.fString(Strings.LOWI, Strings.LOWD);
 
 }

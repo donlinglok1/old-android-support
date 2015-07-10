@@ -160,8 +160,8 @@ public final class Strings {
 		final JSONObject temp = new JSONObject();
 		try {
 			temp.put("Exception", Strings.valueOf(sWriter));
-		} catch (final Exception e) {
-			e.printStackTrace();
+		} catch (final Exception exception1) {
+			Strings.exceptionToJSONObject(exception1);
 		}
 		System.out.println(Strings.valueOf(sWriter));
 		return temp;
@@ -188,7 +188,7 @@ public final class Strings {
 			// System.out.println("size encrypt:" + strs.length());
 			result = strs;
 		} catch (final Exception exception) {
-			// exception.printStackTrace();
+			// Strings.exceptionToJSONObject(exception);
 		}
 		return result;
 	}
@@ -216,7 +216,7 @@ public final class Strings {
 				result = resultString;
 			}
 		} catch (final Exception exception) {
-			// exception.printStackTrace();
+			// Strings.exceptionToJSONObject(exception);
 		}
 		return result;
 	}

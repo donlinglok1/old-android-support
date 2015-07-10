@@ -876,7 +876,7 @@ public class LinkedList<E> extends AbstractSequentialList<E> implements
 			final Entry<E> lastNext = this.lastReturned.next;
 			try {
 				LinkedList.this.remove(this.lastReturned);
-			} catch (final NoSuchElementException e) {
+			} catch (final NoSuchElementException exception) {
 				throw new IllegalStateException();
 			}
 			if (this.next == this.lastReturned) {
@@ -991,7 +991,7 @@ public class LinkedList<E> extends AbstractSequentialList<E> implements
 		LinkedList<E> clone = null;
 		try {
 			clone = (LinkedList<E>) super.clone();
-		} catch (final CloneNotSupportedException e) {
+		} catch (final CloneNotSupportedException exception) {
 			throw new InternalError();
 		}
 

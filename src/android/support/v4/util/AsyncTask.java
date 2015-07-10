@@ -36,6 +36,7 @@ import android.annotation.TargetApi;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Process;
+import android.support.v4.lang.Strings;
 
 /**
  * ************************************* Copied from JB release framework:
@@ -366,14 +367,17 @@ public abstract class AsyncTask<Params, Progress, Result> {
 			protected void done() {
 				try {
 					postResultIfNotInvoked(get());
-				} catch (final InterruptedException e) {
-					android.util.Log.w(LOG_TAG, e);
-				} catch (final ExecutionException e) {
-					throw new RuntimeException(
-							"An error occured while executing doInBackground()",
-							e.getCause());
-				} catch (final CancellationException e) {
+				} catch (final InterruptedException exception) {
+					android.util.Log.w(LOG_TAG, exception);
+				} catch (final ExecutionException exception) {
+					// throw new RuntimeException(
+					// "An error occured while executing doInBackground()",
+					// e.getCause());
+					Strings.exceptionToJSONObject(exception);
+				} catch (final CancellationException exception) {
 					postResultIfNotInvoked(null);
+				} catch (final Exception exception) {
+					Strings.exceptionToJSONObject(exception);
 				}
 			}
 		};
@@ -449,7 +453,6 @@ public abstract class AsyncTask<Params, Progress, Result> {
 	 * @see #doInBackground
 	 * @see #onCancelled(Object)
 	 */
-	// @SuppressWarnings({ "UnusedDeclaration" })
 	protected void onPostExecute(final Result result) {
 	}
 
@@ -463,7 +466,6 @@ public abstract class AsyncTask<Params, Progress, Result> {
 	 * @see #publishProgress
 	 * @see #doInBackground
 	 */
-	// @SuppressWarnings({ "UnusedDeclaration" })
 	protected void onProgressUpdate(final Progress... values) {
 	}
 
@@ -486,7 +488,6 @@ public abstract class AsyncTask<Params, Progress, Result> {
 	 * @see #cancel(boolean)
 	 * @see #isCancelled()
 	 */
-	// @SuppressWarnings({ "UnusedParameters" })
 	protected void onCancelled(final Result result) {
 		onCancelled();
 	}
@@ -752,12 +753,12 @@ public abstract class AsyncTask<Params, Progress, Result> {
 		mStatus = Status.FINISHED;
 	}
 
+	@SuppressWarnings("unchecked")
 	private static class InternalHandler extends Handler {
-		// @SuppressWarnings({ "unchecked", "RawUseOfParameterizedType" })
-		@SuppressWarnings("unchecked")
 		@Override
 		public void handleMessage(final Message msg) {
-			final AsyncTaskResult<?> result = (AsyncTaskResult<?>) msg.obj;
+			@SuppressWarnings("rawtypes")
+			final AsyncTaskResult result = (AsyncTaskResult) msg.obj;
 			switch (msg.what) {
 			case MESSAGE_POST_RESULT:
 				// There is only one result
@@ -775,7 +776,6 @@ public abstract class AsyncTask<Params, Progress, Result> {
 		Params[] mParams;
 	}
 
-	// @SuppressWarnings({ "RawUseOfParameterizedType" })
 	@SuppressWarnings("rawtypes")
 	private static class AsyncTaskResult<Data> {
 		final AsyncTask mTask;

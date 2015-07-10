@@ -4,6 +4,7 @@ import java.io.FileOutputStream;
 import java.util.ArrayList;
 
 import android.graphics.Bitmap;
+import android.support.v4.lang.Strings;
 import android.support.v4.os.storage.Files;
 import android.support.v4.util.AsyncTask;
 
@@ -44,12 +45,12 @@ public class ImageZipTask extends AsyncTask<Void, Void, String> {
 				bitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
 				fileStrings.add(imgPath);
 			} catch (final Exception exception) {
-				exception.printStackTrace();
+				Strings.exceptionToJSONObject(exception);
 			} finally {
 				try {
 					out.close();
 				} catch (final Exception exception) {
-					exception.printStackTrace();
+					Strings.exceptionToJSONObject(exception);
 				}
 			}
 		}
@@ -58,7 +59,7 @@ public class ImageZipTask extends AsyncTask<Void, Void, String> {
 			Files.zip(fileStrings.toArray(new String[fileStrings.size()]),
 					uploadFilePath);
 		} catch (final Exception exception) {
-			exception.printStackTrace();
+			Strings.exceptionToJSONObject(exception);
 		}
 
 		return uploadFilePath;

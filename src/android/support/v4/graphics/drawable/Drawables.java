@@ -54,7 +54,7 @@ public class Drawables {
 				BitmapFactory.Options.class.getField("inNativeAlloc")
 						.setBoolean(options, true);
 			} catch (final Exception exception) {
-				// exception.printStackTrace();
+				// Strings.exceptionToJSONObject(exception);
 			}
 		}
 

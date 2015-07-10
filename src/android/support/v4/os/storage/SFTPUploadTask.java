@@ -21,14 +21,14 @@ import com.jcraft.jsch.SftpProgressMonitor;
  * @version 1.0.0
  */
 public class SFTPUploadTask extends AsyncTask<Void, Void, String> {
-	private  transient final String sftpPort = Strings.fString(Strings.TWO,
+	private transient final String sftpPort = Strings.fString(Strings.TWO,
 			Strings.TWO);
-	private  transient final String sftpHost;
-	private  transient final String sftpUser;
-	private  transient final String sftpPass;
-	private  transient final String dir;
-	private  transient final String path;
-	private  transient final SftpProgressMonitor monitor;
+	private transient final String sftpHost;
+	private transient final String sftpUser;
+	private transient final String sftpPass;
+	private transient final String dir;
+	private transient final String path;
+	private transient final SftpProgressMonitor monitor;
 	private transient int uploadTry = 3;
 
 	public SFTPUploadTask(final String sftpHost, final String sftpUser,
@@ -74,7 +74,7 @@ public class SFTPUploadTask extends AsyncTask<Void, Void, String> {
 			channel.disconnect();
 			session.disconnect();
 		} catch (final Exception exception) {
-			exception.printStackTrace();
+			Strings.exceptionToJSONObject(exception);
 			if (uploadTry > 0) {
 				doInBackground(params);
 				uploadTry--;

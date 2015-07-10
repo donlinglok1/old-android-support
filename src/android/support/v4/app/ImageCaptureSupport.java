@@ -6,15 +6,14 @@ import java.io.IOException;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v4.lang.Strings;
 
 public class ImageCaptureSupport extends Activity {
 	private transient Activity context;
-	private transient Context baseContext;
 
 	private transient String tempFilePath;
 	private static final String TEMP_PATH = "ImageFilePath";
@@ -27,27 +26,30 @@ public class ImageCaptureSupport extends Activity {
 		super.onCreate(savedInstanceState);
 
 		context = this;
-		baseContext = getApplicationContext();
+		final Context baseContext = getApplicationContext();
 
 		if (savedInstanceState == null) {
 			String filePath = "/Android/data/" + context.getPackageName()
 					+ "/temp/ImageCaptureSupport/";
 			if (Environment.getExternalStorageState().equals(
 					Environment.MEDIA_MOUNTED)) {
-				filePath = Environment.getExternalStorageDirectory() + filePath;
+				filePath = Strings.fString(Environment
+						.getExternalStorageDirectory().getAbsolutePath(),
+						filePath);
 			} else {
-				filePath = baseContext.getCacheDir() + filePath;
+				filePath = Strings.fString(baseContext.getCacheDir()
+						.getAbsolutePath() + filePath);
 			}
-			File file = new File(filePath);
+			final File file = new File(filePath);
 			if (!file.exists()) {
 				file.mkdirs();
 			}
-			file = null;
 			final File nomedia = new File(filePath + "/.nomedia");
 			if (!nomedia.exists()) {
 				try {
 					nomedia.createNewFile();
-				} catch (final IOException e) {
+				} catch (final IOException exception) {
+					Strings.exceptionToJSONObject(exception);
 				}
 			}
 			tempFilePath = filePath + System.currentTimeMillis() + ".jpg";
@@ -82,24 +84,8 @@ public class ImageCaptureSupport extends Activity {
 	}
 
 	@Override
-	protected void onSaveInstanceState(final Bundle outState) {
-		super.onSaveInstanceState(outState);
-		outState.putString(TEMP_PATH, tempFilePath);
-	}
-
-	@Override
-	protected void onDestroy() {
-		super.onDestroy();
-	}
-
-	@Override
-	public void onConfigurationChanged(final Configuration newConfig) {
-		super.onConfigurationChanged(newConfig);
-	}
-
-	@Override
-	protected void onRestoreInstanceState(final Bundle savedInstanceState) {
-		super.onRestoreInstanceState(savedInstanceState);
-
+	protected void onSaveInstanceState(final Bundle bundle) {
+		bundle.putString(TEMP_PATH, tempFilePath);
+		super.onSaveInstanceState(bundle);
 	}
 }

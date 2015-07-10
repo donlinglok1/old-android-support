@@ -40,7 +40,7 @@ import android.support.v4.lang.Strings;
  * @author Kenneth Tu
  * @version 1.0.0
  */
-public final class HttpPosts {
+public class HttpPosts {
 	private static final int TIMEOUTSOCKET = 5000 * 2;
 	private static final int TIMEOUTCONNECTION = 3000 * 2;
 
@@ -72,8 +72,7 @@ public final class HttpPosts {
 			httppost.setHeader("Content-type",
 					"application/json; charset=utf-8");
 			if (null != body) {
-				httppost.setEntity(new StringEntity(encrypt(body),
-						HTTP.UTF_8));
+				httppost.setEntity(new StringEntity(encrypt(body), HTTP.UTF_8));
 			}
 			final HttpClient httpclient = createHttpClient();
 			final HttpResponse response = httpclient.execute(httppost);
@@ -93,13 +92,12 @@ public final class HttpPosts {
 						"utf-8"));
 			}
 		} catch (final Exception exception) {
-			// exception.printStackTrace();
+			// Strings.exceptionToJSONObject(exception);
 		}
 		return reuslt;
 	}
 
-	public static String postBodyNoGzip(final String url,
-			final String body) {
+	public static String postBodyNoGzip(final String url, final String body) {
 		String result = Strings.EMPTY;
 		try {
 			final HttpPost httppost = new HttpPost(url);
@@ -107,8 +105,7 @@ public final class HttpPosts {
 			httppost.setHeader("Content-type",
 					"application/json; charset=utf-8");
 			if (null != body) {
-				httppost.setEntity(new StringEntity(encrypt(body),
-						HTTP.UTF_8));
+				httppost.setEntity(new StringEntity(encrypt(body), HTTP.UTF_8));
 			}
 			final HttpClient httpclient = createHttpClient();
 			final HttpResponse response = httpclient.execute(httppost);
@@ -118,7 +115,7 @@ public final class HttpPosts {
 				result = decrypt(EntityUtils.toString(entity));
 			}
 		} catch (final Exception exception) {
-			// exception.printStackTrace();
+			// Strings.exceptionToJSONObject(exception);
 		}
 		return result;
 	}
@@ -152,7 +149,7 @@ public final class HttpPosts {
 				result = new String(byteArrayBuffer.toByteArray(), "utf-8");
 			}
 		} catch (final Exception exception) {
-			// exception.printStackTrace();
+			// Strings.exceptionToJSONObject(exception);
 		}
 		return result;
 	}
@@ -176,7 +173,7 @@ public final class HttpPosts {
 				result = EntityUtils.toString(entity);
 			}
 		} catch (final Exception exception) {
-			// exception.printStackTrace();
+			// Strings.exceptionToJSONObject(exception);
 		}
 		return result;
 	}
@@ -198,7 +195,7 @@ public final class HttpPosts {
 					cipher.getParameters());
 			result = new String(cipher.doFinal(hexStringToByteArray(plaintext)));
 		} catch (final Exception exception) {
-			// exception.printStackTrace();
+			// Strings.exceptionToJSONObject(exception);
 		}
 		return result;
 	}
@@ -217,7 +214,7 @@ public final class HttpPosts {
 					cipher.getParameters());
 			result = byteArrayToHexString(cipher.doFinal(plaintext.getBytes()));
 		} catch (final Exception exception) {
-			// exception.printStackTrace();
+			// Strings.exceptionToJSONObject(exception);
 		}
 		return result;
 	}
@@ -236,7 +233,7 @@ public final class HttpPosts {
 			}
 			result = stringBuilder.toString().toUpperCase(Locale.US);
 		} catch (final Exception exception) {
-			// exception.printStackTrace();
+			// Strings.exceptionToJSONObject(exception);
 		}
 		return result;
 	}
@@ -253,7 +250,7 @@ public final class HttpPosts {
 			}
 			result = bytes;
 		} catch (final Exception exception) {
-			// exception.printStackTrace();
+			// Strings.exceptionToJSONObject(exception);
 		}
 		return result;
 	}

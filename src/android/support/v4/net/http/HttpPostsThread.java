@@ -12,10 +12,10 @@ import android.support.v4.lang.Strings;
  * @version 1.0.0
  */
 public class HttpPostsThread extends Thread {
-	private  transient final JSONObject dateObject;
-	private  transient final String url;
-	private  transient final HttpPostsThreadCallback callback;
-	private  transient final boolean isGzip;
+	private transient final JSONObject dateObject;
+	private transient final String url;
+	private transient final HttpPostsThreadCallback callback;
+	private transient final boolean isGzip;
 
 	public interface HttpPostsThreadCallback {
 		void onReturn(String result);
@@ -41,7 +41,7 @@ public class HttpPostsThread extends Thread {
 						Strings.valueOf(dateObject)));
 			}
 		} catch (final Exception exception) {
-			exception.printStackTrace();
+			Strings.exceptionToJSONObject(exception);
 		}
 	}
 }

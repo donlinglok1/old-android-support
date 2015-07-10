@@ -46,7 +46,7 @@ public class HttpClientLog {
 			final InputStream inputStream = new ByteArrayInputStream(
 					config.getBytes());
 			LogManager.getLogManager().readConfiguration(inputStream);
-		} catch (final IOException e) {
+		} catch (final IOException exception) {
 			Log.w(HttpClientLog.class.getSimpleName(),
 					"Can't read configuration file for logging");
 		}

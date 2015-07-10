@@ -503,7 +503,7 @@ public final class DiskLruCache implements Closeable {
 			for (int i = 0; i < valueCount; i++) {
 				ins[i] = new FileInputStream(entry.getCleanFile(i));
 			}
-		} catch (final FileNotFoundException e) {
+		} catch (final FileNotFoundException exception) {
 			// a file must have been deleted manually!
 			return null;
 		}
@@ -885,7 +885,7 @@ public final class DiskLruCache implements Closeable {
 			public void write(final int oneByte) {
 				try {
 					out.write(oneByte);
-				} catch (final IOException e) {
+				} catch (final IOException exception) {
 					hasErrors = true;
 				}
 			}
@@ -895,7 +895,7 @@ public final class DiskLruCache implements Closeable {
 					final int length) {
 				try {
 					out.write(buffer, offset, length);
-				} catch (final IOException e) {
+				} catch (final IOException exception) {
 					hasErrors = true;
 				}
 			}
@@ -904,7 +904,7 @@ public final class DiskLruCache implements Closeable {
 			public void close() {
 				try {
 					out.close();
-				} catch (final IOException e) {
+				} catch (final IOException exception) {
 					hasErrors = true;
 				}
 			}
@@ -913,7 +913,7 @@ public final class DiskLruCache implements Closeable {
 			public void flush() {
 				try {
 					out.flush();
-				} catch (final IOException e) {
+				} catch (final IOException exception) {
 					hasErrors = true;
 				}
 			}
@@ -963,7 +963,7 @@ public final class DiskLruCache implements Closeable {
 				for (int i = 0; i < strings.length; i++) {
 					lengths[i] = Long.parseLong(strings[i]);
 				}
-			} catch (final NumberFormatException e) {
+			} catch (final NumberFormatException exception) {
 				throw invalidLengths(strings);
 			}
 		}

@@ -16,9 +16,9 @@ import android.widget.ImageView;
  * @version 1.0.0
  */
 public class ImageLoadTask extends AsyncTask<String, Void, Bitmap> {
-	private  transient final WeakReference<ImageView> imageViewReference;
-	private  transient final double width, heigth;
-	private  transient final boolean isExif;
+	private transient final WeakReference<ImageView> imageViewReference;
+	private transient final double width, heigth;
+	private transient final boolean isExif;
 
 	public ImageLoadTask(final ImageView imageView, final double width,
 			final double heigth, final boolean isExif) {

@@ -8,9 +8,9 @@ import android.view.MotionEvent;
 import android.view.View;
 
 public class OnTouchVibrateListener implements View.OnTouchListener {
-	private  transient final Context baseContext;
+	private transient final Context baseContext;
 
-	private  transient final OnTouchVibrateListenerCallBack callBack;
+	private transient final OnTouchVibrateListenerCallBack callBack;
 
 	public interface OnTouchVibrateListenerCallBack {
 		void onClick(View view);
@@ -22,11 +22,13 @@ public class OnTouchVibrateListener implements View.OnTouchListener {
 		this.callBack = callBack;
 	}
 
-	private  transient final Handler handler = new Handler();
-	private  transient final Runnable vibrateRunnable = new Runnable() {
+	public final static String IS_VIBRATE = "isVibrate";
+
+	private transient final Handler handler = new Handler();
+	private transient final Runnable vibrateRunnable = new Runnable() {
 		@Override
 		public void run() {
-			if (Preferences.getInt(baseContext, "isVibrate", 0) == 0) {
+			if (Preferences.getInt(baseContext, IS_VIBRATE, 0) == 0) {
 				((Vibrator) baseContext
 						.getSystemService(Context.VIBRATOR_SERVICE))
 						.vibrate(50);

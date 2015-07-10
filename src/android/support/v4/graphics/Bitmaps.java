@@ -13,6 +13,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.media.ExifInterface;
+import android.support.v4.lang.Strings;
 import android.view.View;
 
 /*
@@ -43,7 +44,7 @@ public class Bitmaps {
 					BitmapFactory.Options.class.getField("inNativeAlloc")
 							.setBoolean(options, true);
 				} catch (final Exception exception) {
-					// exception.printStackTrace();
+					// Strings.exceptionToJSONObject(exception);
 				}
 			}
 
@@ -65,7 +66,7 @@ public class Bitmaps {
 				result = softBitmap.get();
 			}
 		} catch (final FileNotFoundException exception) {
-			exception.printStackTrace();
+			Strings.exceptionToJSONObject(exception);
 		}
 		return result;
 	}
@@ -92,7 +93,7 @@ public class Bitmaps {
 				options.inSampleSize = computeSampleSize(options,
 						minSideLength, width * heigth);
 			} catch (final IOException exception) {
-				exception.printStackTrace();
+				Strings.exceptionToJSONObject(exception);
 			}
 
 			options.inJustDecodeBounds = false;
@@ -105,7 +106,7 @@ public class Bitmaps {
 					BitmapFactory.Options.class.getField("inNativeAlloc")
 							.setBoolean(options, true);
 				} catch (final Exception exception) {
-					exception.printStackTrace();
+					Strings.exceptionToJSONObject(exception);
 				}
 			}
 
@@ -127,7 +128,7 @@ public class Bitmaps {
 				result = softBitmap.get();
 			}
 		} catch (final FileNotFoundException exception) {
-			exception.printStackTrace();
+			Strings.exceptionToJSONObject(exception);
 		}
 		return result;
 	}
@@ -154,7 +155,7 @@ public class Bitmaps {
 				options.inSampleSize = computeSampleSize(options,
 						minSideLength, width * heigth);
 			} catch (final IOException exception) {
-				exception.printStackTrace();
+				Strings.exceptionToJSONObject(exception);
 			}
 
 			options.inJustDecodeBounds = false;
@@ -167,7 +168,7 @@ public class Bitmaps {
 					BitmapFactory.Options.class.getField("inNativeAlloc")
 							.setBoolean(options, true);
 				} catch (final Exception exception) {
-					// exception.printStackTrace();
+					// Strings.exceptionToJSONObject(exception);
 				}
 			}
 
@@ -178,7 +179,7 @@ public class Bitmaps {
 					bitmap);
 			result = softBitmap.get();
 		} catch (final Exception exception) {
-			exception.printStackTrace();
+			Strings.exceptionToJSONObject(exception);
 		}
 		return result;
 	}
@@ -307,7 +308,7 @@ public class Bitmaps {
 				break;
 			}
 		} catch (final IOException exception) {
-			exception.printStackTrace();
+			Strings.exceptionToJSONObject(exception);
 		}
 		return result;
 	}
