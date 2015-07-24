@@ -37,7 +37,7 @@ public class Sockets extends Socket {
 		return idString;
 	}
 
-	private transient JSONObject propertiesObject = new JSONObject();
+	private transient JSONObject propertiesObject;
 
 	public void setProperties(final JSONObject propertiesObject) {
 		this.propertiesObject = propertiesObject;
@@ -82,5 +82,12 @@ public class Sockets extends Socket {
 	public static final String DISCONNECT = Strings.fString(Strings.UPPD,
 			Strings.UPPI, Strings.UPPS, Strings.UPPC, Strings.UPPO,
 			Strings.UPPN);
+	public static final String DUPLICATE_LOGIN = Strings.fString(Strings.UPPD,
+			Strings.UPPU, Strings.UPPP, Strings.UPPL, Strings.UPPO,
+			Strings.UPPG);
+	public static final String SENDER = Strings.fString(Strings.LOWS,
+			Strings.UPPE, Strings.LOWN);
+	public static final String RECEIVER = Strings.fString(Strings.LOWR,
+			Strings.UPPE, Strings.LOWC, Strings.UPPV);
 
 }

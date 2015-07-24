@@ -29,7 +29,7 @@ public class SFTPUploadTask extends AsyncTask<Void, Void, String> {
 	private transient final String dir;
 	private transient final String path;
 	private transient final SftpProgressMonitor monitor;
-	private transient int uploadTry = 3;
+	private transient int uploadTry;
 
 	public SFTPUploadTask(final String sftpHost, final String sftpUser,
 			final String sftpPass, final String dir, final String path,
@@ -41,6 +41,7 @@ public class SFTPUploadTask extends AsyncTask<Void, Void, String> {
 		this.dir = dir;
 		this.path = path;
 		this.monitor = monitor;
+		uploadTry = 3;
 	}
 
 	@Override
@@ -78,9 +79,10 @@ public class SFTPUploadTask extends AsyncTask<Void, Void, String> {
 			if (uploadTry > 0) {
 				doInBackground(params);
 				uploadTry--;
-			} else {
-				uploadTry = 3;
 			}
+			// else {
+			// uploadTry = 3;
+			// }
 		}
 
 		return Strings.EMPTY;

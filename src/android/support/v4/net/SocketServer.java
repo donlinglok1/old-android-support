@@ -59,6 +59,15 @@ public class SocketServer {
 		}
 	}
 
+	// public void addMessage(final Sockets socket, final String message)
+	// throws IOException {
+	// final JSONObject jObject = (JSONObject) JSONValue.parse(message);
+	// if (Strings.isNull(jObject.get(Sockets.MSG_CODE))) {
+	// jObject.put(Sockets.MSG_CODE, Dates.format("HHmmssSSS", new Date()));
+	// }
+	// sendMessages(socket, jObject.toJSONString());
+	// }
+
 	public void sendMessages(final Sockets socket, final String message)
 			throws IOException {
 		if (null != socket && !socket.isOutputShutdown() && !socket.isClosed()) {

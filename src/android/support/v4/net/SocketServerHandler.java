@@ -4,6 +4,7 @@ import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.SocketException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 
@@ -22,6 +23,8 @@ import android.support.v4.util.Dates;
 public class SocketServerHandler {
 	public interface SocketServerHandlerCallBack {
 		void onSend(Sockets socket, String msg);
+
+		void onBroadcast(Sockets socket, JSONObject action);
 
 		void onCallBack(Sockets socket, JSONObject action);
 
@@ -109,8 +112,8 @@ public class SocketServerHandler {
 				}
 			} catch (final InterruptedException exception) {
 				// } catch (final SocketTimeoutException exception) {
-				// } catch (final SocketException exception) {
-				// onDisconnect();
+			} catch (final SocketException exception) {
+				onDisconnect();
 			} catch (final Exception exception) {
 				Strings.exceptionToJSONObject(exception);
 			} finally {
@@ -178,6 +181,11 @@ public class SocketServerHandler {
 		}
 		try {
 			socket.close();
+		} catch (final Exception exception) {
+			// Strings.exceptionToJSONObject(exception);
+		}
+		try {
+			threadPool.shutdownNow();
 		} catch (final Exception exception) {
 			// Strings.exceptionToJSONObject(exception);
 		}

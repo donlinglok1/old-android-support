@@ -41,8 +41,8 @@ import android.support.v4.lang.Strings;
  * @version 1.0.0
  */
 public class HttpPosts {
-	private static final int TIMEOUTSOCKET = 5000 * 2;
-	private static final int TIMEOUTCONNECTION = 3000 * 2;
+	private static final int TIMEOUTSOCKET = 5000 * 4;
+	private static final int TIMEOUTCONNECTION = 3000 * 4;
 
 	public static HttpClient createHttpClient() {
 		final HttpParams params = new BasicHttpParams();
