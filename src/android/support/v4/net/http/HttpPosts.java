@@ -1,16 +1,25 @@
 package android.support.v4.net.http;
 
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.Locale;
 import java.util.zip.GZIPInputStream;
 
+import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.SecretKeySpec;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpVersion;
 import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
@@ -91,8 +100,9 @@ public class HttpPosts {
 				reuslt = decrypt(new String(byteArrayBuffer.toByteArray(),
 						"utf-8"));
 			}
-		} catch (final Exception exception) {
-			// Strings.exceptionToJSONObject(exception);
+		} catch (final UnsupportedEncodingException exception) {
+		} catch (final ClientProtocolException exception) {
+		} catch (final IOException exception) {
 		}
 		return reuslt;
 	}
@@ -114,8 +124,9 @@ public class HttpPosts {
 
 				result = decrypt(EntityUtils.toString(entity));
 			}
-		} catch (final Exception exception) {
-			// Strings.exceptionToJSONObject(exception);
+		} catch (final UnsupportedEncodingException exception) {
+		} catch (final ClientProtocolException exception) {
+		} catch (final IOException exception) {
 		}
 		return result;
 	}
@@ -148,8 +159,9 @@ public class HttpPosts {
 				}
 				result = new String(byteArrayBuffer.toByteArray(), "utf-8");
 			}
-		} catch (final Exception exception) {
-			// Strings.exceptionToJSONObject(exception);
+		} catch (final UnsupportedEncodingException exception) {
+		} catch (final ClientProtocolException exception) {
+		} catch (final IOException exception) {
 		}
 		return result;
 	}
@@ -172,8 +184,9 @@ public class HttpPosts {
 
 				result = EntityUtils.toString(entity);
 			}
-		} catch (final Exception exception) {
-			// Strings.exceptionToJSONObject(exception);
+		} catch (final UnsupportedEncodingException exception) {
+		} catch (final ClientProtocolException exception) {
+		} catch (final IOException exception) {
 		}
 		return result;
 	}
@@ -194,8 +207,12 @@ public class HttpPosts {
 			cipher.init(Cipher.DECRYPT_MODE, secretKeySpec,
 					cipher.getParameters());
 			result = new String(cipher.doFinal(hexStringToByteArray(plaintext)));
-		} catch (final Exception exception) {
-			// Strings.exceptionToJSONObject(exception);
+		} catch (final NoSuchAlgorithmException exception) {
+		} catch (final NoSuchPaddingException exception) {
+		} catch (final IllegalBlockSizeException exception) {
+		} catch (final BadPaddingException exception) {
+		} catch (final InvalidKeyException exception) {
+		} catch (final InvalidAlgorithmParameterException exception) {
 		}
 		return result;
 	}
@@ -213,8 +230,12 @@ public class HttpPosts {
 			cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec,
 					cipher.getParameters());
 			result = byteArrayToHexString(cipher.doFinal(plaintext.getBytes()));
-		} catch (final Exception exception) {
-			// Strings.exceptionToJSONObject(exception);
+		} catch (final NoSuchAlgorithmException exception) {
+		} catch (final NoSuchPaddingException exception) {
+		} catch (final IllegalBlockSizeException exception) {
+		} catch (final BadPaddingException exception) {
+		} catch (final InvalidKeyException exception) {
+		} catch (final InvalidAlgorithmParameterException exception) {
 		}
 		return result;
 	}
@@ -233,7 +254,7 @@ public class HttpPosts {
 			}
 			result = stringBuilder.toString().toUpperCase(Locale.US);
 		} catch (final Exception exception) {
-			// Strings.exceptionToJSONObject(exception);
+			Strings.exceptionToJSONObject(exception);
 		}
 		return result;
 	}
@@ -249,8 +270,9 @@ public class HttpPosts {
 				bytes[i] = (byte) calint;
 			}
 			result = bytes;
+		} catch (final NumberFormatException exception) {
 		} catch (final Exception exception) {
-			// Strings.exceptionToJSONObject(exception);
+			Strings.exceptionToJSONObject(exception);
 		}
 		return result;
 	}

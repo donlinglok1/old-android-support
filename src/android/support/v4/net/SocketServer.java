@@ -1,13 +1,6 @@
 package android.support.v4.net;
 
-import java.io.BufferedOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
-
-import android.support.v4.lang.Strings;
-import android.support.v4.util.Dates;
 
 /*
  * Copyright (c) 2014 Kenneth Tu <don.ling.lok@gmail.com>
@@ -28,20 +21,15 @@ public class SocketServer {
 		this.callback = callback;
 	}
 
-	private transient int serverPort = 40;
-
-	public void setServerPort(final int serverPort) {
-		this.serverPort = serverPort;
-	}
-
 	public void waitForClient() {
 		try {
-			final ServerSockets serverSocket = new ServerSockets(serverPort);
+			final ServerSockets serverSocket = new ServerSockets(
+					Sockets.SERVERPORT);
 
 			while (null != serverSocket) {
 				final Sockets socket = serverSocket.accept();
-				socket.setReceiveBufferSize(8 * 1024);
-				socket.setSendBufferSize(8 * 1024);
+				socket.setReceiveBufferSize(Sockets.BUFFERSIZE / 2 * 1024);
+				socket.setSendBufferSize(Sockets.BUFFERSIZE * 1024);
 				// socket.setSoLinger(true, 0);
 				socket.setTcpNoDelay(true);
 				socket.setKeepAlive(true);
@@ -54,45 +42,7 @@ public class SocketServer {
 					callback.onConnected(socket);
 				}
 			}
-		} catch (final Exception exception) {
-			Strings.exceptionToJSONObject(exception);
+		} catch (final IOException exception) {
 		}
 	}
-
-	// public void addMessage(final Sockets socket, final String message)
-	// throws IOException {
-	// final JSONObject jObject = (JSONObject) JSONValue.parse(message);
-	// if (Strings.isNull(jObject.get(Sockets.MSG_CODE))) {
-	// jObject.put(Sockets.MSG_CODE, Dates.format("HHmmssSSS", new Date()));
-	// }
-	// sendMessages(socket, jObject.toJSONString());
-	// }
-
-	public void sendMessages(final Sockets socket, final String message)
-			throws IOException {
-		if (null != socket && !socket.isOutputShutdown() && !socket.isClosed()) {
-			final OutputStream out = new BufferedOutputStream(
-					socket.getOutputStream());
-			final PrintWriter writer = new PrintWriter(new OutputStreamWriter(
-					out, "UTF-8"));
-
-			String outMessage = message;
-			if (outMessage.length() >= socket.getEncryptionSizeLimit()) {
-				System.out.println("[" + Dates.now() + "]"
-						+ "_SocketServerSend_" + outMessage + "_"
-						// +socket.getRemoteSocketAddress() + "_"
-						+ socket.getProperties());
-				try {
-					outMessage = Strings.encrypt(outMessage,
-							socket.getEncryptionKey());
-				} catch (final Exception exception) {
-					Strings.exceptionToJSONObject(exception);
-				}
-			}
-
-			writer.println(outMessage);
-			writer.flush();
-		}
-	}
-
 }

@@ -1,5 +1,7 @@
 package android.support.v4.os.storage;
 
+import java.io.IOException;
+
 import android.content.Context;
 import android.support.v4.lang.Strings;
 import android.support.v4.util.AsyncTask;
@@ -29,7 +31,7 @@ public class AssetsCopyTask extends AsyncTask<Void, Void, String> {
 		try {
 			Files.copyAssets(context);
 			callback.onReturn(true);
-		} catch (final Exception exception) {
+		} catch (final IOException exception) {
 			Strings.exceptionToJSONObject(exception);
 			callback.onReturn(false);
 		}

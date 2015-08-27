@@ -8,6 +8,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.support.v4.lang.Strings;
 import android.support.v4.widget.TypedValue;
 
 /*
@@ -33,6 +34,7 @@ public class Drawables {
 							drawable2Bitmap(getDrawable(baseContext, resid)),
 							width, heigth, true));
 		} catch (final Exception exception) {
+			Strings.exceptionToJSONObject(exception);
 			result = new BitmapDrawable(baseContext.getResources(),
 					Bitmap.createScaledBitmap(drawable2Bitmap(baseContext
 							.getResources().getDrawable(resid)), width, heigth,
@@ -53,8 +55,9 @@ public class Drawables {
 			try {
 				BitmapFactory.Options.class.getField("inNativeAlloc")
 						.setBoolean(options, true);
-			} catch (final Exception exception) {
-				// Strings.exceptionToJSONObject(exception);
+			} catch (final IllegalArgumentException exception) {
+			} catch (final IllegalAccessException exception) {
+			} catch (final NoSuchFieldException exception) {
 			}
 		}
 

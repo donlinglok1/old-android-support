@@ -2,9 +2,9 @@ package android.support.v4.net;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.SocketException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 
@@ -21,19 +21,15 @@ import android.support.v4.util.Dates;
  * @version 1.0.0
  */
 public class SocketServerHandler {
-	public interface SocketServerHandlerCallBack {
-		void onSend(Sockets socket, String msg);
+	public interface ServerHandlerCallBack {
+		void onCallBack(SocketServerHandler handler, JSONObject action);
 
-		void onBroadcast(Sockets socket, JSONObject action);
-
-		void onCallBack(Sockets socket, JSONObject action);
-
-		void onDisconnected(Sockets socket);
+		void onDisconnected(SocketServerHandler handler);
 	}
 
-	private transient SocketServerHandlerCallBack callback;
+	private transient ServerHandlerCallBack callback;
 
-	public void setCallback(final SocketServerHandlerCallBack callback) {
+	public void setCallback(final ServerHandlerCallBack callback) {
 		this.callback = callback;
 	}
 
@@ -43,26 +39,39 @@ public class SocketServerHandler {
 		this.threadPool = threadPool;
 	}
 
-	private transient Sockets socket;
+	public transient Sockets socket;
 
 	public void connectToClient(final Sockets socket) {
 		this.socket = socket;
-		try {
+		if (null != receiveFuture) {
 			receiveFuture.cancel(true);
-		} catch (final Exception exception) {
-			// Strings.exceptionToJSONObject(exception);
+			receiveFuture = null;
 		}
-		receiveFuture = threadPool.submit(new Receive(socket));
+		receiveFuture = threadPool.submit(new Receive());
 
-		try {
+		if (null != keepAliveFuture) {
 			keepAliveFuture.cancel(true);
-		} catch (final Exception exception) {
-			// Strings.exceptionToJSONObject(exception);
+			keepAliveFuture = null;
 		}
-		keepAliveFuture = threadPool.submit(new KeepAlive(socket));
+		keepAliveFuture = threadPool.submit(new KeepAlive());
+	}
+
+	public void sendMessage(final String message) throws IOException {
+		if (!message.equals(Sockets.KEEPALIVE_REACTION)) {
+			System.out.println("[" + Dates.now() + "]" + "_SocketServerSend-->"
+					+ message + "_"
+					// +socket.getRemoteSocketAddress() + "_"
+					+ socket.getProperties());
+		}
+		socket.send(message);
 	}
 
 	public void readMessage(final String message) {
+		System.out.println("[" + Dates.now() + "]" + "_SocketServerRead-->"
+				+ message + "_"
+				// + socket.getRemoteSocketAddress() +
+				// "_"
+				+ socket.getProperties());
 	}
 
 	protected transient Future<?> receiveFuture;
@@ -70,12 +79,6 @@ public class SocketServerHandler {
 	private class Receive implements Runnable {
 		private transient BufferedReader reader;
 		private transient InputStream inputStream;
-
-		private transient final Sockets socket;
-
-		public Receive(final Sockets socket) {
-			this.socket = socket;
-		}
 
 		@Override
 		public void run() {
@@ -88,53 +91,33 @@ public class SocketServerHandler {
 					if (message != null && message.length() != 0) {
 						if (message.equals(Sockets.KEEPALIVE)) {
 							keepAliveTimeoutCount = 0;
-							callback.onSend(socket, Sockets.KEEPALIVE_REACTION);
+							sendMessage(Sockets.KEEPALIVE_REACTION);
 						} else {
-							if (message.length() >= socket
-									.getEncryptionSizeLimit()) {
-								try {
-									message = Strings.decrypt(message,
-											socket.getEncryptionKey());
-								} catch (final Exception exception) {
-									Strings.exceptionToJSONObject(exception);
-								}
+							if (message.length() >= Sockets.ENCRYPTSIZELIMIT) {
+								message = Strings.decrypt(message,
+										socket.getEncryptionKey());
 							}
 							readMessage(message);
-
-							System.out.println("[" + Dates.now() + "]"
-									+ "_SocketServerRead-->" + message + "_"
-									// + socket.getRemoteSocketAddress() +
-									// "_"
-									+ socket.getProperties());
 						}
 					}
 					Thread.sleep(5);
 				}
 			} catch (final InterruptedException exception) {
-				// } catch (final SocketTimeoutException exception) {
-			} catch (final SocketException exception) {
+			} catch (final IOException exception) {
 				onDisconnect();
 			} catch (final Exception exception) {
 				Strings.exceptionToJSONObject(exception);
 			} finally {
 				try {
 					inputStream.close();
-				} catch (final Exception exception) {
-					// Strings.exceptionToJSONObject(exception);
+				} catch (final IOException exception) {
 				}
 				try {
 					reader.close();
-				} catch (final Exception exception) {
-					// Strings.exceptionToJSONObject(exception);
+				} catch (final IOException exception) {
 				}
 			}
 		}
-	}
-
-	private transient int keepAliveFailTry = 5;
-
-	public void setKeepAliveFailTry(final int keepAliveFailTry) {
-		this.keepAliveFailTry = keepAliveFailTry;
 	}
 
 	private transient int keepAliveTimeoutCount;
@@ -142,16 +125,12 @@ public class SocketServerHandler {
 	protected transient Future<?> keepAliveFuture;
 
 	private class KeepAlive implements Runnable {
-		// private transient final Sockets socket;
-
-		public KeepAlive(final Sockets socket) {
-			// this.socket = socket;
-		}
-
 		@Override
 		public void run() {
+			keepAliveTimeoutCount = 0;
+
 			while (true) {
-				if (keepAliveTimeoutCount > keepAliveFailTry) {
+				if (keepAliveTimeoutCount > Sockets.KEEPALIVEFAILTRY) {
 					keepAliveTimeoutCount = 0;
 					onDisconnect();
 					break;
@@ -159,38 +138,36 @@ public class SocketServerHandler {
 					keepAliveTimeoutCount++;
 				}
 				try {
-					Thread.sleep(1000 * 4);
+					Thread.sleep(Sockets.KEEPALIVESPEED);
 				} catch (final InterruptedException exception) {
-				} catch (final Exception exception) {
-					Strings.exceptionToJSONObject(exception);
 				}
 			}
 		}
 	}
 
 	public void onDisconnect() {
-		try {
+		if (null != keepAliveFuture) {
 			keepAliveFuture.cancel(true);
-		} catch (final Exception exception) {
-			// Strings.exceptionToJSONObject(exception);
+			keepAliveFuture = null;
 		}
-		try {
+		if (null != receiveFuture) {
 			receiveFuture.cancel(true);
-		} catch (final Exception exception) {
-			// Strings.exceptionToJSONObject(exception);
+			receiveFuture = null;
 		}
-		try {
-			socket.close();
-		} catch (final Exception exception) {
-			// Strings.exceptionToJSONObject(exception);
-		}
-		try {
+		if (null != threadPool) {
 			threadPool.shutdownNow();
-		} catch (final Exception exception) {
-			// Strings.exceptionToJSONObject(exception);
+			threadPool = null;
+		}
+		if (null != socket) {
+			try {
+				socket.close();
+			} catch (final IOException exception) {
+			}
+			socket = null;
 		}
 		if (null != callback) {
-			callback.onDisconnected(socket);
+			callback.onDisconnected(SocketServerHandler.this);
+			callback = null;
 		}
 	}
 }

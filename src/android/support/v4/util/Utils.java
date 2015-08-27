@@ -25,7 +25,7 @@ import android.os.StrictMode;
  * Class containing some static utility methods.
  */
 public class Utils {
-	private Utils() {
+	public Utils() {
 	};
 
 	@TargetApi(VERSION_CODES.HONEYCOMB)

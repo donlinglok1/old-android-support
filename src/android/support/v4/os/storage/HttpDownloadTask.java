@@ -2,8 +2,10 @@ package android.support.v4.os.storage;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 
 import android.app.Activity;
@@ -96,8 +98,9 @@ public class HttpDownloadTask extends AsyncTask<String, String, String> {
 				inputStream.close();
 			}
 			callback.onSuccess(outputFile);
-		} catch (final Exception exception) {
-			Strings.exceptionToJSONObject(exception);
+		} catch (final MalformedURLException exception) {
+			callback.onFail(exception);
+		} catch (final IOException exception) {
 			callback.onFail(exception);
 		}
 

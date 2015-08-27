@@ -49,7 +49,6 @@ public class ImageCaptureSupport extends Activity {
 				try {
 					nomedia.createNewFile();
 				} catch (final IOException exception) {
-					Strings.exceptionToJSONObject(exception);
 				}
 			}
 			tempFilePath = filePath + System.currentTimeMillis() + ".jpg";

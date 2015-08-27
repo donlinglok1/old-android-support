@@ -10,6 +10,7 @@ import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
 import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.DESKeySpec;
@@ -157,11 +158,8 @@ public final class Strings {
 		final StringWriter sWriter = new StringWriter();
 		exception.printStackTrace(new PrintWriter(sWriter));
 		final JSONObject temp = new JSONObject();
-		try {
-			temp.put("Exception", Strings.valueOf(sWriter));
-		} catch (final Exception exception1) {
-			Strings.exceptionToJSONObject(exception1);
-		}
+		temp.put("Exception", Strings.valueOf(sWriter));
+
 		System.out.println(Strings.valueOf(sWriter));
 		return temp;
 	}
@@ -186,8 +184,10 @@ public final class Strings {
 					.getBytes()));
 			// System.out.println("size encrypt:" + strs.length());
 			result = strs;
+		} catch (final IllegalArgumentException exception) {
+		} catch (final IllegalBlockSizeException exception) {
 		} catch (final Exception exception) {
-			// Strings.exceptionToJSONObject(exception);
+			Strings.exceptionToJSONObject(exception);
 		}
 		return result;
 	}
@@ -214,8 +214,10 @@ public final class Strings {
 				// + unCompress(resultString).length());
 				result = resultString;
 			}
+		} catch (final IllegalArgumentException exception) {
+		} catch (final IllegalBlockSizeException exception) {
 		} catch (final Exception exception) {
-			// Strings.exceptionToJSONObject(exception);
+			Strings.exceptionToJSONObject(exception);
 		}
 		return result;
 	}

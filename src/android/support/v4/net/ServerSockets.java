@@ -14,10 +14,6 @@ import java.net.SocketImpl;
  * @version 1.0.0
  */
 public class ServerSockets extends ServerSocket {
-	public ServerSockets() throws IOException {
-		super();
-	}
-
 	public ServerSockets(final int serverport) throws IOException {
 		super(serverport);
 	}
@@ -34,5 +30,4 @@ public class ServerSockets extends ServerSocket {
 		implAccept(socket);
 		return socket;
 	}
-
 }

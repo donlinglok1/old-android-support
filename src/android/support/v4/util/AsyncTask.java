@@ -114,11 +114,11 @@ import android.support.v4.lang.Strings;
  * 		}
  * 		return totalSize;
  * 	}
- *
+ * 
  * 	protected void onProgressUpdate(Integer... progress) {
  * 		setProgressPercent(progress[0]);
  * 	}
- *
+ * 
  * 	protected void onPostExecute(Long result) {
  * 		showDialog(&quot;Downloaded &quot; + result + &quot; bytes&quot;);
  * 	}
@@ -373,7 +373,7 @@ public abstract class AsyncTask<Params, Progress, Result> {
 					// throw new RuntimeException(
 					// "An error occured while executing doInBackground()",
 					// e.getCause());
-					Strings.exceptionToJSONObject(exception);
+					// Strings.exceptionToJSONObject(exception);
 				} catch (final CancellationException exception) {
 					postResultIfNotInvoked(null);
 				} catch (final Exception exception) {

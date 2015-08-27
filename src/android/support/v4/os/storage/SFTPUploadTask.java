@@ -2,6 +2,7 @@ package android.support.v4.os.storage;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 
 import android.support.v4.lang.Strings;
 import android.support.v4.util.AsyncTask;
@@ -9,7 +10,9 @@ import android.support.v4.util.AsyncTask;
 import com.jcraft.jsch.Channel;
 import com.jcraft.jsch.ChannelSftp;
 import com.jcraft.jsch.JSch;
+import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
+import com.jcraft.jsch.SftpException;
 import com.jcraft.jsch.SftpProgressMonitor;
 
 /*
@@ -69,20 +72,28 @@ public class SFTPUploadTask extends AsyncTask<Void, Void, String> {
 			if (null != dir) {
 				channelSftp.cd(dir);
 			}
-			// Log.e(Strings.EMPTY, Strings.valueOf(file.length() / 1024));
 			channelSftp.put(new FileInputStream(file), file.getName(), monitor);
 			channelSftp.disconnect();
 			channel.disconnect();
 			session.disconnect();
-		} catch (final Exception exception) {
+		} catch (final FileNotFoundException exception) {
 			Strings.exceptionToJSONObject(exception);
 			if (uploadTry > 0) {
 				doInBackground(params);
 				uploadTry--;
 			}
-			// else {
-			// uploadTry = 3;
-			// }
+		} catch (final SftpException exception) {
+			Strings.exceptionToJSONObject(exception);
+			if (uploadTry > 0) {
+				doInBackground(params);
+				uploadTry--;
+			}
+		} catch (final JSchException exception) {
+			Strings.exceptionToJSONObject(exception);
+			if (uploadTry > 0) {
+				doInBackground(params);
+				uploadTry--;
+			}
 		}
 
 		return Strings.EMPTY;

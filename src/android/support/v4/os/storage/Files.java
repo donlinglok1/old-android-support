@@ -106,6 +106,7 @@ public final class Files {
 						}
 					}
 				} catch (final Exception exception) {
+					Strings.exceptionToJSONObject(exception);
 				}
 			}
 		}

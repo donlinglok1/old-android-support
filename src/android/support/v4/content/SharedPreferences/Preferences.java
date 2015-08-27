@@ -172,13 +172,12 @@ public final class Preferences {
 	public static String getString(final Context baseContext,
 			final String sharedPreferencesName, final String key,
 			final String defValue) {
-		String result = Strings.decrypt(
+		String result = defValue;
+
+		result = Strings.decrypt(
 				baseContext.getSharedPreferences(sharedPreferencesName, 0)
 						.getString(key, defValue), SHAREDPREFERENCESNAME);
 
-		if (null == result) {
-			result = defValue;
-		}
 		return result;
 	}
 

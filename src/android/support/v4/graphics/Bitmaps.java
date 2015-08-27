@@ -51,8 +51,9 @@ public class Bitmaps {
 				try {
 					BitmapFactory.Options.class.getField("inNativeAlloc")
 							.setBoolean(options, true);
-				} catch (final Exception exception) {
-					// Strings.exceptionToJSONObject(exception);
+				} catch (final IllegalArgumentException exception) {
+				} catch (final IllegalAccessException exception) {
+				} catch (final NoSuchFieldException exception) {
 				}
 			}
 
@@ -74,7 +75,6 @@ public class Bitmaps {
 				result = softBitmap.get();
 			}
 		} catch (final FileNotFoundException exception) {
-			Strings.exceptionToJSONObject(exception);
 		}
 		return result;
 	}
@@ -101,7 +101,6 @@ public class Bitmaps {
 				options.inSampleSize = computeSampleSize(options,
 						minSideLength, width * heigth);
 			} catch (final IOException exception) {
-				Strings.exceptionToJSONObject(exception);
 			}
 
 			options.inJustDecodeBounds = false;
@@ -113,8 +112,9 @@ public class Bitmaps {
 				try {
 					BitmapFactory.Options.class.getField("inNativeAlloc")
 							.setBoolean(options, true);
-				} catch (final Exception exception) {
-					Strings.exceptionToJSONObject(exception);
+				} catch (final IllegalArgumentException exception) {
+				} catch (final IllegalAccessException exception) {
+				} catch (final NoSuchFieldException exception) {
 				}
 			}
 
@@ -136,7 +136,6 @@ public class Bitmaps {
 				result = softBitmap.get();
 			}
 		} catch (final FileNotFoundException exception) {
-			Strings.exceptionToJSONObject(exception);
 		}
 		return result;
 	}
@@ -163,7 +162,6 @@ public class Bitmaps {
 				options.inSampleSize = computeSampleSize(options,
 						minSideLength, width * heigth);
 			} catch (final IOException exception) {
-				Strings.exceptionToJSONObject(exception);
 			}
 
 			options.inJustDecodeBounds = false;
@@ -175,8 +173,9 @@ public class Bitmaps {
 				try {
 					BitmapFactory.Options.class.getField("inNativeAlloc")
 							.setBoolean(options, true);
-				} catch (final Exception exception) {
-					// Strings.exceptionToJSONObject(exception);
+				} catch (final IllegalArgumentException exception) {
+				} catch (final IllegalAccessException exception) {
+				} catch (final NoSuchFieldException exception) {
 				}
 			}
 
@@ -316,7 +315,6 @@ public class Bitmaps {
 				break;
 			}
 		} catch (final IOException exception) {
-			Strings.exceptionToJSONObject(exception);
 		}
 		return result;
 	}

@@ -34,15 +34,10 @@ public class HttpPostsTask extends AsyncTask<Void, Void, String> {
 	@Override
 	protected String doInBackground(final Void... params) {
 		String result = null;
-		try {
-			if (isGzip) {
-				result = HttpPosts.postBody(url, Strings.valueOf(dateObject));
-			} else {
-				result = HttpPosts.postBodyNoGzip(url,
-						Strings.valueOf(dateObject));
-			}
-		} catch (final Exception exception) {
-			Strings.exceptionToJSONObject(exception);
+		if (isGzip) {
+			result = HttpPosts.postBody(url, Strings.valueOf(dateObject));
+		} else {
+			result = HttpPosts.postBodyNoGzip(url, Strings.valueOf(dateObject));
 		}
 		return result;
 	}
