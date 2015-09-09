@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -26,7 +25,6 @@ public class ImageCaptureSupport extends Activity {
 		super.onCreate(savedInstanceState);
 
 		context = this;
-		final Context baseContext = getApplicationContext();
 
 		if (savedInstanceState == null) {
 			String filePath = "/Android/data/" + context.getPackageName()
@@ -37,7 +35,7 @@ public class ImageCaptureSupport extends Activity {
 						.getExternalStorageDirectory().getAbsolutePath(),
 						filePath);
 			} else {
-				filePath = Strings.fString(baseContext.getCacheDir()
+				filePath = Strings.fString(context.getCacheDir()
 						.getAbsolutePath() + filePath);
 			}
 			final File file = new File(filePath);
@@ -52,6 +50,7 @@ public class ImageCaptureSupport extends Activity {
 				}
 			}
 			tempFilePath = filePath + System.currentTimeMillis() + ".jpg";
+
 			final Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 			intent.putExtra(MediaStore.EXTRA_OUTPUT,
 					Uri.fromFile(new File(tempFilePath)));
@@ -76,10 +75,8 @@ public class ImageCaptureSupport extends Activity {
 			final Intent intent2 = new Intent();
 			intent2.putExtra(IMAGE_PATH, tempFilePath);
 			context.setResult(Activity.RESULT_OK, intent2);
-			context.finish();
-		} else {
-			context.finish();
 		}
+		context.finish();
 	}
 
 	@Override

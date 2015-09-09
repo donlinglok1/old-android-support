@@ -1,12 +1,12 @@
 package android.support.v4.graphics;
 
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import android.graphics.Bitmap;
-import android.support.v4.lang.Strings;
+import android.support.v4.graphics.bitmapfun.AsyncTask;
 import android.support.v4.os.storage.Files;
-import android.support.v4.util.AsyncTask;
 
 public class ImageZipTask extends AsyncTask<Void, Void, String> {
 	private transient final ArrayList<String> imageArrayList;
@@ -44,13 +44,11 @@ public class ImageZipTask extends AsyncTask<Void, Void, String> {
 				out = new FileOutputStream(imgPath);
 				bitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
 				fileStrings.add(imgPath);
-			} catch (final Exception exception) {
-				Strings.exceptionToJSONObject(exception);
+			} catch (final IOException exception) {
 			} finally {
 				try {
 					out.close();
-				} catch (final Exception exception) {
-					Strings.exceptionToJSONObject(exception);
+				} catch (final IOException exception) {
 				}
 			}
 		}
@@ -58,8 +56,7 @@ public class ImageZipTask extends AsyncTask<Void, Void, String> {
 		try {
 			Files.zip(fileStrings.toArray(new String[fileStrings.size()]),
 					uploadFilePath);
-		} catch (final Exception exception) {
-			Strings.exceptionToJSONObject(exception);
+		} catch (final IOException exception) {
 		}
 
 		return uploadFilePath;

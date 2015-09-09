@@ -15,9 +15,6 @@ import android.net.Uri;
  * @version 1.0.0
  */
 public final class Notifications {
-	private Notifications() {
-	}
-
 	@SuppressWarnings("deprecation")
 	public static void showNoti(final Context context, final int notiId,
 			final int smallIcon, final String title, final String content,

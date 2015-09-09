@@ -27,6 +27,7 @@ import android.support.v4.util.Dates;
  * @version 1.0.0
  */
 public class SocketClient {
+	private transient boolean isLog = false;
 	private transient String serverIp;
 
 	public void setServerIp(final String serverIp) {
@@ -137,13 +138,15 @@ public class SocketClient {
 	}
 
 	public void sendMessage(final String message) throws IOException {
-		if (!message.equals(Sockets.KEEPALIVE)) {
-			System.out.println("[" + Dates.now() + "]" + "_SocketClientSend-->"
-					+ message + "_"
-					// + socket.getRemoteSocketAddress() + "_"
-					+ socket.getProperties());
+		if (null != socket) {
+			if (isLog) {
+				System.out.println("[" + Dates.now() + "]"
+						+ "_SocketClientSend-->" + message + "_"
+						// + socket.getRemoteSocketAddress() + "_"
+						+ socket.getProperties());
+			}
+			socket.send(message);
 		}
-		socket.send(message);
 		setIsConnected(false);
 	}
 
@@ -289,11 +292,13 @@ public class SocketClient {
 							readMessage(message);
 						}
 
-						System.out.println("[" + Dates.now() + "]"
-								+ "_SocketClientRead-->" + message + "_"
-								// + socket.getRemoteSocketAddress() +
-								// "_"
-								+ socket.getProperties());
+						if (isLog) {
+							System.out.println("[" + Dates.now() + "]"
+									+ "_SocketClientRead-->" + message + "_"
+									// + socket.getRemoteSocketAddress() +
+									// "_"
+									+ socket.getProperties());
+						}
 
 						setIsConnected(true);
 					}

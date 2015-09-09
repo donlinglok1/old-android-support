@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package android.support.v4.graphics;
+package android.support.v4.graphics.bitmapfun;
 
 import java.io.File;
 import java.io.FileDescriptor;

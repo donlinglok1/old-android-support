@@ -28,7 +28,7 @@ public class OnTouchVibrateListener implements View.OnTouchListener {
 	private transient final Runnable vibrateRunnable = new Runnable() {
 		@Override
 		public void run() {
-			if (Preferences.getInt(baseContext, IS_VIBRATE, 0) == 0) {
+			if (Preferences.getInt(baseContext, IS_VIBRATE, 1) == 0) {
 				((Vibrator) baseContext
 						.getSystemService(Context.VIBRATOR_SERVICE))
 						.vibrate(50);

@@ -13,7 +13,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.media.ExifInterface;
-import android.support.v4.lang.Strings;
 import android.view.View;
 
 /*
@@ -151,43 +150,38 @@ public class Bitmaps {
 		final BitmapFactory.Options options = new BitmapFactory.Options();
 		options.inJustDecodeBounds = true;
 
+		BitmapFactory.decodeResource(context.getResources(), resid, options);
+
+		final int width_tmp = options.outWidth;
+		final int height_tmp = options.outHeight;
+		final int minSideLength = Math.min(width_tmp, height_tmp);
 		try {
-			BitmapFactory
-					.decodeResource(context.getResources(), resid, options);
-
-			final int width_tmp = options.outWidth;
-			final int height_tmp = options.outHeight;
-			final int minSideLength = Math.min(width_tmp, height_tmp);
-			try {
-				options.inSampleSize = computeSampleSize(options,
-						minSideLength, width * heigth);
-			} catch (final IOException exception) {
-			}
-
-			options.inJustDecodeBounds = false;
-			options.inPurgeable = true;
-			options.inInputShareable = true;
-			options.inPreferredConfig = Bitmap.Config.RGB_565;
-
-			if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
-				try {
-					BitmapFactory.Options.class.getField("inNativeAlloc")
-							.setBoolean(options, true);
-				} catch (final IllegalArgumentException exception) {
-				} catch (final IllegalAccessException exception) {
-				} catch (final NoSuchFieldException exception) {
-				}
-			}
-
-			final Bitmap bitmap = BitmapFactory.decodeResource(
-					context.getResources(), resid, options);
-
-			final SoftReference<Bitmap> softBitmap = new SoftReference<Bitmap>(
-					bitmap);
-			result = softBitmap.get();
-		} catch (final Exception exception) {
-			Strings.exceptionToJSONObject(exception);
+			options.inSampleSize = computeSampleSize(options, minSideLength,
+					width * heigth);
+		} catch (final IOException exception) {
 		}
+
+		options.inJustDecodeBounds = false;
+		options.inPurgeable = true;
+		options.inInputShareable = true;
+		options.inPreferredConfig = Bitmap.Config.RGB_565;
+
+		if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+			try {
+				BitmapFactory.Options.class.getField("inNativeAlloc")
+						.setBoolean(options, true);
+			} catch (final IllegalArgumentException exception) {
+			} catch (final IllegalAccessException exception) {
+			} catch (final NoSuchFieldException exception) {
+			}
+		}
+
+		final Bitmap bitmap = BitmapFactory.decodeResource(
+				context.getResources(), resid, options);
+
+		final SoftReference<Bitmap> softBitmap = new SoftReference<Bitmap>(
+				bitmap);
+		result = softBitmap.get();
 		return result;
 	}
 

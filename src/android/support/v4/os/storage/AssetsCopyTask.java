@@ -3,8 +3,8 @@ package android.support.v4.os.storage;
 import java.io.IOException;
 
 import android.content.Context;
+import android.support.v4.graphics.bitmapfun.AsyncTask;
 import android.support.v4.lang.Strings;
-import android.support.v4.util.AsyncTask;
 
 public class AssetsCopyTask extends AsyncTask<Void, Void, String> {
 	private transient final Context context;

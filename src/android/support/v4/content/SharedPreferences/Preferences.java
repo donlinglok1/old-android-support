@@ -18,9 +18,6 @@ import android.support.v4.lang.Strings;
 public final class Preferences {
 	public static final String SHAREDPREFERENCESNAME = "SharedPreference";
 
-	private Preferences() {
-	}
-
 	public static void setPreferences(final Context baseContext,
 			final String key, final boolean value) {
 		setPreferences(baseContext, SHAREDPREFERENCESNAME, key, value);

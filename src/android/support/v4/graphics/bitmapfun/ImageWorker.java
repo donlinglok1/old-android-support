@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package android.support.v4.graphics;
+package android.support.v4.graphics.bitmapfun;
 
 import java.lang.ref.WeakReference;
 
@@ -29,7 +29,6 @@ import android.graphics.drawable.TransitionDrawable;
 import android.support.v4.BuildConfig;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.util.AsyncTask;
 import android.support.v4.util.Utils;
 import android.util.Log;
 import android.widget.ImageView;

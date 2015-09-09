@@ -57,21 +57,25 @@ public class SocketServerHandler {
 	}
 
 	public void sendMessage(final String message) throws IOException {
-		if (!message.equals(Sockets.KEEPALIVE_REACTION)) {
-			System.out.println("[" + Dates.now() + "]" + "_SocketServerSend-->"
-					+ message + "_"
-					// +socket.getRemoteSocketAddress() + "_"
-					+ socket.getProperties());
+		if (null != socket) {
+			if (!message.equals(Sockets.KEEPALIVE_REACTION)) {
+				System.out.println("[" + Dates.now() + "]"
+						+ "_SocketServerSend-->" + message + "_"
+						// +socket.getRemoteSocketAddress() + "_"
+						+ socket.getProperties());
+			}
+			socket.send(message);
 		}
-		socket.send(message);
 	}
 
 	public void readMessage(final String message) {
-		System.out.println("[" + Dates.now() + "]" + "_SocketServerRead-->"
-				+ message + "_"
-				// + socket.getRemoteSocketAddress() +
-				// "_"
-				+ socket.getProperties());
+		if (null != socket) {
+			System.out.println("[" + Dates.now() + "]" + "_SocketServerRead-->"
+					+ message + "_"
+					// + socket.getRemoteSocketAddress() +
+					// "_"
+					+ socket.getProperties());
+		}
 	}
 
 	protected transient Future<?> receiveFuture;

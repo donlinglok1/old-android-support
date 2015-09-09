@@ -1,7 +1,7 @@
 package android.support.v4.database.sqlite;
 
 import android.database.Cursor;
-import android.support.v4.util.AsyncTask;
+import android.support.v4.graphics.bitmapfun.AsyncTask;
 
 /*
  * Copyright (c) 2014 Kenneth Tu <don.ling.lok@gmail.com>
@@ -14,10 +14,11 @@ import android.support.v4.util.AsyncTask;
 public class SQLiteOpenHelpersTask extends AsyncTask<Void, Void, String> {
 	private transient final String query;
 	private transient final SQLiteCallback callback;
+	private transient final int taskType;
+	private transient final SQLiteOpenHelpers sqLiteOpenHelpers;
 
 	public static final int EXE = 0;
 	public static final int RAW = 1;
-	private transient final int taskType;
 
 	public interface SQLiteCallback {
 		void onReturn(Cursor result);
@@ -32,8 +33,6 @@ public class SQLiteOpenHelpersTask extends AsyncTask<Void, Void, String> {
 		this.callback = callback;
 		this.taskType = taskType;
 	}
-
-	private transient final SQLiteOpenHelpers sqLiteOpenHelpers;
 
 	@Override
 	protected String doInBackground(final Void... params) {

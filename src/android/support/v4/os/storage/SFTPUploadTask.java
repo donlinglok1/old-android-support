@@ -4,8 +4,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
+import android.support.v4.graphics.bitmapfun.AsyncTask;
 import android.support.v4.lang.Strings;
-import android.support.v4.util.AsyncTask;
 
 import com.jcraft.jsch.Channel;
 import com.jcraft.jsch.ChannelSftp;

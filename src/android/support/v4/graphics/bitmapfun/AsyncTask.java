@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package android.support.v4.util;
+package android.support.v4.graphics.bitmapfun;
 
 import java.util.ArrayDeque;
 import java.util.concurrent.BlockingQueue;
@@ -37,6 +37,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.Process;
 import android.support.v4.lang.Strings;
+import android.support.v4.util.Utils;
 
 /**
  * ************************************* Copied from JB release framework:

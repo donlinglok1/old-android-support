@@ -24,6 +24,8 @@ public class SQLiteOpenHelpers extends SQLiteOpenHelper {
 
 	public static final int SYSTEM = 0;
 	public static final int ANDROID_DATA = 1;
+	public static final int SQLCIPHER_SYSTEM = 2;
+	public static final int SQLCIPHER_ANDROID_DATA = 3;
 
 	public SQLiteOpenHelpers(final Context context, final int version_code,
 			final int dbStorageLocation) {
@@ -35,20 +37,18 @@ public class SQLiteOpenHelpers extends SQLiteOpenHelper {
 							+ "/Android/data/" + context.getPackageName() + "/"
 							+ DB_NAME, null, Context.MODE_PRIVATE);
 			break;
-		// case 2:
+		// case SQLCIPHER_SYSTEM:
 		// SQLiteDatabase.loadLibs(context);
 		// sqLiteDatabase = getWritableDatabase(DB_PW);
-		// THE sqlcipher are 10 time final slow than default.
+		// //THE sqlcipher are 10 time final slow than default.
 		// break;
-		// case 3:
+		// case SQLCIPHER_ANDROID_DATA:
 		// sqLiteDatabase = SQLiteDatabase.openOrCreateDatabase(
 		// Environment.getExternalStorageDirectory()
 		// + "/Android/data/" + context.getPackageName() + "/"
 		// + DB_NAME, DB_PW, null);
 		// break;
 		case SYSTEM:
-			sqLiteDatabase = getWritableDatabase();
-			break;
 		default:
 			sqLiteDatabase = getWritableDatabase();
 			break;
@@ -69,6 +69,10 @@ public class SQLiteOpenHelpers extends SQLiteOpenHelper {
 		}
 	}
 
+	public void onDestroy() {
+		sqLiteDatabase.close();
+	}
+
 	@Override
 	public void onCreate(final SQLiteDatabase arg0) {
 	}
@@ -78,7 +82,4 @@ public class SQLiteOpenHelpers extends SQLiteOpenHelper {
 			final int arg2) {
 	}
 
-	public void onDestroy() {
-		sqLiteDatabase.close();
-	}
 }

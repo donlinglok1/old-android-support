@@ -1,4 +1,4 @@
-package android.support.v4.util.Log;
+package android.support.v4.util.log;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;

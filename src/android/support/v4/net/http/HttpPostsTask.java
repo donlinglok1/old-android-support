@@ -1,8 +1,8 @@
 package android.support.v4.net.http;
 
 import net.minidev.json.JSONObject;
+import android.support.v4.graphics.bitmapfun.AsyncTask;
 import android.support.v4.lang.Strings;
-import android.support.v4.util.AsyncTask;
 
 /*
  * Copyright (c) 2014 Kenneth Tu <don.ling.lok@gmail.com>

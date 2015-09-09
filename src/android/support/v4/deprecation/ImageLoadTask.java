@@ -1,9 +1,10 @@
-package android.support.v4.graphics;
+package android.support.v4.deprecation;
 
 import java.lang.ref.WeakReference;
 
 import android.graphics.Bitmap;
-import android.support.v4.util.AsyncTask;
+import android.support.v4.graphics.Bitmaps;
+import android.support.v4.graphics.bitmapfun.AsyncTask;
 import android.view.View;
 import android.widget.ImageView;
 
