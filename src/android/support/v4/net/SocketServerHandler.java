@@ -56,15 +56,19 @@ public class SocketServerHandler {
 		keepAliveFuture = threadPool.submit(new KeepAlive());
 	}
 
-	public void sendMessage(final String message) throws IOException {
+	public void sendMessage(final String message) {
 		if (null != socket) {
-			if (!message.equals(Sockets.KEEPALIVE_REACTION)) {
-				System.out.println("[" + Dates.now() + "]"
-						+ "_SocketServerSend-->" + message + "_"
-						// +socket.getRemoteSocketAddress() + "_"
-						+ socket.getProperties());
+			try {
+				socket.send(message);
+				if (!message.equals(Sockets.KEEPALIVE_REACTION)) {
+					System.out.println("[" + Dates.now() + "]"
+							+ "_SocketServerSend-->" + message + "_"
+							// +socket.getRemoteSocketAddress() + "_"
+							+ socket.getProperties());
+				}
+			} catch (final IOException exception) {
+				Strings.exceptionToJSONObject(exception);
 			}
-			socket.send(message);
 		}
 	}
 

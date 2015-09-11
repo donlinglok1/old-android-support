@@ -13,7 +13,7 @@ import javax.crypto.spec.SecretKeySpec;
 
 import android.support.v4.lang.Strings;
 
-public class Crypt {
+public class HttpCrypt {
 	private static final String AES = Strings.fString(Strings.UPPA,
 			Strings.UPPE, Strings.UPPS);
 

@@ -27,7 +27,7 @@ import android.support.v4.util.Dates;
  * @version 1.0.0
  */
 public class SocketClient {
-	private transient boolean isLog = false;
+	public transient boolean isLog;
 	private transient String serverIp;
 
 	public void setServerIp(final String serverIp) {
@@ -137,15 +137,20 @@ public class SocketClient {
 		}
 	}
 
-	public void sendMessage(final String message) throws IOException {
+	public void sendMessage(final String message) {
 		if (null != socket) {
-			if (isLog) {
-				System.out.println("[" + Dates.now() + "]"
-						+ "_SocketClientSend-->" + message + "_"
-						// + socket.getRemoteSocketAddress() + "_"
-						+ socket.getProperties());
+			try {
+				socket.send(message);
+				if (isLog && !message.equals(Sockets.KEEPALIVE_REACTION)) {
+					System.out.println("[" + Dates.now() + "]"
+							+ "_SocketClientSend-->" + message + "_"
+							// +socket.getRemoteSocketAddress() + "_"
+							+ socket.getProperties());
+				}
+			} catch (final IOException exception) {
+				Strings.exceptionToJSONObject(exception);
+				onDisconnect();
 			}
-			socket.send(message);
 		}
 		setIsConnected(false);
 	}
@@ -254,8 +259,6 @@ public class SocketClient {
 				}
 				Thread.currentThread().interrupt();
 			} catch (final InterruptedException exception) {
-			} catch (final IOException exception) {
-				onDisconnect();
 			} catch (final Exception exception) {
 				Strings.exceptionToJSONObject(exception);
 			}
@@ -339,11 +342,8 @@ public class SocketClient {
 				} else {
 					keepAliveTimeoutCount++;
 				}
-				try {
-					sendMessage(Sockets.KEEPALIVE);
-				} catch (final IOException exception) {
-					onDisconnect();
-				}
+				sendMessage(Sockets.KEEPALIVE);
+
 				try {
 					Thread.sleep(Sockets.KEEPALIVESPEED);
 				} catch (final InterruptedException exception) {

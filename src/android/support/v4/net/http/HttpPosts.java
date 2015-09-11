@@ -71,7 +71,7 @@ public class HttpPosts {
 			httppost.setHeader("Content-type",
 					"application/json; charset=utf-8");
 			if (null != body) {
-				httppost.setEntity(new StringEntity(Crypt.encrypt(body),
+				httppost.setEntity(new StringEntity(HttpCrypt.encrypt(body),
 						HTTP.UTF_8));
 			}
 			final HttpClient httpclient = createHttpClient();
@@ -88,7 +88,7 @@ public class HttpPosts {
 				while ((length = gzipInputStream.read(tempbyte)) != -1) {
 					byteArrayBuffer.append(tempbyte, 0, length);
 				}
-				reuslt = Crypt.decrypt(new String(
+				reuslt = HttpCrypt.decrypt(new String(
 						byteArrayBuffer.toByteArray(), "utf-8"));
 			}
 		} catch (final UnsupportedEncodingException exception) {
@@ -106,7 +106,7 @@ public class HttpPosts {
 			httppost.setHeader("Content-type",
 					"application/json; charset=utf-8");
 			if (null != body) {
-				httppost.setEntity(new StringEntity(Crypt.encrypt(body),
+				httppost.setEntity(new StringEntity(HttpCrypt.encrypt(body),
 						HTTP.UTF_8));
 			}
 			final HttpClient httpclient = createHttpClient();
@@ -114,7 +114,7 @@ public class HttpPosts {
 			if (null != response) {
 				final HttpEntity entity = response.getEntity();
 
-				result = Crypt.decrypt(EntityUtils.toString(entity));
+				result = HttpCrypt.decrypt(EntityUtils.toString(entity));
 			}
 		} catch (final UnsupportedEncodingException exception) {
 		} catch (final ClientProtocolException exception) {
