@@ -58,23 +58,23 @@ import android.util.Log;
  * .
  */
 public class ImageCache {
-	private static final String TAG = "ImageCache";
+	private final static String TAG = "ImageCache";
 
 	// Default memory cache size in kilobytes
-	private static final int DEFAULT_MEM_CACHE_SIZE = 1024 * 5; // 5MB
+	private final static int DEFAULT_MEM_CACHE_SIZE = 1024 * 5; // 5MB
 
 	// Default disk cache size in bytes
-	private static final int DEFAULT_DISK_CACHE_SIZE = 1024 * 1024 * 10; // 10MB
+	private final static int DEFAULT_DISK_CACHE_SIZE = 1024 * 1024 * 10; // 10MB
 
 	// Compression settings when writing images to disk cache
-	private static final CompressFormat DEFAULT_COMPRESS_FORMAT = CompressFormat.JPEG;
-	private static final int DEFAULT_COMPRESS_QUALITY = 70;
-	private static final int DISK_CACHE_INDEX = 0;
+	private final static CompressFormat DEFAULT_COMPRESS_FORMAT = CompressFormat.JPEG;
+	private final static int DEFAULT_COMPRESS_QUALITY = 70;
+	private final static int DISK_CACHE_INDEX = 0;
 
 	// Constants to easily toggle various caches
-	private static final boolean DEFAULT_MEM_CACHE_ENABLED = true;
-	private static final boolean DEFAULT_DISK_CACHE_ENABLED = true;
-	private static final boolean DEFAULT_INIT_DISK_CACHE_ON_CREATE = false;
+	private final static boolean DEFAULT_MEM_CACHE_ENABLED = true;
+	private final static boolean DEFAULT_DISK_CACHE_ENABLED = true;
+	private final static boolean DEFAULT_INIT_DISK_CACHE_ON_CREATE = false;
 
 	private DiskLruCache mDiskLruCache;
 	private LruCache<String, BitmapDrawable> mMemoryCache;
@@ -176,7 +176,7 @@ public class ImageCache {
 				 * Notify the removed entry that is no longer being cached
 				 */
 				@Override
-				protected void entryRemoved(final boolean evicted,
+				public  void entryRemoved(final boolean evicted,
 						final String key, final BitmapDrawable oldValue,
 						final BitmapDrawable newValue) {
 					if (RecyclingBitmapDrawable.class.isInstance(oldValue)) {
@@ -203,7 +203,7 @@ public class ImageCache {
 				 * more practical for a bitmap cache
 				 */
 				@Override
-				protected int sizeOf(final String key,
+				public  int sizeOf(final String key,
 						final BitmapDrawable value) {
 					final int bitmapSize = getBitmapSize(value) / 1024;
 					return bitmapSize == 0 ? 1 : bitmapSize;
@@ -404,7 +404,7 @@ public class ImageCache {
 	 *            - BitmapFactory.Options with out* options populated
 	 * @return Bitmap that case be used for inBitmap
 	 */
-	protected Bitmap getBitmapFromReusableSet(
+	public  Bitmap getBitmapFromReusableSet(
 			final BitmapFactory.Options options) {
 		// BEGIN_INCLUDE(get_bitmap_from_reusable_set)
 		Bitmap bitmap = null;

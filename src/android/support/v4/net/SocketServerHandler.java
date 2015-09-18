@@ -27,21 +27,21 @@ public class SocketServerHandler {
 		void onDisconnected(SocketServerHandler handler);
 	}
 
-	private transient ServerHandlerCallBack callback;
+	public transient ServerHandlerCallBack callBack;
 
-	public void setCallback(final ServerHandlerCallBack callback) {
-		this.callback = callback;
+	public void setCallback(final ServerHandlerCallBack callBack) {
+		this.callBack = callBack;
 	}
 
 	private transient ExecutorService threadPool;
 
-	public void setThreadPool(final ExecutorService threadPool) {
+	public final void setThreadPool(final ExecutorService threadPool) {
 		this.threadPool = threadPool;
 	}
 
 	public transient Sockets socket;
 
-	public void connectToClient(final Sockets socket) {
+	public final void connectToClient(final Sockets socket) {
 		this.socket = socket;
 		if (null != receiveFuture) {
 			receiveFuture.cancel(true);
@@ -56,7 +56,7 @@ public class SocketServerHandler {
 		keepAliveFuture = threadPool.submit(new KeepAlive());
 	}
 
-	public void sendMessage(final String message) {
+	public final void sendMessage(final String message) {
 		if (null != socket) {
 			try {
 				socket.send(message);
@@ -82,14 +82,14 @@ public class SocketServerHandler {
 		}
 	}
 
-	protected transient Future<?> receiveFuture;
+	public transient Future<?> receiveFuture;
 
 	private class Receive implements Runnable {
 		private transient BufferedReader reader;
 		private transient InputStream inputStream;
 
 		@Override
-		public void run() {
+		public final void run() {
 			try {
 				inputStream = new BufferedInputStream(socket.getInputStream());
 				reader = new BufferedReader(new InputStreamReader(inputStream,
@@ -130,11 +130,11 @@ public class SocketServerHandler {
 
 	private transient int keepAliveTimeoutCount;
 
-	protected transient Future<?> keepAliveFuture;
+	public transient Future<?> keepAliveFuture;
 
 	private class KeepAlive implements Runnable {
 		@Override
-		public void run() {
+		public final void run() {
 			keepAliveTimeoutCount = 0;
 
 			while (true) {
@@ -153,7 +153,7 @@ public class SocketServerHandler {
 		}
 	}
 
-	public void onDisconnect() {
+	public final void onDisconnect() {
 		if (null != keepAliveFuture) {
 			keepAliveFuture.cancel(true);
 			keepAliveFuture = null;
@@ -173,9 +173,9 @@ public class SocketServerHandler {
 			}
 			socket = null;
 		}
-		if (null != callback) {
-			callback.onDisconnected(SocketServerHandler.this);
-			callback = null;
+		if (null != callBack) {
+			callBack.onDisconnected(SocketServerHandler.this);
+			callBack = null;
 		}
 	}
 }

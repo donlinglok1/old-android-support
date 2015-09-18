@@ -17,17 +17,17 @@ import android.support.v4.lang.Strings;
  * @author Kenneth Tu
  * @version 1.0.0
  */
-public final class Dates {
-	public static final String FORMAT_DATE = Strings.fString(Strings.LOWY,
+public class Dates {
+	public final static String FORMAT_DATE = Strings.fString(Strings.LOWY,
 			Strings.LOWY, Strings.LOWY, Strings.LOWY, Strings.MINUS,
 			Strings.UPPM, Strings.UPPM, Strings.MINUS, Strings.LOWD,
 			Strings.LOWD);
-	public static final String FORMAT_TIME = Strings.fString(Strings.UPPH,
+	public final static String FORMAT_TIME = Strings.fString(Strings.UPPH,
 			Strings.UPPH, Strings.COLON, Strings.LOWM, Strings.LOWM,
 			Strings.COLON, Strings.LOWS, Strings.LOWS);
-	public static final String FORMAT_TIME_NOS = Strings.fString(Strings.UPPH,
+	public final static String FORMAT_TIME_NOS = Strings.fString(Strings.UPPH,
 			Strings.UPPH, Strings.COLON, Strings.LOWM, Strings.LOWM);
-	public static final String FORMAT_DATETIME = Strings.fString(FORMAT_DATE,
+	public final static String FORMAT_DATETIME = Strings.fString(FORMAT_DATE,
 			Strings.SPACE, FORMAT_TIME);
 
 	private static Date myTime;

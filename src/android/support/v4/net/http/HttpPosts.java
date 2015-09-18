@@ -40,10 +40,10 @@ import android.support.v4.lang.Strings;
  * @version 1.0.0
  */
 public class HttpPosts {
-	private static final int TIMEOUTSOCKET = 5000 * 4;
-	private static final int TIMEOUTCONNECTION = 3000 * 4;
+	private final static int TIMEOUTSOCKET = 5000 * 4;
+	private final static int TIMEOUTCONNECTION = 3000 * 4;
 
-	public static HttpClient createHttpClient() {
+	public final static HttpClient createHttpClient() {
 		final HttpParams params = new BasicHttpParams();
 		HttpProtocolParams.setVersion(params, HttpVersion.HTTP_1_1);
 		HttpProtocolParams.setContentCharset(params,
@@ -62,7 +62,7 @@ public class HttpPosts {
 		return new DefaultHttpClient(conMgr, params);
 	}
 
-	public static String postBody(final String url, final String body) {
+	public final static String postBody(final String url, final String body) {
 		String reuslt = Strings.EMPTY;
 		try {
 			final HttpPost httppost = new HttpPost(url);
@@ -88,8 +88,8 @@ public class HttpPosts {
 				while ((length = gzipInputStream.read(tempbyte)) != -1) {
 					byteArrayBuffer.append(tempbyte, 0, length);
 				}
-				reuslt = HttpCrypt.decrypt(new String(
-						byteArrayBuffer.toByteArray(), "utf-8"));
+				reuslt = HttpCrypt.decrypt(new String(byteArrayBuffer
+						.toByteArray(), "utf-8"));
 			}
 		} catch (final UnsupportedEncodingException exception) {
 		} catch (final ClientProtocolException exception) {
@@ -98,7 +98,8 @@ public class HttpPosts {
 		return reuslt;
 	}
 
-	public static String postBodyNoGzip(final String url, final String body) {
+	public final static String postBodyNoGzip(final String url,
+			final String body) {
 		String result = Strings.EMPTY;
 		try {
 			final HttpPost httppost = new HttpPost(url);
@@ -123,7 +124,7 @@ public class HttpPosts {
 		return result;
 	}
 
-	public static String postNameValuePair(final String url,
+	public final static String postNameValuePair(final String url,
 			final List<NameValuePair> nameValuePairs) {
 		String result = Strings.EMPTY;
 		try {
@@ -158,7 +159,7 @@ public class HttpPosts {
 		return result;
 	}
 
-	public static String postNameValuePairNoGzip(final String url,
+	public final static String postNameValuePairNoGzip(final String url,
 			final List<NameValuePair> nameValuePairs) {
 		String result = Strings.EMPTY;
 		try {

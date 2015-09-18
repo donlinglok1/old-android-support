@@ -7,7 +7,7 @@ import android.support.v4.graphics.bitmapfun.AsyncTask;
 import android.support.v4.lang.Strings;
 
 public class AssetsCopyTask extends AsyncTask<Void, Void, String> {
-	private transient final Context context;
+	private final transient Context context;
 	private transient AssetsCopyTaskCallback callback;
 
 	public interface AssetsCopyTaskCallback {
@@ -27,7 +27,7 @@ public class AssetsCopyTask extends AsyncTask<Void, Void, String> {
 	}
 
 	@Override
-	public String doInBackground(final Void... params) {
+	public final String doInBackground(final Void... params) {
 		try {
 			Files.copyAssets(context);
 			callback.onReturn(true);

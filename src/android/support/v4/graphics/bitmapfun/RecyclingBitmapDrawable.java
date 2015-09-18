@@ -30,7 +30,7 @@ import android.util.Log;
  */
 public class RecyclingBitmapDrawable extends BitmapDrawable {
 
-	static final String TAG = "CountingBitmapDrawable";
+	final static String TAG = "CountingBitmapDrawable";
 
 	private int mCacheRefCount = 0;
 	private int mDisplayRefCount = 0;

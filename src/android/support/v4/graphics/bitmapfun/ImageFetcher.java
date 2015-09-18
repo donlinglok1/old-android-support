@@ -39,16 +39,16 @@ import android.util.Log;
  * fetched from a URL.
  */
 public class ImageFetcher extends ImageResizer {
-	private static final String TAG = "ImageFetcher";
-	private static final int HTTP_CACHE_SIZE = 10 * 1024 * 1024; // 10MB
-	private static final String HTTP_CACHE_DIR = "http";
-	private static final int IO_BUFFER_SIZE = 8 * 1024;
+	private final static String TAG = "ImageFetcher";
+	private final static int HTTP_CACHE_SIZE = 10 * 1024 * 1024; // 10MB
+	private final static String HTTP_CACHE_DIR = "http";
+	private final static int IO_BUFFER_SIZE = 8 * 1024;
 
 	private DiskLruCache mHttpDiskCache;
 	private File mHttpCacheDir;
 	private boolean mHttpDiskCacheStarting = true;
 	private final Object mHttpDiskCacheLock = new Object();
-	private static final int DISK_CACHE_INDEX = 0;
+	private final static int DISK_CACHE_INDEX = 0;
 
 	/**
 	 * Initialize providing a target image width and height for the processing
@@ -82,7 +82,7 @@ public class ImageFetcher extends ImageResizer {
 	}
 
 	@Override
-	protected void initDiskCacheInternal() {
+	public  void initDiskCacheInternal() {
 		super.initDiskCacheInternal();
 		initHttpDiskCache();
 	}
@@ -109,7 +109,7 @@ public class ImageFetcher extends ImageResizer {
 	}
 
 	@Override
-	protected void clearCacheInternal() {
+	public  void clearCacheInternal() {
 		super.clearCacheInternal();
 		synchronized (mHttpDiskCacheLock) {
 			if (mHttpDiskCache != null && !mHttpDiskCache.isClosed()) {
@@ -129,7 +129,7 @@ public class ImageFetcher extends ImageResizer {
 	}
 
 	@Override
-	protected void flushCacheInternal() {
+	public  void flushCacheInternal() {
 		super.flushCacheInternal();
 		synchronized (mHttpDiskCacheLock) {
 			if (mHttpDiskCache != null) {
@@ -146,7 +146,7 @@ public class ImageFetcher extends ImageResizer {
 	}
 
 	@Override
-	protected void closeCacheInternal() {
+	public  void closeCacheInternal() {
 		super.closeCacheInternal();
 		synchronized (mHttpDiskCacheLock) {
 			if (mHttpDiskCache != null) {
@@ -262,7 +262,7 @@ public class ImageFetcher extends ImageResizer {
 	}
 
 	@Override
-	protected Bitmap processBitmap(final Object data) {
+	public  Bitmap processBitmap(final Object data) {
 		return processBitmap(String.valueOf(data));
 	}
 

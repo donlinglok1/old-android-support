@@ -12,13 +12,13 @@ import android.support.v4.graphics.bitmapfun.AsyncTask;
  * @version 1.0.0
  */
 public class SQLiteOpenHelpersTask extends AsyncTask<Void, Void, String> {
-	private transient final String query;
-	private transient final SQLiteCallback callback;
-	private transient final int taskType;
-	private transient final SQLiteOpenHelpers sqLiteOpenHelpers;
+	private final transient String query;
+	private final transient SQLiteCallback callback;
+	private final transient int taskType;
+	private final transient SQLiteOpenHelpers sqLiteOpenHelpers;
 
-	public static final int EXE = 0;
-	public static final int RAW = 1;
+	public final static int EXE = 0;
+	public final static int RAW = 1;
 
 	public interface SQLiteCallback {
 		void onReturn(Cursor result);
@@ -35,7 +35,7 @@ public class SQLiteOpenHelpersTask extends AsyncTask<Void, Void, String> {
 	}
 
 	@Override
-	protected String doInBackground(final Void... params) {
+	public final String doInBackground(final Void... params) {
 		if (taskType == RAW) {
 			sqLiteOpenHelpers.raw(callback, query);
 		} else {

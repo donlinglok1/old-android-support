@@ -24,11 +24,8 @@ import android.support.v4.lang.Strings;
  * @author Kenneth Tu
  * @version 1.0.0
  */
-public final class Files {
-	private Files() {
-	}
-
-	public static void zip(final String[] files, final String output)
+public class Files {
+	public final static void zip(final String[] files, final String output)
 			throws IOException {
 		BufferedInputStream origin = null;
 		final ZipOutputStream out = new ZipOutputStream(
@@ -56,16 +53,17 @@ public final class Files {
 		}
 	}
 
-	private static final String[] NOCOPYFILE = { "fonts", "googlemap",
+	private final static String[] NOCOPYFILE = { "fonts", "googlemap",
 			"images", "offlinemap", "sounds", "webkit",
 			"crashlytics-build.properties", "icudt46l.zip" };
 
-	public static void copyAssets(final Context context) throws IOException {
+	public final static void copyAssets(final Context context)
+			throws IOException {
 		copyAssets(context, Strings.EMPTY);
 	}
 
-	public static void copyAssets(final Context context, final String folderName)
-			throws IOException {
+	public final static void copyAssets(final Context context,
+			final String folderName) throws IOException {
 		final String dirPathString = Strings.fString(
 				Strings.valueOf(Environment.getExternalStorageDirectory()),
 				Strings.SLASH, Strings.UPPA, Strings.LOWN, Strings.LOWD,
@@ -112,7 +110,7 @@ public final class Files {
 		}
 	}
 
-	public static void copyFile(final InputStream inputStream,
+	public final static void copyFile(final InputStream inputStream,
 			final OutputStream outputStream) throws IOException {
 		final byte[] buffer = new byte[1024];
 		int read;

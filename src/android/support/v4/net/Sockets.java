@@ -33,21 +33,21 @@ public class Sockets extends Socket {
 
 	private transient String idString;
 
-	public void setIdString(final String idString) {
+	public final void setIdString(final String idString) {
 		this.idString = idString;
 	}
 
-	public String getIdString() {
+	public final String getIdString() {
 		return idString;
 	}
 
 	private transient JSONObject propertiesObject;
 
-	public void setProperties(final JSONObject propertiesObject) {
+	public final void setProperties(final JSONObject propertiesObject) {
 		this.propertiesObject = propertiesObject;
 	}
 
-	public JSONObject getProperties() {
+	public final JSONObject getProperties() {
 		return propertiesObject;
 	}
 
@@ -55,11 +55,11 @@ public class Sockets extends Socket {
 			Strings.LOWE, Strings.LOWN, Strings.LOWN, Strings.LOWN,
 			Strings.LOWE, Strings.LOWT, Strings.LOWH);
 
-	public void setEncryptionKey(final String encryptionKey) {
+	public final void setEncryptionKey(final String encryptionKey) {
 		this.encryptionKey = encryptionKey;
 	}
 
-	public String getEncryptionKey() {
+	public final String getEncryptionKey() {
 		return encryptionKey;
 	}
 
@@ -76,7 +76,7 @@ public class Sockets extends Socket {
 
 	public final static int ENCRYPTSIZELIMIT = 10;
 
-	public void send(final String message) throws IOException {
+	public final void send(final String message) throws IOException {
 		if (!isOutputShutdown() && !isClosed()) {
 			final OutputStream out = new BufferedOutputStream(getOutputStream());
 			final PrintWriter writer = new PrintWriter(new OutputStreamWriter(
@@ -92,25 +92,25 @@ public class Sockets extends Socket {
 		}
 	}
 
-	public static final String SENDER = Strings.fString(Strings.LOWS,
+	public final static String SENDER = Strings.fString(Strings.LOWS,
 			Strings.UPPE, Strings.LOWN);
-	public static final String RECEIVER = Strings.fString(Strings.LOWR,
+	public final static String RECEIVER = Strings.fString(Strings.LOWR,
 			Strings.UPPE, Strings.LOWC, Strings.UPPV);
-	public static final String MSG_CODE = Strings.fString(Strings.LOWC,
+	public final static String MSG_CODE = Strings.fString(Strings.LOWC,
 			Strings.LOWO, Strings.LOWD, Strings.LOWE);
-	public static final String ACTION = Strings.fString(Strings.UPPA,
+	public final static String ACTION = Strings.fString(Strings.UPPA,
 			Strings.UPPC, Strings.UPPT, Strings.UPPI, Strings.UPPO,
 			Strings.UPPN);
-	public static final String RETURN = Strings.fString(Strings.UPPR,
+	public final static String RETURN = Strings.fString(Strings.UPPR,
 			Strings.UPPE, Strings.UPPT, Strings.UPPU, Strings.UPPR,
 			Strings.UPPN);
 
-	public static final String KEEPALIVE = Strings.LOWK;
-	public static final String KEEPALIVE_REACTION = Strings.LOWT;
-	public static final String DISCONNECT = Strings.fString(Strings.UPPD,
+	public final static String KEEPALIVE = Strings.LOWK;
+	public final static String KEEPALIVE_REACTION = Strings.LOWT;
+	public final static String DISCONNECT = Strings.fString(Strings.UPPD,
 			Strings.UPPI, Strings.UPPS, Strings.UPPC, Strings.UPPO,
 			Strings.UPPN);
-	public static final String DUPLICATE_LOGIN = Strings.fString(Strings.UPPD,
+	public final static String DUPLICATE_LOGIN = Strings.fString(Strings.UPPD,
 			Strings.UPPU, Strings.UPPP, Strings.UPPL, Strings.UPPO,
 			Strings.UPPG);
 }

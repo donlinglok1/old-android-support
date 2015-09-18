@@ -31,17 +31,17 @@ import android.support.v4.util.Dates;
  * @version 1.0.0
  */
 public class SocketClientService extends Service {
-	public transient boolean isLog = false;
+	public transient boolean isLog;
 
 	private transient String serverIp;
 
-	public void setServerIp(final String serverIp) {
+	public final void setServerIp(final String serverIp) {
 		this.serverIp = serverIp;
 	}
 
 	private transient JSONObject greetings;
 
-	public void setGreetings(final JSONObject greetings) {
+	public final void setGreetings(final JSONObject greetings) {
 		this.greetings = greetings;
 	}
 
@@ -55,13 +55,13 @@ public class SocketClientService extends Service {
 
 	private transient ClientCallback callback;
 
-	public void setCallback(final ClientCallback callback) {
+	public final void setCallback(final ClientCallback callback) {
 		this.callback = callback;
 	}
 
 	private transient ExecutorService threadPool;
 
-	public void setThreadPool(final ExecutorService threadPool) {
+	public final void setThreadPool(final ExecutorService threadPool) {
 		this.threadPool = threadPool;
 	}
 
@@ -73,7 +73,7 @@ public class SocketClientService extends Service {
 
 	private transient Sockets socket;
 
-	public void connectToServer() {
+	public final void connectToServer() {
 		if (null != connectToServerFuture) {
 			connectToServerFuture.cancel(true);
 			connectToServerFuture = null;
@@ -87,7 +87,7 @@ public class SocketClientService extends Service {
 
 	private class ConnectToServerRunnable implements Runnable {
 		@Override
-		public void run() {
+		public final void run() {
 			try {
 				if (null != socket) {
 					try {
@@ -142,7 +142,7 @@ public class SocketClientService extends Service {
 		}
 	}
 
-	public void sendMessage(final String message) {
+	public final void sendMessage(final String message) {
 		if (null != socket) {
 			try {
 				socket.send(message);
@@ -160,14 +160,14 @@ public class SocketClientService extends Service {
 		setIsConnected(false);
 	}
 
-	public static final int PRIORITY_LOW = 0;
-	public static final int PRIORITY_HIG = 1;
+	public final static int PRIORITY_LOW = 0;
+	public final static int PRIORITY_HIG = 1;
 
 	private transient String lastMsgCode = Strings.EMPTY;
-	private transient final ArrayList<JSONObject> queryListLOW = new ArrayList<JSONObject>();
-	private transient final ArrayList<JSONObject> queryListHIG = new ArrayList<JSONObject>();
+	private final transient ArrayList<JSONObject> queryListLOW = new ArrayList<JSONObject>();
+	private final transient ArrayList<JSONObject> queryListHIG = new ArrayList<JSONObject>();
 
-	public void addMessage(final JSONObject jObject, final int priority) {
+	public final void addMessage(final JSONObject jObject, final int priority) {
 		if (!Strings.isNull(jObject.get(Sockets.ACTION))) {
 			for (int i = 0; i < queryListHIG.size(); i++) {
 				if (jObject.get(Sockets.ACTION).equals(
@@ -220,7 +220,7 @@ public class SocketClientService extends Service {
 		private transient int queryTryCount;
 
 		@Override
-		public void run() {
+		public final void run() {
 			try {
 				while (socket.isConnected()) {
 					if (isConnected) {
@@ -270,7 +270,7 @@ public class SocketClientService extends Service {
 		}
 	}
 
-	public void readMessage(final String message) {
+	public final void readMessage(final String message) {
 		removeMessage(message);
 		callback.onRead(message);
 	}
@@ -282,7 +282,7 @@ public class SocketClientService extends Service {
 		private transient InputStream inputStream;
 
 		@Override
-		public void run() {
+		public final void run() {
 			try {
 				inputStream = new BufferedInputStream(socket.getInputStream());
 				reader = new BufferedReader(new InputStreamReader(inputStream,
@@ -336,7 +336,7 @@ public class SocketClientService extends Service {
 
 	private class KeepAlive implements Runnable {
 		@Override
-		public void run() {
+		public final void run() {
 			keepAliveTimeoutCount = 0;
 
 			while (true) {
@@ -357,7 +357,7 @@ public class SocketClientService extends Service {
 		}
 	}
 
-	public void onDisconnect() {
+	public final void onDisconnect() {
 		if (null != connectToServerFuture) {
 			connectToServerFuture.cancel(true);
 			connectToServerFuture = null;
@@ -408,7 +408,7 @@ public class SocketClientService extends Service {
 		return super.onStartCommand(intent, Service.START_STICKY, startId);
 	}
 
-	private transient final IBinder myBinder = new LocalBinder();
+	private final transient IBinder myBinder = new LocalBinder();
 
 	/**
 	 * Must Set

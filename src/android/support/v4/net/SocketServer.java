@@ -17,11 +17,11 @@ public class SocketServer {
 
 	private transient ServerCallback callback;
 
-	public void setCallback(final ServerCallback callback) {
+	public final void setCallback(final ServerCallback callback) {
 		this.callback = callback;
 	}
 
-	public void waitForClient() {
+	public final void waitForClient() {
 		try {
 			final ServerSockets serverSocket = new ServerSockets(
 					Sockets.SERVERPORT);

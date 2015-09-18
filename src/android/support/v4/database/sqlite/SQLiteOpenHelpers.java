@@ -17,15 +17,15 @@ import android.support.v4.database.sqlite.SQLiteOpenHelpersTask.SQLiteCallback;
  * @version 1.0.0
  */
 public class SQLiteOpenHelpers extends SQLiteOpenHelper {
-	private transient final SQLiteDatabase sqLiteDatabase;
+	private final transient SQLiteDatabase sqLiteDatabase;
 
-	private static final String DB_NAME = "notification.wav";
-	public static final String DB_PW = "27032015";
+	private final static String DB_NAME = "notification.wav";
+	public final static String DB_PW = "27032015";
 
-	public static final int SYSTEM = 0;
-	public static final int ANDROID_DATA = 1;
-	public static final int SQLCIPHER_SYSTEM = 2;
-	public static final int SQLCIPHER_ANDROID_DATA = 3;
+	public final static int SYSTEM = 0;
+	public final static int ANDROID_DATA = 1;
+	public final static int SQLCIPHER_SYSTEM = 2;
+	public final static int SQLCIPHER_ANDROID_DATA = 3;
 
 	public SQLiteOpenHelpers(final Context context, final int version_code,
 			final int dbStorageLocation) {
@@ -56,20 +56,20 @@ public class SQLiteOpenHelpers extends SQLiteOpenHelper {
 
 	}
 
-	public void execute(final SQLiteCallback callback, final String query) {
+	public final void execute(final SQLiteCallback callback, final String query) {
 		sqLiteDatabase.execSQL(query);
 		if (null != callback) {
 			callback.onReturn(null);
 		}
 	}
 
-	public void raw(final SQLiteCallback callback, final String query) {
+	public final void raw(final SQLiteCallback callback, final String query) {
 		if (null != callback) {
 			callback.onReturn(sqLiteDatabase.rawQuery(query, null));
 		}
 	}
 
-	public void onDestroy() {
+	public final void onDestroy() {
 		sqLiteDatabase.close();
 	}
 

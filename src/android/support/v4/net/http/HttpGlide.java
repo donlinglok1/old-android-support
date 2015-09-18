@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 
 public class HttpGlide {
-	public void load(final Activity context, final String path,
+	public final void load(final Activity context, final String path,
 			final ImageView imageView) {
 		final String file = path.substring(path.lastIndexOf('/') + 1,
 				path.length());

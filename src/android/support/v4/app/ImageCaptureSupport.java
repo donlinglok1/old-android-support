@@ -15,13 +15,13 @@ public class ImageCaptureSupport extends Activity {
 	private transient Activity context;
 
 	private transient String tempFilePath;
-	private static final String TEMP_PATH = "ImageFilePath";
-	private static final int TEMP_CODE = 6260;
+	private final static String TEMP_PATH = "ImageFilePath";
+	private final static int TEMP_CODE = 6260;
 
-	public static final String IMAGE_PATH = "image_path";
+	public final static String IMAGE_PATH = "image_path";
 
 	@Override
-	protected void onCreate(final Bundle savedInstanceState) {
+	public final void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		context = this;
@@ -69,8 +69,8 @@ public class ImageCaptureSupport extends Activity {
 	}
 
 	@Override
-	public void onActivityResult(final int requestCode, final int resultCode,
-			final Intent intent) {
+	public final void onActivityResult(final int requestCode,
+			final int resultCode, final Intent intent) {
 		if (TEMP_CODE == requestCode && resultCode == Activity.RESULT_OK) {
 			final Intent intent2 = new Intent();
 			intent2.putExtra(IMAGE_PATH, tempFilePath);
@@ -80,7 +80,7 @@ public class ImageCaptureSupport extends Activity {
 	}
 
 	@Override
-	protected void onSaveInstanceState(final Bundle bundle) {
+	public final void onSaveInstanceState(final Bundle bundle) {
 		bundle.putString(TEMP_PATH, tempFilePath);
 		super.onSaveInstanceState(bundle);
 	}

@@ -15,7 +15,7 @@ public class Glide_CircleTransform extends BitmapTransformation {
 	}
 
 	@Override
-	protected Bitmap transform(final BitmapPool pool, final Bitmap toTransform,
+	public Bitmap transform(final BitmapPool pool, final Bitmap toTransform,
 			final int width, final int height) {
 		return circleCrop(pool, toTransform);
 	}

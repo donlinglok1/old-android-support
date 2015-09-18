@@ -101,19 +101,19 @@ import java.util.concurrent.TimeUnit;
  * Callers should handle other problems by catching {@code IOException} and
  * responding appropriately.
  */
-public final class DiskLruCache implements Closeable {
-	static final String JOURNAL_FILE = "journal";
-	static final String JOURNAL_FILE_TMP = "journal.tmp";
-	static final String MAGIC = "libcore.io.DiskLruCache";
-	static final String VERSION_1 = "1";
-	static final long ANY_SEQUENCE_NUMBER = -1;
-	private static final String CLEAN = "CLEAN";
-	private static final String DIRTY = "DIRTY";
-	private static final String REMOVE = "REMOVE";
-	private static final String READ = "READ";
+public class DiskLruCache implements Closeable {
+	final static String JOURNAL_FILE = "journal";
+	final static String JOURNAL_FILE_TMP = "journal.tmp";
+	final static String MAGIC = "libcore.io.DiskLruCache";
+	final static String VERSION_1 = "1";
+	final static long ANY_SEQUENCE_NUMBER = -1;
+	private final static String CLEAN = "CLEAN";
+	private final static String DIRTY = "DIRTY";
+	private final static String REMOVE = "REMOVE";
+	private final static String READ = "READ";
 
-	private static final Charset UTF_8 = Charset.forName("UTF-8");
-	private static final int IO_BUFFER_SIZE = 8 * 1024;
+	private final static Charset UTF_8 = Charset.forName("UTF-8");
+	private final static int IO_BUFFER_SIZE = 8 * 1024;
 
 	/*
 	 * This cache uses a journal file named "journal". A typical journal file
@@ -746,7 +746,7 @@ public final class DiskLruCache implements Closeable {
 	/**
 	 * A snapshot of the values for an entry.
 	 */
-	public final class Snapshot implements Closeable {
+	public class Snapshot implements Closeable {
 		private final String key;
 		private final long sequenceNumber;
 		private final InputStream[] ins;
@@ -792,7 +792,7 @@ public final class DiskLruCache implements Closeable {
 	/**
 	 * Edits the values for an entry.
 	 */
-	public final class Editor {
+	public class Editor {
 		private final Entry entry;
 		private boolean hasErrors;
 
@@ -920,7 +920,7 @@ public final class DiskLruCache implements Closeable {
 		}
 	}
 
-	private final class Entry {
+	private class Entry {
 		private final String key;
 
 		/** Lengths of this entry's files. */

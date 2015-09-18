@@ -40,7 +40,7 @@ public class HttpDownloadTask extends AsyncTask<String, String, String> {
 	private transient ProgressDialog progressDialog;
 
 	@Override
-	public void onPreExecute() {
+	public final void onPreExecute() {
 		if (context instanceof Activity && !((Activity) context).isFinishing()) {
 			((Activity) context).runOnUiThread(new Runnable() {
 				@Override
@@ -58,12 +58,12 @@ public class HttpDownloadTask extends AsyncTask<String, String, String> {
 	}
 
 	@Override
-	public void onProgressUpdate(final String... progress) {
+	public final void onProgressUpdate(final String... progress) {
 		progressDialog.setProgress(Integer.parseInt(progress[0]));
 	}
 
 	@Override
-	public String doInBackground(final String... arg0) {
+	public final String doInBackground(final String... arg0) {
 		try {
 			final File file = new File(Strings.fString(
 					Strings.valueOf(Environment.getExternalStorageDirectory()),

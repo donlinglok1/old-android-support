@@ -103,7 +103,7 @@ import android.support.v4.util.Utils;
  *
  * <pre class="prettyprint">
  * private class DownloadFilesTask extends AsyncTask&lt;URL, Integer, Long&gt; {
- * 	protected Long doInBackground(URL... urls) {
+ * 	public  Long doInBackground(URL... urls) {
  * 		int count = urls.length;
  * 		long totalSize = 0;
  * 		for (int i = 0; i &lt; count; i++) {
@@ -115,12 +115,12 @@ import android.support.v4.util.Utils;
  * 		}
  * 		return totalSize;
  * 	}
- * 
- * 	protected void onProgressUpdate(Integer... progress) {
+ *
+ * 	public  void onProgressUpdate(Integer... progress) {
  * 		setProgressPercent(progress[0]);
  * 	}
- * 
- * 	protected void onPostExecute(Long result) {
+ *
+ * 	public  void onPostExecute(Long result) {
  * 		showDialog(&quot;Downloaded &quot; + result + &quot; bytes&quot;);
  * 	}
  * }
@@ -237,13 +237,13 @@ import android.support.v4.util.Utils;
  * </p>
  */
 public abstract class AsyncTask<Params, Progress, Result> {
-	private static final String LOG_TAG = "AsyncTask";
+	private final static String LOG_TAG = "AsyncTask";
 
-	private static final int CORE_POOL_SIZE = 5;
-	private static final int MAXIMUM_POOL_SIZE = 128;
-	private static final int KEEP_ALIVE = 1;
+	private final static int CORE_POOL_SIZE = 5;
+	private final static int MAXIMUM_POOL_SIZE = 128;
+	private final static int KEEP_ALIVE = 1;
 
-	private static final ThreadFactory sThreadFactory = new ThreadFactory() {
+	private final static ThreadFactory sThreadFactory = new ThreadFactory() {
 		private final AtomicInteger mCount = new AtomicInteger(1);
 
 		@Override
@@ -252,14 +252,14 @@ public abstract class AsyncTask<Params, Progress, Result> {
 		}
 	};
 
-	private static final BlockingQueue<Runnable> sPoolWorkQueue = new LinkedBlockingQueue<Runnable>(
+	private final static BlockingQueue<Runnable> sPoolWorkQueue = new LinkedBlockingQueue<Runnable>(
 			10);
 
 	/**
 	 * An {@link java.util.concurrent.Executor} that can be used to execute
 	 * tasks in parallel.
 	 */
-	public static final Executor THREAD_POOL_EXECUTOR = new ThreadPoolExecutor(
+	public final static Executor THREAD_POOL_EXECUTOR = new ThreadPoolExecutor(
 			CORE_POOL_SIZE, MAXIMUM_POOL_SIZE, KEEP_ALIVE, TimeUnit.SECONDS,
 			sPoolWorkQueue, sThreadFactory,
 			new ThreadPoolExecutor.DiscardOldestPolicy());
@@ -269,16 +269,16 @@ public abstract class AsyncTask<Params, Progress, Result> {
 	 * time in serial order. This serialization is global to a particular
 	 * process.
 	 */
-	public static final Executor SERIAL_EXECUTOR = Utils.hasHoneycomb() ? new SerialExecutor()
+	public final static Executor SERIAL_EXECUTOR = Utils.hasHoneycomb() ? new SerialExecutor()
 			: Executors.newSingleThreadExecutor(sThreadFactory);
 
-	public static final Executor DUAL_THREAD_EXECUTOR = Executors
+	public final static Executor DUAL_THREAD_EXECUTOR = Executors
 			.newFixedThreadPool(2, sThreadFactory);
 
-	private static final int MESSAGE_POST_RESULT = 0x1;
-	private static final int MESSAGE_POST_PROGRESS = 0x2;
+	private final static int MESSAGE_POST_RESULT = 0x1;
+	private final static int MESSAGE_POST_PROGRESS = 0x2;
 
-	private static final InternalHandler sHandler = new InternalHandler();
+	private final static InternalHandler sHandler = new InternalHandler();
 
 	private static volatile Executor sDefaultExecutor = SERIAL_EXECUTOR;
 	private final WorkerRunnable<Params, Result> mWorker;
@@ -311,7 +311,7 @@ public abstract class AsyncTask<Params, Progress, Result> {
 			}
 		}
 
-		protected synchronized void scheduleNext() {
+		public  synchronized void scheduleNext() {
 			if ((mActive = mTasks.poll()) != null) {
 				THREAD_POOL_EXECUTOR.execute(mActive);
 			}
@@ -365,7 +365,7 @@ public abstract class AsyncTask<Params, Progress, Result> {
 
 		mFuture = new FutureTask<Result>(mWorker) {
 			@Override
-			protected void done() {
+			public  void done() {
 				try {
 					postResultIfNotInvoked(get());
 				} catch (final InterruptedException exception) {
@@ -425,7 +425,7 @@ public abstract class AsyncTask<Params, Progress, Result> {
 	 * @see #onPostExecute
 	 * @see #publishProgress
 	 */
-	protected abstract Result doInBackground(Params... params);
+	public  abstract Result doInBackground(Params... params);
 
 	/**
 	 * Runs on the UI thread before {@link #doInBackground}.
@@ -433,7 +433,7 @@ public abstract class AsyncTask<Params, Progress, Result> {
 	 * @see #onPostExecute
 	 * @see #doInBackground
 	 */
-	protected void onPreExecute() {
+	public  void onPreExecute() {
 	}
 
 	/**
@@ -454,7 +454,7 @@ public abstract class AsyncTask<Params, Progress, Result> {
 	 * @see #doInBackground
 	 * @see #onCancelled(Object)
 	 */
-	protected void onPostExecute(final Result result) {
+	public  void onPostExecute(final Result result) {
 	}
 
 	/**
@@ -467,7 +467,7 @@ public abstract class AsyncTask<Params, Progress, Result> {
 	 * @see #publishProgress
 	 * @see #doInBackground
 	 */
-	protected void onProgressUpdate(final Progress... values) {
+	public  void onProgressUpdate(final Progress... values) {
 	}
 
 	/**
@@ -489,7 +489,7 @@ public abstract class AsyncTask<Params, Progress, Result> {
 	 * @see #cancel(boolean)
 	 * @see #isCancelled()
 	 */
-	protected void onCancelled(final Result result) {
+	public  void onCancelled(final Result result) {
 		onCancelled();
 	}
 
@@ -509,7 +509,7 @@ public abstract class AsyncTask<Params, Progress, Result> {
 	 * @see #cancel(boolean)
 	 * @see #isCancelled()
 	 */
-	protected void onCancelled() {
+	public  void onCancelled() {
 	}
 
 	/**
@@ -738,7 +738,7 @@ public abstract class AsyncTask<Params, Progress, Result> {
 	 * @see #onProgressUpdate
 	 * @see #doInBackground
 	 */
-	protected final void publishProgress(final Progress... values) {
+	public  final void publishProgress(final Progress... values) {
 		if (!isCancelled()) {
 			sHandler.obtainMessage(MESSAGE_POST_PROGRESS,
 					new AsyncTaskResult<Progress>(this, values)).sendToTarget();

@@ -15,9 +15,9 @@ public class HttpClientLog {
 
 	private static DalvikLogHandler activeHandler;
 
-	protected static class DalvikLogHandler extends Handler {
+	public  static class DalvikLogHandler extends Handler {
 
-		private static final String LOG_TAG = "HttpClient";
+		private final static String LOG_TAG = "HttpClient";
 
 		@Override
 		public void close() {

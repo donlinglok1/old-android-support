@@ -34,9 +34,9 @@ import android.util.Log;
  * too large to simply load directly into memory.
  */
 public class ImageResizer extends ImageWorker {
-	private static final String TAG = "ImageResizer";
-	protected transient int mImageWidth;
-	protected transient int mImageHeight;
+	private final static String TAG = "ImageResizer";
+	public  transient int mImageWidth;
+	public  transient int mImageHeight;
 
 	/**
 	 * Initialize providing a single target image size (used for both width and
@@ -101,7 +101,7 @@ public class ImageResizer extends ImageWorker {
 	}
 
 	@Override
-	protected Bitmap processBitmap(final Object data) {
+	public  Bitmap processBitmap(final Object data) {
 		return processBitmap(Integer.parseInt(String.valueOf(data)));
 	}
 

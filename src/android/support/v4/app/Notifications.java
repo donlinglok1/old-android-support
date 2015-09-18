@@ -14,11 +14,25 @@ import android.net.Uri;
  * @author Kenneth Tu
  * @version 1.0.0
  */
-public final class Notifications {
-	@SuppressWarnings("deprecation")
-	public static void showNoti(final Context context, final int notiId,
-			final int smallIcon, final String title, final String content,
-			final Uri isSound, final boolean ongoing,
+@SuppressWarnings("deprecation")
+public class Notifications {
+	public final static Notification showNoti(final Context context,
+			final String title, final String content, final int smallIcon,
+			final Uri sound, final boolean ongoing, final int notiId) {
+		final PendingIntent contentIntent = PendingIntent.getActivity(
+				context,
+				0,
+				context.getPackageManager().getLaunchIntentForPackage(
+						context.getPackageName()),
+				PendingIntent.FLAG_CANCEL_CURRENT);
+
+		return showNoti(context, title, content, smallIcon, sound, ongoing,
+				notiId, contentIntent);
+	}
+
+	public final static Notification showNoti(final Context context,
+			final String title, final String content, final int smallIcon,
+			final Uri sound, final boolean ongoing, final int notiId,
 			final PendingIntent pendingIntent) {
 		final NotificationManager notificationManager = (NotificationManager) context
 				.getSystemService(Context.NOTIFICATION_SERVICE);
@@ -28,16 +42,12 @@ public final class Notifications {
 				.setWhen(System.currentTimeMillis()).setContentTitle(title)
 				.setContentText(content).setAutoCancel(true).build();
 
-		if (null == isSound) {
+		if (null == sound) {
 			notification.defaults |= Notification.DEFAULT_SOUND;
 		} else {
-			notification.sound = isSound;
+			notification.sound = sound;
 		}
 		notification.defaults |= Notification.DEFAULT_VIBRATE;
-
-		if (ongoing) {
-			notification.flags = Notification.FLAG_ONGOING_EVENT;
-		}
 
 		if (null == pendingIntent) {
 			notification.setLatestEventInfo(context, title, content,
@@ -53,19 +63,25 @@ public final class Notifications {
 					pendingIntent);
 		}
 
-		notificationManager.notify(notiId, notification);
+		if (ongoing) {
+			notification.flags = Notification.FLAG_ONGOING_EVENT;
+		} else {
+			notificationManager.notify(notiId, notification);
+		}
+
+		return notification;
 	}
 
 	/*
 	 * Remove all
 	 */
-	public static void removeNotification(final Context context) {
+	public final static void removeNotification(final Context context) {
 		final NotificationManager notificationManager = (NotificationManager) context
 				.getSystemService(Context.NOTIFICATION_SERVICE);
 		notificationManager.cancelAll();
 	}
 
-	public static void removeNotification(final Context context,
+	public final static void removeNotification(final Context context,
 			final int notiId) {
 		final NotificationManager notificationManager = (NotificationManager) context
 				.getSystemService(Context.NOTIFICATION_SERVICE);
