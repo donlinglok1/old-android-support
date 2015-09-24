@@ -82,7 +82,7 @@ public class ImageFetcher extends ImageResizer {
 	}
 
 	@Override
-	public  void initDiskCacheInternal() {
+	public void initDiskCacheInternal() {
 		super.initDiskCacheInternal();
 		initHttpDiskCache();
 	}
@@ -109,7 +109,7 @@ public class ImageFetcher extends ImageResizer {
 	}
 
 	@Override
-	public  void clearCacheInternal() {
+	public void clearCacheInternal() {
 		super.clearCacheInternal();
 		synchronized (mHttpDiskCacheLock) {
 			if (mHttpDiskCache != null && !mHttpDiskCache.isClosed()) {
@@ -129,7 +129,7 @@ public class ImageFetcher extends ImageResizer {
 	}
 
 	@Override
-	public  void flushCacheInternal() {
+	public void flushCacheInternal() {
 		super.flushCacheInternal();
 		synchronized (mHttpDiskCacheLock) {
 			if (mHttpDiskCache != null) {
@@ -146,7 +146,7 @@ public class ImageFetcher extends ImageResizer {
 	}
 
 	@Override
-	public  void closeCacheInternal() {
+	public void closeCacheInternal() {
 		super.closeCacheInternal();
 		synchronized (mHttpDiskCacheLock) {
 			if (mHttpDiskCache != null) {
@@ -262,7 +262,7 @@ public class ImageFetcher extends ImageResizer {
 	}
 
 	@Override
-	public  Bitmap processBitmap(final Object data) {
+	public Bitmap processBitmap(final Object data) {
 		return processBitmap(String.valueOf(data));
 	}
 

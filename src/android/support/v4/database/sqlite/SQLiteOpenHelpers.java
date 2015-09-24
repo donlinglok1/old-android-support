@@ -16,8 +16,8 @@ import android.support.v4.database.sqlite.SQLiteOpenHelpersTask.SQLiteCallback;
  * @author Kenneth Tu
  * @version 1.0.0
  */
-public class SQLiteOpenHelpers extends SQLiteOpenHelper {
-	private final transient SQLiteDatabase sqLiteDatabase;
+public final class SQLiteOpenHelpers extends SQLiteOpenHelper {
+	private transient final SQLiteDatabase sqLiteDatabase;
 
 	private final static String DB_NAME = "notification.wav";
 	public final static String DB_PW = "27032015";
@@ -56,20 +56,20 @@ public class SQLiteOpenHelpers extends SQLiteOpenHelper {
 
 	}
 
-	public final void execute(final SQLiteCallback callback, final String query) {
+	public void execute(final SQLiteCallback callback, final String query) {
 		sqLiteDatabase.execSQL(query);
 		if (null != callback) {
 			callback.onReturn(null);
 		}
 	}
 
-	public final void raw(final SQLiteCallback callback, final String query) {
+	public void raw(final SQLiteCallback callback, final String query) {
 		if (null != callback) {
 			callback.onReturn(sqLiteDatabase.rawQuery(query, null));
 		}
 	}
 
-	public final void onDestroy() {
+	public void onDestroy() {
 		sqLiteDatabase.close();
 	}
 

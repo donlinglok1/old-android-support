@@ -7,9 +7,9 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
 public class JSONArrayAdapter extends BaseAdapter {
-	public final transient Context context;
-	public final transient Context baseContext;
-	public final transient JSONArray listArray;
+	public transient final Context context;
+	public transient final Context baseContext;
+	public transient final JSONArray listArray;
 
 	public JSONArrayAdapter(final Context context, final JSONArray listArray) {
 		super();
@@ -19,17 +19,17 @@ public class JSONArrayAdapter extends BaseAdapter {
 	}
 
 	@Override
-	public final int getCount() {
+	public int getCount() {
 		return listArray.size();
 	}
 
 	@Override
-	public final Object getItem(final int position) {
+	public Object getItem(final int position) {
 		return listArray.get(position);
 	}
 
 	@Override
-	public final long getItemId(final int position) {
+	public long getItemId(final int position) {
 		return position;
 	}
 

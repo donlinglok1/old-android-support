@@ -24,8 +24,8 @@ import android.support.v4.lang.Strings;
  * @author Kenneth Tu
  * @version 1.0.0
  */
-public class Files {
-	public final static void zip(final String[] files, final String output)
+public final class Files {
+	public static void zip(final String[] files, final String output)
 			throws IOException {
 		BufferedInputStream origin = null;
 		final ZipOutputStream out = new ZipOutputStream(
@@ -57,13 +57,12 @@ public class Files {
 			"images", "offlinemap", "sounds", "webkit",
 			"crashlytics-build.properties", "icudt46l.zip" };
 
-	public final static void copyAssets(final Context context)
-			throws IOException {
+	public static void copyAssets(final Context context) throws IOException {
 		copyAssets(context, Strings.EMPTY);
 	}
 
-	public final static void copyAssets(final Context context,
-			final String folderName) throws IOException {
+	public static void copyAssets(final Context context, final String folderName)
+			throws IOException {
 		final String dirPathString = Strings.fString(
 				Strings.valueOf(Environment.getExternalStorageDirectory()),
 				Strings.SLASH, Strings.UPPA, Strings.LOWN, Strings.LOWD,
@@ -110,7 +109,7 @@ public class Files {
 		}
 	}
 
-	public final static void copyFile(final InputStream inputStream,
+	public static void copyFile(final InputStream inputStream,
 			final OutputStream outputStream) throws IOException {
 		final byte[] buffer = new byte[1024];
 		int read;

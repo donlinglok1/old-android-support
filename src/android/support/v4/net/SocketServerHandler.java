@@ -89,7 +89,7 @@ public class SocketServerHandler {
 		private transient InputStream inputStream;
 
 		@Override
-		public final void run() {
+		public void run() {
 			try {
 				inputStream = new BufferedInputStream(socket.getInputStream());
 				reader = new BufferedReader(new InputStreamReader(inputStream,
@@ -134,7 +134,7 @@ public class SocketServerHandler {
 
 	private class KeepAlive implements Runnable {
 		@Override
-		public final void run() {
+		public void run() {
 			keepAliveTimeoutCount = 0;
 
 			while (true) {

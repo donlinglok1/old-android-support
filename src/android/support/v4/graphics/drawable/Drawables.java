@@ -19,13 +19,13 @@ import android.support.v4.widget.TypedValue;
  * @author Kenneth Tu
  * @version 1.0.0
  */
-public class Drawables {
-	public final static Drawable getDrawable(final Context baseContext,
+public final class Drawables {
+	public static Drawable getDrawable(final Context baseContext,
 			final int resid, final int size) {
 		return getDrawable(baseContext, resid, size, size);
 	}
 
-	public final static Drawable getDrawable(final Context baseContext,
+	public static Drawable getDrawable(final Context baseContext,
 			final int resid, final int width, final int heigth) {
 		Drawable result = null;
 		try {
@@ -44,7 +44,7 @@ public class Drawables {
 	}
 
 	@SuppressWarnings("deprecation")
-	public final static Drawable getDrawable(final Context baseContext,
+	public static Drawable getDrawable(final Context baseContext,
 			final int resId) {
 		final BitmapFactory.Options options = new BitmapFactory.Options();
 		options.inPurgeable = true;
@@ -65,7 +65,7 @@ public class Drawables {
 				baseContext.getResources(), resId, options));
 	}
 
-	public final static Bitmap drawable2Bitmap(final Drawable drawable) {
+	public static Bitmap drawable2Bitmap(final Drawable drawable) {
 		if (drawable instanceof BitmapDrawable) {
 			return ((BitmapDrawable) drawable).getBitmap();
 		}
@@ -79,7 +79,7 @@ public class Drawables {
 		return bitmap;
 	}
 
-	public final static int dp2px(final int dipValue) {
+	public static int dp2px(final int dipValue) {
 		final int result = (int) TypedValue.applyDimension(
 				TypedValue.COMPLEX_UNIT_DIP, dipValue, Resources.getSystem()
 						.getDisplayMetrics());

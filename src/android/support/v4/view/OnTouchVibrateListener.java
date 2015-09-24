@@ -8,9 +8,9 @@ import android.view.MotionEvent;
 import android.view.View;
 
 public class OnTouchVibrateListener implements View.OnTouchListener {
-	private final transient Context baseContext;
+	private transient final Context baseContext;
 
-	private final transient OnTouchVibrateListenerCallBack callBack;
+	private transient final OnTouchVibrateListenerCallBack callBack;
 
 	public interface OnTouchVibrateListenerCallBack {
 		void onClick(View view);
@@ -24,10 +24,10 @@ public class OnTouchVibrateListener implements View.OnTouchListener {
 
 	public final static String IS_VIBRATE = "isVibrate";
 
-	private final transient Handler handler = new Handler();
-	private final transient Runnable vibrateRunnable = new Runnable() {
+	private transient final Handler handler = new Handler();
+	private transient final Runnable vibrateRunnable = new Runnable() {
 		@Override
-		public final void run() {
+		public void run() {
 			if (Preferences.getInt(baseContext, IS_VIBRATE, 1) == 0) {
 				((Vibrator) baseContext
 						.getSystemService(Context.VIBRATOR_SERVICE))
@@ -39,7 +39,7 @@ public class OnTouchVibrateListener implements View.OnTouchListener {
 	private transient boolean toofast = true;
 
 	@Override
-	public final boolean onTouch(final View view, final MotionEvent motionEvent) {
+	public boolean onTouch(final View view, final MotionEvent motionEvent) {
 		switch (motionEvent.getAction()) {
 		case MotionEvent.ACTION_DOWN:
 			toofast = true;

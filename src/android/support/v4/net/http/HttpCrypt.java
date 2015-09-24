@@ -13,7 +13,7 @@ import javax.crypto.spec.SecretKeySpec;
 
 import android.support.v4.lang.Strings;
 
-public class HttpCrypt {
+public final class HttpCrypt {
 	private final static String AES = Strings.fString(Strings.UPPA,
 			Strings.UPPE, Strings.UPPS);
 
@@ -25,7 +25,7 @@ public class HttpCrypt {
 		return encrypt(plaintext, "57238004e784498bbc2f8bf984565090");
 	}
 
-	public final static String decrypt(final String plaintext, final String key) {
+	public static String decrypt(final String plaintext, final String key) {
 		String result = plaintext;
 		try {
 			final SecretKeySpec secretKeySpec = new SecretKeySpec(
@@ -44,7 +44,7 @@ public class HttpCrypt {
 		return result;
 	}
 
-	public final static String encrypt(final String plaintext, final String key) {
+	public static String encrypt(final String plaintext, final String key) {
 		String result = plaintext;
 		try {
 			final SecretKeySpec secretKeySpec = new SecretKeySpec(
@@ -63,7 +63,7 @@ public class HttpCrypt {
 		return result;
 	}
 
-	public final static String byteArrayToHexString(final byte... bytes) {
+	public static String byteArrayToHexString(final byte... bytes) {
 		String result = new String(bytes);
 		try {
 			final StringBuilder stringBuilder = new StringBuilder(
@@ -82,7 +82,7 @@ public class HttpCrypt {
 		return result;
 	}
 
-	public final static byte[] hexStringToByteArray(final String string) {
+	public static byte[] hexStringToByteArray(final String string) {
 		byte[] result = string.getBytes();
 		try {
 			final byte[] bytes = new byte[string.length() / 2];

@@ -35,8 +35,8 @@ import android.util.Log;
  */
 public class ImageResizer extends ImageWorker {
 	private final static String TAG = "ImageResizer";
-	public  transient int mImageWidth;
-	public  transient int mImageHeight;
+	public transient int mImageWidth;
+	public transient int mImageHeight;
 
 	/**
 	 * Initialize providing a single target image size (used for both width and
@@ -101,7 +101,7 @@ public class ImageResizer extends ImageWorker {
 	}
 
 	@Override
-	public  Bitmap processBitmap(final Object data) {
+	public Bitmap processBitmap(final Object data) {
 		return processBitmap(Integer.parseInt(String.valueOf(data)));
 	}
 

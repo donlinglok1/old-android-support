@@ -40,7 +40,7 @@ public class RecyclingImageView extends ImageView {
 	 * @see android.widget.ImageView#onDetachedFromWindow()
 	 */
 	@Override
-	public  void onDetachedFromWindow() {
+	public void onDetachedFromWindow() {
 		// This has been detached from Window, so clear the drawable
 		setImageDrawable(null);
 

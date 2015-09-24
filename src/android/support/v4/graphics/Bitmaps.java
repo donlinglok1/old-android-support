@@ -23,8 +23,8 @@ import android.view.View;
  * @author Kenneth Tu
  * @version 1.0.0
  */
-public class Bitmaps {
-	public final static int[] getImageSize(final String path) {
+public final class Bitmaps {
+	public static int[] getImageSize(final String path) {
 		final BitmapFactory.Options options = new BitmapFactory.Options();
 		options.inJustDecodeBounds = true;
 		BitmapFactory.decodeFile(path, options);
@@ -32,7 +32,7 @@ public class Bitmaps {
 		return new int[] { options.outHeight, options.outWidth };
 	}
 
-	public final static Bitmap getBitmap(final String path, final boolean isExif) {
+	public static Bitmap getBitmap(final String path, final boolean isExif) {
 		Bitmap result = null;
 		final BitmapFactory.Options options = new BitmapFactory.Options();
 		options.inJustDecodeBounds = true;
@@ -78,12 +78,12 @@ public class Bitmaps {
 		return result;
 	}
 
-	public final static Bitmap getBitmap(final String path, final double size,
+	public static Bitmap getBitmap(final String path, final double size,
 			final boolean isExif) {
 		return getBitmap(path, size, size, isExif);
 	}
 
-	public final static Bitmap getBitmap(final String path, final double width,
+	public static Bitmap getBitmap(final String path, final double width,
 			final double heigth, final boolean isExif) {
 		Bitmap result = null;
 		final BitmapFactory.Options options = new BitmapFactory.Options();
@@ -139,13 +139,13 @@ public class Bitmaps {
 		return result;
 	}
 
-	public final static Bitmap getBitmap(final Context context,
-			final int resid, final double size) {
+	public static Bitmap getBitmap(final Context context, final int resid,
+			final double size) {
 		return getBitmap(context, resid, size, size);
 	}
 
-	public final static Bitmap getBitmap(final Context context,
-			final int resid, final double width, final double heigth) {
+	public static Bitmap getBitmap(final Context context, final int resid,
+			final double width, final double heigth) {
 		Bitmap result = null;
 		final BitmapFactory.Options options = new BitmapFactory.Options();
 		options.inJustDecodeBounds = true;
@@ -185,8 +185,8 @@ public class Bitmaps {
 		return result;
 	}
 
-	public final static Bitmap replaceColor(final Bitmap bitmap,
-			final int fromColor, final int toColor) {
+	public static Bitmap replaceColor(final Bitmap bitmap, final int fromColor,
+			final int toColor) {
 		Bitmap result = null;
 		if (null != bitmap) {
 			final int width = bitmap.getWidth();
@@ -203,7 +203,7 @@ public class Bitmaps {
 		return result;
 	}
 
-	public final static Bitmap view2Bitmap(final View view) {
+	public static Bitmap view2Bitmap(final View view) {
 		final Bitmap bmImg = Bitmap.createBitmap(view.getWidth(),
 				view.getHeight(), Bitmap.Config.ARGB_4444);
 
@@ -214,7 +214,7 @@ public class Bitmaps {
 				bmImg.getHeight() / 20, true);
 	}
 
-	public final static Bitmap view2Bitmap(final View view, final int quality,
+	public static Bitmap view2Bitmap(final View view, final int quality,
 			final int theWidth, final int theHeight) throws IOException {
 		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		view.setDrawingCacheEnabled(true);
@@ -233,7 +233,7 @@ public class Bitmaps {
 		return bytes2Bimap(bytes);
 	}
 
-	public final static Bitmap bytes2Bimap(final byte... bytes) {
+	public static Bitmap bytes2Bimap(final byte... bytes) {
 		Bitmap result = null;
 		if (0 != bytes.length) {
 			result = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
@@ -243,9 +243,9 @@ public class Bitmaps {
 
 	private final static int INITIALSIZELIMIT = 8;
 
-	public final static int computeSampleSize(
-			final BitmapFactory.Options options, final int minSideLength,
-			final double maxNumOfPixels) throws IOException {
+	public static int computeSampleSize(final BitmapFactory.Options options,
+			final int minSideLength, final double maxNumOfPixels)
+			throws IOException {
 		final int initialSize = computeInitialSampleSize(options,
 				minSideLength, maxNumOfPixels);
 		int roundedSize;
@@ -261,7 +261,7 @@ public class Bitmaps {
 		return roundedSize;
 	}
 
-	public final static int computeInitialSampleSize(
+	public static int computeInitialSampleSize(
 			final BitmapFactory.Options options, final int minSideLength,
 			final double maxNumOfPixels) throws IOException {
 		int result = 1;
@@ -285,7 +285,7 @@ public class Bitmaps {
 		return result;
 	}
 
-	public final static int getImageOrientation(final String path) {
+	public static int getImageOrientation(final String path) {
 		int result = 0;
 		try {
 			ExifInterface exif;

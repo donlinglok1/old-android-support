@@ -21,8 +21,8 @@ import android.support.v4.lang.Strings;
  * @author Kenneth Tu
  * @version 1.0.0
  */
-public class Tools {
-	public final static void setBadge(final Context context, final int count) {
+public final class Tools {
+	public static void setBadge(final Context context, final int count) {
 		final String launcherClassName = getLauncherClassName(context);
 		if (null == launcherClassName) {
 			return;
@@ -38,7 +38,7 @@ public class Tools {
 		context.sendBroadcast(intent);
 	}
 
-	public final static boolean isOnline(final Context context) {
+	public static boolean isOnline(final Context context) {
 		final ConnectivityManager connectivityManager = (ConnectivityManager) context
 				.getSystemService(Context.CONNECTIVITY_SERVICE);
 		final NetworkInfo netInfo = connectivityManager.getActiveNetworkInfo();
@@ -49,7 +49,7 @@ public class Tools {
 		return result;
 	}
 
-	public final static void checkMemory() {
+	public static void checkMemory() {
 		System.out.println("maxMemory" + Runtime.getRuntime().maxMemory()
 				/ 1024);
 
@@ -60,8 +60,7 @@ public class Tools {
 				/ 1024);
 	}
 
-	public final static double addDouble(final Number value1,
-			final Number value2) {
+	public static double addDouble(final Number value1, final Number value2) {
 		final BigDecimal bigDecimal1 = new BigDecimal(Double.toString(value1
 				.doubleValue()));
 		final BigDecimal bigDecimal2 = new BigDecimal(Double.toString(value2
@@ -69,8 +68,7 @@ public class Tools {
 		return bigDecimal1.add(bigDecimal2).doubleValue();
 	}
 
-	public final static double subDouble(final Number value1,
-			final Number value2) {
+	public static double subDouble(final Number value1, final Number value2) {
 		final BigDecimal bigDecimal1 = new BigDecimal(Double.toString(value1
 				.doubleValue()));
 		final BigDecimal bigDecimal2 = new BigDecimal(Double.toString(value2
@@ -80,7 +78,7 @@ public class Tools {
 
 	private final static double RATIO_LIMIT = 1.0;
 
-	public final static double calculateBeaconAccuracy(final int txPower,
+	public static double calculateBeaconAccuracy(final int txPower,
 			final double rssi) {
 		double result = -1.0;
 		if (0 != rssi) {
@@ -96,7 +94,7 @@ public class Tools {
 
 	private final static double EARTH_RADIUS = 6378137.0;
 
-	public final static double latlng2m(final Double lat_a, final Double lng_a,
+	public static double latlng2m(final Double lat_a, final Double lng_a,
 			final Double lat_b, final Double lng_b) {
 
 		final double radLat1 = lat_a * Math.PI / 180.0;
@@ -123,7 +121,7 @@ public class Tools {
 		return result;
 	}
 
-	public final static String getDeviceName() {
+	public static String getDeviceName() {
 		final String manufacturer = Build.MANUFACTURER;
 		final String model = Build.MODEL;
 		String result;
@@ -135,7 +133,7 @@ public class Tools {
 		return result;
 	}
 
-	public final static String getLauncherClassName(final Context context) {
+	public static String getLauncherClassName(final Context context) {
 		String result = null;
 		final PackageManager packageManager = context.getPackageManager();
 

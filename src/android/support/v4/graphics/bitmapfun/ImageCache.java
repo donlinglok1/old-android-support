@@ -176,7 +176,7 @@ public class ImageCache {
 				 * Notify the removed entry that is no longer being cached
 				 */
 				@Override
-				public  void entryRemoved(final boolean evicted,
+				public void entryRemoved(final boolean evicted,
 						final String key, final BitmapDrawable oldValue,
 						final BitmapDrawable newValue) {
 					if (RecyclingBitmapDrawable.class.isInstance(oldValue)) {
@@ -203,8 +203,7 @@ public class ImageCache {
 				 * more practical for a bitmap cache
 				 */
 				@Override
-				public  int sizeOf(final String key,
-						final BitmapDrawable value) {
+				public int sizeOf(final String key, final BitmapDrawable value) {
 					final int bitmapSize = getBitmapSize(value) / 1024;
 					return bitmapSize == 0 ? 1 : bitmapSize;
 				}
@@ -404,8 +403,7 @@ public class ImageCache {
 	 *            - BitmapFactory.Options with out* options populated
 	 * @return Bitmap that case be used for inBitmap
 	 */
-	public  Bitmap getBitmapFromReusableSet(
-			final BitmapFactory.Options options) {
+	public Bitmap getBitmapFromReusableSet(final BitmapFactory.Options options) {
 		// BEGIN_INCLUDE(get_bitmap_from_reusable_set)
 		Bitmap bitmap = null;
 

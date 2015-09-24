@@ -103,7 +103,7 @@ import android.support.v4.util.Utils;
  *
  * <pre class="prettyprint">
  * private class DownloadFilesTask extends AsyncTask&lt;URL, Integer, Long&gt; {
- * 	public  Long doInBackground(URL... urls) {
+ * 	public Long doInBackground(URL... urls) {
  * 		int count = urls.length;
  * 		long totalSize = 0;
  * 		for (int i = 0; i &lt; count; i++) {
@@ -116,11 +116,11 @@ import android.support.v4.util.Utils;
  * 		return totalSize;
  * 	}
  *
- * 	public  void onProgressUpdate(Integer... progress) {
+ * 	public void onProgressUpdate(Integer... progress) {
  * 		setProgressPercent(progress[0]);
  * 	}
  *
- * 	public  void onPostExecute(Long result) {
+ * 	public void onPostExecute(Long result) {
  * 		showDialog(&quot;Downloaded &quot; + result + &quot; bytes&quot;);
  * 	}
  * }
@@ -311,7 +311,7 @@ public abstract class AsyncTask<Params, Progress, Result> {
 			}
 		}
 
-		public  synchronized void scheduleNext() {
+		public synchronized void scheduleNext() {
 			if ((mActive = mTasks.poll()) != null) {
 				THREAD_POOL_EXECUTOR.execute(mActive);
 			}
@@ -365,7 +365,7 @@ public abstract class AsyncTask<Params, Progress, Result> {
 
 		mFuture = new FutureTask<Result>(mWorker) {
 			@Override
-			public  void done() {
+			public void done() {
 				try {
 					postResultIfNotInvoked(get());
 				} catch (final InterruptedException exception) {
@@ -425,7 +425,7 @@ public abstract class AsyncTask<Params, Progress, Result> {
 	 * @see #onPostExecute
 	 * @see #publishProgress
 	 */
-	public  abstract Result doInBackground(Params... params);
+	public abstract Result doInBackground(Params... params);
 
 	/**
 	 * Runs on the UI thread before {@link #doInBackground}.
@@ -433,7 +433,7 @@ public abstract class AsyncTask<Params, Progress, Result> {
 	 * @see #onPostExecute
 	 * @see #doInBackground
 	 */
-	public  void onPreExecute() {
+	public void onPreExecute() {
 	}
 
 	/**
@@ -454,7 +454,7 @@ public abstract class AsyncTask<Params, Progress, Result> {
 	 * @see #doInBackground
 	 * @see #onCancelled(Object)
 	 */
-	public  void onPostExecute(final Result result) {
+	public void onPostExecute(final Result result) {
 	}
 
 	/**
@@ -467,7 +467,7 @@ public abstract class AsyncTask<Params, Progress, Result> {
 	 * @see #publishProgress
 	 * @see #doInBackground
 	 */
-	public  void onProgressUpdate(final Progress... values) {
+	public void onProgressUpdate(final Progress... values) {
 	}
 
 	/**
@@ -489,7 +489,7 @@ public abstract class AsyncTask<Params, Progress, Result> {
 	 * @see #cancel(boolean)
 	 * @see #isCancelled()
 	 */
-	public  void onCancelled(final Result result) {
+	public void onCancelled(final Result result) {
 		onCancelled();
 	}
 
@@ -509,7 +509,7 @@ public abstract class AsyncTask<Params, Progress, Result> {
 	 * @see #cancel(boolean)
 	 * @see #isCancelled()
 	 */
-	public  void onCancelled() {
+	public void onCancelled() {
 	}
 
 	/**
@@ -738,7 +738,7 @@ public abstract class AsyncTask<Params, Progress, Result> {
 	 * @see #onProgressUpdate
 	 * @see #doInBackground
 	 */
-	public  final void publishProgress(final Progress... values) {
+	public final void publishProgress(final Progress... values) {
 		if (!isCancelled()) {
 			sHandler.obtainMessage(MESSAGE_POST_PROGRESS,
 					new AsyncTaskResult<Progress>(this, values)).sendToTarget();

@@ -11,8 +11,8 @@ import android.support.v4.graphics.bitmapfun.ImageResizer;
 import android.util.Base64;
 import android.util.Base64OutputStream;
 
-public class Base64s {
-	public final String imgToBase64(final String filePath) {
+public final class Base64s {
+	public String imgToBase64(final String filePath) {
 		final Bitmap bitmap = ImageResizer.decodeSampledBitmapFromFile(
 				filePath, 1536, 1536, null);
 		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -28,7 +28,7 @@ public class Base64s {
 				.replace("\n", "").replace("=", "");
 	}
 
-	public final String fileToBase64(final String filePath) {
+	public String fileToBase64(final String filePath) {
 		InputStream inputStream = null;
 		try {
 			inputStream = new FileInputStream(filePath);

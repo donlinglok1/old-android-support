@@ -27,7 +27,7 @@ import net.minidev.json.JSONValue;
  * @author Kenneth Tu
  * @version 1.0.0
  */
-public class Strings {
+public final class Strings {
 	// http://www.robelle.com/smugbook/ascii.html
 
 	// DONT CHANGE THE SORTING!!!
@@ -125,7 +125,7 @@ public class Strings {
 
 	private final static String DES = fString(UPPD, UPPE, UPPS);
 
-	public final static JSONArray joinJSONArray(final JSONArray firstArray,
+	public static JSONArray joinJSONArray(final JSONArray firstArray,
 			final JSONArray secArray) {
 		final StringBuffer buffer = new StringBuffer();
 
@@ -154,8 +154,7 @@ public class Strings {
 		return (JSONArray) JSONValue.parse(valueOf(buffer));
 	}
 
-	public final static JSONObject exceptionToJSONObject(
-			final Exception exception) {
+	public static JSONObject exceptionToJSONObject(final Exception exception) {
 		final StringWriter sWriter = new StringWriter();
 		exception.printStackTrace(new PrintWriter(sWriter));
 		final JSONObject temp = new JSONObject();
@@ -166,7 +165,7 @@ public class Strings {
 	}
 
 	// @SuppressLint("TrulyRandom")
-	public final static String encrypt(final String data, final String key) {
+	public static String encrypt(final String data, final String key) {
 		String result = data;
 		try {
 			// System.out.println("size org:" + data.length());
@@ -193,7 +192,7 @@ public class Strings {
 		return result;
 	}
 
-	public final static String decrypt(final String data, final String key) {
+	public static String decrypt(final String data, final String key) {
 		String result = data;
 		try {
 			if (null != data && !Strings.EMPTY.equals(data)) {
@@ -223,7 +222,7 @@ public class Strings {
 		return result;
 	}
 
-	public final static String fString(final String... words) {
+	public static String fString(final String... words) {
 		final StringBuffer queryBuffer = new StringBuffer();
 		for (final String word : words) {
 			queryBuffer.append(word);
@@ -231,7 +230,7 @@ public class Strings {
 		return valueOf(queryBuffer);
 	}
 
-	public final static String compress(final String str) throws IOException {
+	public static String compress(final String str) throws IOException {
 		String result = str;
 		if (null != str && str.length() > 0) {
 			final ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -243,7 +242,7 @@ public class Strings {
 		return result;
 	}
 
-	public final static String unCompress(final String str) throws IOException {
+	public static String unCompress(final String str) throws IOException {
 		String result = str;
 		if (null != str && str.length() > 0) {
 			final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
@@ -261,7 +260,7 @@ public class Strings {
 		return result;
 	}
 
-	public final static boolean isNull(final Object object) {
+	public static boolean isNull(final Object object) {
 		return null == object || valueOf(object).length() == 0;
 	}
 

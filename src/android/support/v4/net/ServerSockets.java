@@ -19,7 +19,7 @@ public class ServerSockets extends ServerSocket {
 	}
 
 	@Override
-	public final Sockets accept() throws IOException {
+	public Sockets accept() throws IOException {
 		if (isClosed()) {
 			throw new SocketException("Socket is closed");
 		}

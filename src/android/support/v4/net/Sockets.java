@@ -21,7 +21,7 @@ import android.support.v4.lang.Strings;
  * @author Kenneth Tu
  * @version 1.0.0
  */
-public class Sockets extends Socket {
+public final class Sockets extends Socket {
 	public Sockets(final InetAddress serverAddr, final int serverport)
 			throws IOException {
 		super(serverAddr, serverport);
@@ -33,21 +33,21 @@ public class Sockets extends Socket {
 
 	private transient String idString;
 
-	public final void setIdString(final String idString) {
+	public void setIdString(final String idString) {
 		this.idString = idString;
 	}
 
-	public final String getIdString() {
+	public String getIdString() {
 		return idString;
 	}
 
 	private transient JSONObject propertiesObject;
 
-	public final void setProperties(final JSONObject propertiesObject) {
+	public void setProperties(final JSONObject propertiesObject) {
 		this.propertiesObject = propertiesObject;
 	}
 
-	public final JSONObject getProperties() {
+	public JSONObject getProperties() {
 		return propertiesObject;
 	}
 
@@ -55,11 +55,11 @@ public class Sockets extends Socket {
 			Strings.LOWE, Strings.LOWN, Strings.LOWN, Strings.LOWN,
 			Strings.LOWE, Strings.LOWT, Strings.LOWH);
 
-	public final void setEncryptionKey(final String encryptionKey) {
+	public void setEncryptionKey(final String encryptionKey) {
 		this.encryptionKey = encryptionKey;
 	}
 
-	public final String getEncryptionKey() {
+	public String getEncryptionKey() {
 		return encryptionKey;
 	}
 
@@ -76,7 +76,7 @@ public class Sockets extends Socket {
 
 	public final static int ENCRYPTSIZELIMIT = 10;
 
-	public final void send(final String message) throws IOException {
+	public void send(final String message) throws IOException {
 		if (!isOutputShutdown() && !isClosed()) {
 			final OutputStream out = new BufferedOutputStream(getOutputStream());
 			final PrintWriter writer = new PrintWriter(new OutputStreamWriter(

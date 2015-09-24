@@ -83,7 +83,7 @@ public class SocketClient {
 
 	private class ConnectToServerRunnable implements Runnable {
 		@Override
-		public final void run() {
+		public void run() {
 			try {
 				if (null != socket) {
 					try {
@@ -160,8 +160,8 @@ public class SocketClient {
 	public final static int PRIORITY_HIG = 1;
 
 	private transient String lastMsgCode = Strings.EMPTY;
-	private final transient ArrayList<JSONObject> queryListLOW = new ArrayList<JSONObject>();
-	private final transient ArrayList<JSONObject> queryListHIG = new ArrayList<JSONObject>();
+	private transient final ArrayList<JSONObject> queryListLOW = new ArrayList<JSONObject>();
+	private transient final ArrayList<JSONObject> queryListHIG = new ArrayList<JSONObject>();
 
 	public final void addMessage(final JSONObject jObject, final int priority) {
 		if (!Strings.isNull(jObject.get(Sockets.ACTION))) {
@@ -216,7 +216,7 @@ public class SocketClient {
 		private transient int queryTryCount;
 
 		@Override
-		public final void run() {
+		public void run() {
 			try {
 				while (socket.isConnected()) {
 					if (isConnected) {
@@ -278,7 +278,7 @@ public class SocketClient {
 		private transient InputStream inputStream;
 
 		@Override
-		public final void run() {
+		public void run() {
 			try {
 				inputStream = new BufferedInputStream(socket.getInputStream());
 				reader = new BufferedReader(new InputStreamReader(inputStream,
@@ -332,7 +332,7 @@ public class SocketClient {
 
 	private class KeepAlive implements Runnable {
 		@Override
-		public final void run() {
+		public void run() {
 			keepAliveTimeoutCount = 0;
 
 			while (true) {

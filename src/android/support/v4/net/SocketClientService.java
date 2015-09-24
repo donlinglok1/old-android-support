@@ -87,7 +87,7 @@ public class SocketClientService extends Service {
 
 	private class ConnectToServerRunnable implements Runnable {
 		@Override
-		public final void run() {
+		public void run() {
 			try {
 				if (null != socket) {
 					try {
@@ -164,8 +164,8 @@ public class SocketClientService extends Service {
 	public final static int PRIORITY_HIG = 1;
 
 	private transient String lastMsgCode = Strings.EMPTY;
-	private final transient ArrayList<JSONObject> queryListLOW = new ArrayList<JSONObject>();
-	private final transient ArrayList<JSONObject> queryListHIG = new ArrayList<JSONObject>();
+	private transient final ArrayList<JSONObject> queryListLOW = new ArrayList<JSONObject>();
+	private transient final ArrayList<JSONObject> queryListHIG = new ArrayList<JSONObject>();
 
 	public final void addMessage(final JSONObject jObject, final int priority) {
 		if (!Strings.isNull(jObject.get(Sockets.ACTION))) {
@@ -220,7 +220,7 @@ public class SocketClientService extends Service {
 		private transient int queryTryCount;
 
 		@Override
-		public final void run() {
+		public void run() {
 			try {
 				while (socket.isConnected()) {
 					if (isConnected) {
@@ -282,7 +282,7 @@ public class SocketClientService extends Service {
 		private transient InputStream inputStream;
 
 		@Override
-		public final void run() {
+		public void run() {
 			try {
 				inputStream = new BufferedInputStream(socket.getInputStream());
 				reader = new BufferedReader(new InputStreamReader(inputStream,
@@ -336,7 +336,7 @@ public class SocketClientService extends Service {
 
 	private class KeepAlive implements Runnable {
 		@Override
-		public final void run() {
+		public void run() {
 			keepAliveTimeoutCount = 0;
 
 			while (true) {
@@ -399,7 +399,7 @@ public class SocketClientService extends Service {
 
 	/*
 	 * Auto run after onCreate();
-	 * 
+	 *
 	 * @see android.app.Service#onStartCommand(android.content.Intent, int, int)
 	 */
 	@Override
@@ -408,16 +408,12 @@ public class SocketClientService extends Service {
 		return super.onStartCommand(intent, Service.START_STICKY, startId);
 	}
 
-	private final transient IBinder myBinder = new LocalBinder();
+	private transient final IBinder myBinder = new LocalBinder();
 
 	/**
 	 * Must Set
 	 */
 	public class LocalBinder extends Binder {
-		LocalBinder() {
-			super();
-		}
-
 		public SocketClientService getService() {
 			return SocketClientService.this;
 		}
@@ -425,7 +421,7 @@ public class SocketClientService extends Service {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see android.app.Service#onBind(android.content.Intent)
 	 */
 	@Override
@@ -435,7 +431,7 @@ public class SocketClientService extends Service {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see android.app.Service#onUnbind(android.content.Intent)
 	 */
 	@Override

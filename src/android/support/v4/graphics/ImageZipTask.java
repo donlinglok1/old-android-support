@@ -9,10 +9,10 @@ import android.support.v4.graphics.bitmapfun.AsyncTask;
 import android.support.v4.os.storage.Files;
 
 public class ImageZipTask extends AsyncTask<Void, Void, String> {
-	private final transient ArrayList<String> imageArrayList;
-	private final transient int compressSize;
-	private final transient String uploadFilePath;
-	private final transient ZipImagesTaskCallback callback;
+	private transient final ArrayList<String> imageArrayList;
+	private transient final int compressSize;
+	private transient final String uploadFilePath;
+	private transient final ZipImagesTaskCallback callback;
 
 	public interface ZipImagesTaskCallback {
 		void onReturn(String result);
@@ -29,7 +29,7 @@ public class ImageZipTask extends AsyncTask<Void, Void, String> {
 	}
 
 	@Override
-	public final String doInBackground(final Void... params) {
+	public String doInBackground(final Void... params) {
 		final ArrayList<String> fileStrings = new ArrayList<String>();
 
 		final int loopStopNum = imageArrayList.size();
@@ -63,7 +63,7 @@ public class ImageZipTask extends AsyncTask<Void, Void, String> {
 	}
 
 	@Override
-	public final void onPostExecute(final String result) {
+	public void onPostExecute(final String result) {
 		super.onPostExecute(result);
 		callback.onReturn(result);
 	}
