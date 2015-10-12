@@ -615,7 +615,7 @@ public class Base64 {
 	 *            output buffer
 	 * @since 2.3
 	 */
-	public static void encode(final java.nio.ByteBuffer raw,
+	public final static void encode(final java.nio.ByteBuffer raw,
 			final java.nio.ByteBuffer encoded) {
 		final byte[] raw3 = new byte[3];
 		final byte[] enc4 = new byte[4];
@@ -640,7 +640,7 @@ public class Base64 {
 	 *            output buffer
 	 * @since 2.3
 	 */
-	public static void encode(final java.nio.ByteBuffer raw,
+	public final static void encode(final java.nio.ByteBuffer raw,
 			final java.nio.CharBuffer encoded) {
 		final byte[] raw3 = new byte[3];
 		final byte[] enc4 = new byte[4];
@@ -677,7 +677,7 @@ public class Base64 {
 	 *             if serializedObject is null
 	 * @since 1.4
 	 */
-	public static String encodeObject(
+	public final static String encodeObject(
 			final java.io.Serializable serializableObject)
 			throws java.io.IOException {
 		return encodeObject(serializableObject, NO_OPTIONS);
@@ -719,7 +719,7 @@ public class Base64 {
 	 *             if there is an error
 	 * @since 2.0
 	 */
-	public static String encodeObject(
+	public final static String encodeObject(
 			final java.io.Serializable serializableObject, final int options)
 			throws java.io.IOException {
 
@@ -792,7 +792,7 @@ public class Base64 {
 	 *             if source array is null
 	 * @since 1.4
 	 */
-	public static String encodeBytes(final byte[] source) {
+	public final static String encodeBytes(final byte[] source) {
 		// Since we're not going to have the GZIP encoding turned on,
 		// we're not going to have an java.io.IOException thrown, so
 		// we should not force the user to have to catch it.
@@ -844,7 +844,7 @@ public class Base64 {
 	 *             if source array is null
 	 * @since 2.0
 	 */
-	public static String encodeBytes(final byte[] source, final int options)
+	public final static String encodeBytes(final byte[] source, final int options)
 			throws java.io.IOException {
 		return encodeBytes(source, 0, source.length, options);
 	} // end encodeBytes
@@ -873,7 +873,7 @@ public class Base64 {
 	 *             if source array, offset, or length are invalid
 	 * @since 1.4
 	 */
-	public static String encodeBytes(final byte[] source, final int off,
+	public final static String encodeBytes(final byte[] source, final int off,
 			final int len) {
 		// Since we're not going to have the GZIP encoding turned on,
 		// we're not going to have an java.io.IOException thrown, so
@@ -932,7 +932,7 @@ public class Base64 {
 	 *             if source array, offset, or length are invalid
 	 * @since 2.0
 	 */
-	public static String encodeBytes(final byte[] source, final int off,
+	public final static String encodeBytes(final byte[] source, final int off,
 			final int len, final int options) throws java.io.IOException {
 		final byte[] encoded = encodeBytesToBytes(source, off, len, options);
 
@@ -959,7 +959,7 @@ public class Base64 {
 	 *             if source array is null
 	 * @since 2.3.1
 	 */
-	public static byte[] encodeBytesToBytes(final byte[] source) {
+	public final static byte[] encodeBytesToBytes(final byte[] source) {
 		byte[] encoded = null;
 		try {
 			encoded = encodeBytesToBytes(source, 0, source.length,
@@ -996,7 +996,7 @@ public class Base64 {
 	 *             if source array, offset, or length are invalid
 	 * @since 2.3.1
 	 */
-	public static byte[] encodeBytesToBytes(final byte[] source, final int off,
+	public final static byte[] encodeBytesToBytes(final byte[] source, final int off,
 			final int len, final int options) throws java.io.IOException {
 
 		if (source == null) {
@@ -1243,7 +1243,7 @@ public class Base64 {
 	 * @return decoded data
 	 * @since 2.3.1
 	 */
-	public static byte[] decode(final byte[] source) throws java.io.IOException {
+	public final static byte[] decode(final byte[] source) throws java.io.IOException {
 		byte[] decoded = null;
 		// try {
 		decoded = decode(source, 0, source.length, Base64.NO_OPTIONS);
@@ -1276,7 +1276,7 @@ public class Base64 {
 	 *             If bogus characters exist in source data
 	 * @since 1.3
 	 */
-	public static byte[] decode(final byte[] source, final int off,
+	public final static byte[] decode(final byte[] source, final int off,
 			final int len, final int options) throws java.io.IOException {
 
 		// Lots of error checking and exception throwing
@@ -1358,7 +1358,7 @@ public class Base64 {
 	 *             If there is a problem
 	 * @since 1.4
 	 */
-	public static byte[] decode(final String s) throws java.io.IOException {
+	public final static byte[] decode(final String s) throws java.io.IOException {
 		return decode(s, NO_OPTIONS);
 	}
 
@@ -1377,7 +1377,7 @@ public class Base64 {
 	 *             if <tt>s</tt> is null
 	 * @since 1.4
 	 */
-	public static byte[] decode(final String s, final int options)
+	public final static byte[] decode(final String s, final int options)
 			throws java.io.IOException {
 
 		if (s == null) {
@@ -1463,7 +1463,7 @@ public class Base64 {
 	 *             the JVM
 	 * @since 1.5
 	 */
-	public static Object decodeToObject(final String encodedObject)
+	public final static Object decodeToObject(final String encodedObject)
 			throws java.io.IOException, java.lang.ClassNotFoundException {
 		return decodeToObject(encodedObject, NO_OPTIONS, null);
 	}
@@ -1489,7 +1489,7 @@ public class Base64 {
 	 *             the JVM
 	 * @since 2.3.4
 	 */
-	public static Object decodeToObject(final String encodedObject,
+	public final static Object decodeToObject(final String encodedObject,
 			final int options, final ClassLoader loader)
 			throws java.io.IOException, java.lang.ClassNotFoundException {
 
@@ -1569,7 +1569,7 @@ public class Base64 {
 	 *             if dataToEncode is null
 	 * @since 2.1
 	 */
-	public static void encodeToFile(final byte[] dataToEncode,
+	public final static void encodeToFile(final byte[] dataToEncode,
 			final String filename) throws java.io.IOException {
 
 		if (dataToEncode == null) {
@@ -1612,7 +1612,7 @@ public class Base64 {
 	 *             if there is an error
 	 * @since 2.1
 	 */
-	public static void decodeToFile(final String dataToDecode,
+	public final static void decodeToFile(final String dataToDecode,
 			final String filename) throws java.io.IOException {
 
 		Base64.OutputStream bos = null;
@@ -1650,7 +1650,7 @@ public class Base64 {
 	 *             if there is an error
 	 * @since 2.1
 	 */
-	public static byte[] decodeFromFile(final String filename)
+	public final static byte[] decodeFromFile(final String filename)
 			throws java.io.IOException {
 
 		byte[] decodedData = null;
@@ -1714,7 +1714,7 @@ public class Base64 {
 	 *             if there is an error
 	 * @since 2.1
 	 */
-	public static String encodeFromFile(final String filename)
+	public final static String encodeFromFile(final String filename)
 			throws java.io.IOException {
 
 		String encodedData = null;
@@ -1771,7 +1771,7 @@ public class Base64 {
 	 *             if there is an error
 	 * @since 2.2
 	 */
-	public static void encodeFileToFile(final String infile,
+	public final static void encodeFileToFile(final String infile,
 			final String outfile) throws java.io.IOException {
 
 		final String encoded = Base64.encodeFromFile(infile);
@@ -1803,7 +1803,7 @@ public class Base64 {
 	 *             if there is an error
 	 * @since 2.2
 	 */
-	public static void decodeFileToFile(final String infile,
+	public final static void decodeFileToFile(final String infile,
 			final String outfile) throws java.io.IOException {
 
 		final byte[] decoded = Base64.decodeFromFile(infile);
@@ -1834,7 +1834,7 @@ public class Base64 {
 	 * @see Base64
 	 * @since 1.3
 	 */
-	public static class InputStream extends java.io.FilterInputStream {
+	public final static class InputStream extends java.io.FilterInputStream {
 
 		private final boolean encode; // Encoding or decoding
 		private int position; // Current position in the buffer
@@ -2048,7 +2048,7 @@ public class Base64 {
 	 * @see Base64
 	 * @since 1.3
 	 */
-	public static class OutputStream extends java.io.FilterOutputStream {
+	public final static class OutputStream extends java.io.FilterOutputStream {
 
 		private final boolean encode;
 		private int position;

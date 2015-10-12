@@ -124,7 +124,7 @@ public class ImageResizer extends ImageWorker {
 	 *         ratio and dimensions that are equal to or greater than the
 	 *         requested width and height
 	 */
-	public static Bitmap decodeSampledBitmapFromResource(final Resources res,
+	public final static Bitmap decodeSampledBitmapFromResource(final Resources res,
 			final int resId, final int reqWidth, final int reqHeight,
 			final ImageCache cache) {
 
@@ -166,7 +166,7 @@ public class ImageResizer extends ImageWorker {
 	 *         ratio and dimensions that are equal to or greater than the
 	 *         requested width and height
 	 */
-	public static Bitmap decodeSampledBitmapFromFile(final String filename,
+	public final static Bitmap decodeSampledBitmapFromFile(final String filename,
 			final int reqWidth, final int reqHeight, final ImageCache cache) {
 
 		// First decode with inJustDecodeBounds=true to check dimensions
@@ -205,7 +205,7 @@ public class ImageResizer extends ImageWorker {
 	 *         ratio and dimensions that are equal to or greater than the
 	 *         requested width and height
 	 */
-	public static Bitmap decodeSampledBitmapFromDescriptor(
+	public final static Bitmap decodeSampledBitmapFromDescriptor(
 			final FileDescriptor fileDescriptor, final int reqWidth,
 			final int reqHeight, final ImageCache cache) {
 
@@ -267,7 +267,7 @@ public class ImageResizer extends ImageWorker {
 	 *            The requested height of the resulting bitmap
 	 * @return The value to be used for inSampleSize
 	 */
-	public static int calculateInSampleSize(
+	public final static int calculateInSampleSize(
 			final BitmapFactory.Options options, final int reqWidth,
 			final int reqHeight) {
 		// BEGIN_INCLUDE (calculate_sample_size)

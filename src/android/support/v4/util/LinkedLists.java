@@ -44,7 +44,7 @@ import java.util.Vector;
  * <tt>LinkedList</tt> class provides uniformly named methods to <tt>get</tt>,
  * <tt>remove</tt> and <tt>insert</tt> an element at the beginning and end of
  * the list. These operations allow linked lists to be used as a stack,
- * {@linkplain Queue queue}, or {@linkplain Deque double-ended queue}.
+ * {@linkplain Queue queue}, or {@linkplain Deques double-ended queue}.
  * <p>
  *
  * The class implements the <tt>Deque</tt> interface, providing
@@ -107,15 +107,15 @@ import java.util.Vector;
  *            the type of elements held in this collection
  */
 
-public class LinkedList<E> extends AbstractSequentialList<E> implements
-		List<E>, Deque<E>, Cloneable, java.io.Serializable {
+public class LinkedLists<E> extends AbstractSequentialList<E> implements
+		List<E>, Deques<E>, Cloneable, java.io.Serializable {
 	private transient Entry<E> header = new Entry<E>(null, null, null);
 	private transient int size = 0;
 
 	/**
 	 * Constructs an empty list.
 	 */
-	public LinkedList() {
+	public LinkedLists() {
 		this.header.next = this.header.previous = this.header;
 	}
 
@@ -128,7 +128,7 @@ public class LinkedList<E> extends AbstractSequentialList<E> implements
 	 * @throws NullPointerException
 	 *             if the specified collection is null
 	 */
-	public LinkedList(final Collection<? extends E> c) {
+	public LinkedLists(final Collection<? extends E> c) {
 		this();
 		this.addAll(c);
 	}
@@ -607,7 +607,7 @@ public class LinkedList<E> extends AbstractSequentialList<E> implements
 	 *
 	 * @param e
 	 *            the element to insert
-	 * @return <tt>true</tt> (as specified by {@link Deque#offerFirst})
+	 * @return <tt>true</tt> (as specified by {@link Deques#offerFirst})
 	 * @since 1.6
 	 */
 	@Override
@@ -621,7 +621,7 @@ public class LinkedList<E> extends AbstractSequentialList<E> implements
 	 *
 	 * @param e
 	 *            the element to insert
-	 * @return <tt>true</tt> (as specified by {@link Deque#offerLast})
+	 * @return <tt>true</tt> (as specified by {@link Deques#offerLast})
 	 * @since 1.6
 	 */
 	@Override
@@ -802,24 +802,24 @@ public class LinkedList<E> extends AbstractSequentialList<E> implements
 	}
 
 	private class ListItr implements ListIterator<E> {
-		private Entry<E> lastReturned = LinkedList.this.header;
+		private Entry<E> lastReturned = LinkedLists.this.header;
 		private Entry<E> next;
 		private int nextIndex;
-		private int expectedModCount = LinkedList.this.modCount;
+		private int expectedModCount = LinkedLists.this.modCount;
 
 		ListItr(final int index) {
-			if (index < 0 || index > LinkedList.this.size) {
+			if (index < 0 || index > LinkedLists.this.size) {
 				throw new IndexOutOfBoundsException("Index: " + index
-						+ ", Size: " + LinkedList.this.size);
+						+ ", Size: " + LinkedLists.this.size);
 			}
-			if (index < LinkedList.this.size >> 1) {
-				this.next = LinkedList.this.header.next;
+			if (index < LinkedLists.this.size >> 1) {
+				this.next = LinkedLists.this.header.next;
 				for (this.nextIndex = 0; this.nextIndex < index; this.nextIndex++) {
 					this.next = this.next.next;
 				}
 			} else {
-				this.next = LinkedList.this.header;
-				for (this.nextIndex = LinkedList.this.size; this.nextIndex > index; this.nextIndex--) {
+				this.next = LinkedLists.this.header;
+				for (this.nextIndex = LinkedLists.this.size; this.nextIndex > index; this.nextIndex--) {
 					this.next = this.next.previous;
 				}
 			}
@@ -827,13 +827,13 @@ public class LinkedList<E> extends AbstractSequentialList<E> implements
 
 		@Override
 		public boolean hasNext() {
-			return this.nextIndex != LinkedList.this.size;
+			return this.nextIndex != LinkedLists.this.size;
 		}
 
 		@Override
 		public E next() {
 			this.checkForComodification();
-			if (this.nextIndex == LinkedList.this.size) {
+			if (this.nextIndex == LinkedLists.this.size) {
 				throw new NoSuchElementException();
 			}
 
@@ -875,7 +875,7 @@ public class LinkedList<E> extends AbstractSequentialList<E> implements
 			this.checkForComodification();
 			final Entry<E> lastNext = this.lastReturned.next;
 			try {
-				LinkedList.this.remove(this.lastReturned);
+				LinkedLists.this.remove(this.lastReturned);
 			} catch (final NoSuchElementException exception) {
 				throw new IllegalStateException();
 			}
@@ -884,13 +884,13 @@ public class LinkedList<E> extends AbstractSequentialList<E> implements
 			} else {
 				this.nextIndex--;
 			}
-			this.lastReturned = LinkedList.this.header;
+			this.lastReturned = LinkedLists.this.header;
 			this.expectedModCount++;
 		}
 
 		@Override
 		public void set(final E e) {
-			if (this.lastReturned == LinkedList.this.header) {
+			if (this.lastReturned == LinkedLists.this.header) {
 				throw new IllegalStateException();
 			}
 			this.checkForComodification();
@@ -900,14 +900,14 @@ public class LinkedList<E> extends AbstractSequentialList<E> implements
 		@Override
 		public void add(final E e) {
 			this.checkForComodification();
-			this.lastReturned = LinkedList.this.header;
-			LinkedList.this.addBefore(e, this.next);
+			this.lastReturned = LinkedLists.this.header;
+			LinkedLists.this.addBefore(e, this.next);
 			this.nextIndex++;
 			this.expectedModCount++;
 		}
 
 		final void checkForComodification() {
-			if (LinkedList.this.modCount != this.expectedModCount) {
+			if (LinkedLists.this.modCount != this.expectedModCount) {
 				throw new ConcurrentModificationException();
 			}
 		}
@@ -961,7 +961,7 @@ public class LinkedList<E> extends AbstractSequentialList<E> implements
 	/** Adapter to provide descending iterators via ListItr.previous */
 	@SuppressWarnings("rawtypes")
 	private class DescendingIterator implements Iterator {
-		final ListItr itr = new ListItr(LinkedList.this.size());
+		final ListItr itr = new ListItr(LinkedLists.this.size());
 
 		@Override
 		public boolean hasNext() {
@@ -988,9 +988,9 @@ public class LinkedList<E> extends AbstractSequentialList<E> implements
 	@SuppressWarnings("unchecked")
 	@Override
 	public Object clone() {
-		LinkedList<E> clone = null;
+		LinkedLists<E> clone = null;
 		try {
-			clone = (LinkedList<E>) super.clone();
+			clone = (LinkedLists<E>) super.clone();
 		} catch (final CloneNotSupportedException exception) {
 			throw new InternalError();
 		}

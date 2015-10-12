@@ -338,12 +338,12 @@ public abstract class AsyncTask<Params, Progress, Result> {
 	}
 
 	/** @hide Used to force static handler to be created. */
-	public static void init() {
+	public final static void init() {
 		sHandler.getLooper();
 	}
 
 	/** @hide */
-	public static void setDefaultExecutor(final Executor exec) {
+	public final static void setDefaultExecutor(final Executor exec) {
 		sDefaultExecutor = exec;
 	}
 
@@ -404,7 +404,7 @@ public abstract class AsyncTask<Params, Progress, Result> {
 	 *
 	 * @return The current status.
 	 */
-	public final Status getStatus() {
+	public Status getStatus() {
 		return mStatus;
 	}
 
@@ -522,7 +522,7 @@ public abstract class AsyncTask<Params, Progress, Result> {
 	 *
 	 * @see #cancel(boolean)
 	 */
-	public final boolean isCancelled() {
+	public boolean isCancelled() {
 		return mCancelled.get();
 	}
 
@@ -559,7 +559,7 @@ public abstract class AsyncTask<Params, Progress, Result> {
 	 * @see #isCancelled()
 	 * @see #onCancelled(Object)
 	 */
-	public final boolean cancel(final boolean mayInterruptIfRunning) {
+	public boolean cancel(final boolean mayInterruptIfRunning) {
 		mCancelled.set(true);
 		return mFuture.cancel(mayInterruptIfRunning);
 	}
@@ -577,7 +577,7 @@ public abstract class AsyncTask<Params, Progress, Result> {
 	 * @throws InterruptedException
 	 *             If the current thread was interrupted while waiting.
 	 */
-	public final Result get() throws InterruptedException, ExecutionException {
+	public Result get() throws InterruptedException, ExecutionException {
 		return mFuture.get();
 	}
 
@@ -601,7 +601,7 @@ public abstract class AsyncTask<Params, Progress, Result> {
 	 * @throws java.util.concurrent.TimeoutException
 	 *             If the wait timed out.
 	 */
-	public final Result get(final long timeout, final TimeUnit unit)
+	public Result get(final long timeout, final TimeUnit unit)
 			throws InterruptedException, ExecutionException, TimeoutException {
 		return mFuture.get(timeout, unit);
 	}
@@ -639,7 +639,7 @@ public abstract class AsyncTask<Params, Progress, Result> {
 	 * @see #executeOnExecutor(java.util.concurrent.Executor, Object[])
 	 * @see #execute(Runnable)
 	 */
-	public final AsyncTask<Params, Progress, Result> execute(
+	public AsyncTask<Params, Progress, Result> execute(
 			final Params... params) {
 		return executeOnExecutor(sDefaultExecutor, params);
 	}
@@ -685,7 +685,7 @@ public abstract class AsyncTask<Params, Progress, Result> {
 	 *
 	 * @see #execute(Object[])
 	 */
-	public final AsyncTask<Params, Progress, Result> executeOnExecutor(
+	public AsyncTask<Params, Progress, Result> executeOnExecutor(
 			final Executor exec, final Params... params) {
 		if (mStatus != Status.PENDING) {
 			switch (mStatus) {
@@ -719,7 +719,7 @@ public abstract class AsyncTask<Params, Progress, Result> {
 	 * @see #execute(Object[])
 	 * @see #executeOnExecutor(java.util.concurrent.Executor, Object[])
 	 */
-	public static void execute(final Runnable runnable) {
+	public final static void execute(final Runnable runnable) {
 		sDefaultExecutor.execute(runnable);
 	}
 
@@ -738,7 +738,7 @@ public abstract class AsyncTask<Params, Progress, Result> {
 	 * @see #onProgressUpdate
 	 * @see #doInBackground
 	 */
-	public final void publishProgress(final Progress... values) {
+	public void publishProgress(final Progress... values) {
 		if (!isCancelled()) {
 			sHandler.obtainMessage(MESSAGE_POST_PROGRESS,
 					new AsyncTaskResult<Progress>(this, values)).sendToTarget();

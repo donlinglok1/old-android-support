@@ -14,16 +14,14 @@ import android.support.v4.lang.Strings;
 public class ImageCaptureSupport extends Activity {
 	private transient Activity context;
 
-	private transient String tempFilePath;
+	public final static String IMAGE_PATH = "image_path";
 	private final static String TEMP_PATH = "ImageFilePath";
 	private final static int TEMP_CODE = 6260;
-
-	public final static String IMAGE_PATH = "image_path";
+	private transient String tempFilePath;
 
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
 		context = this;
 
 		if (savedInstanceState == null) {
@@ -49,6 +47,7 @@ public class ImageCaptureSupport extends Activity {
 				} catch (final IOException exception) {
 				}
 			}
+
 			tempFilePath = filePath + System.currentTimeMillis() + ".jpg";
 
 			final Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);

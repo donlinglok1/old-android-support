@@ -9,9 +9,12 @@ import java.lang.ref.SoftReference;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Bitmap.Config;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.media.ExifInterface;
 import android.view.View;
 
@@ -23,8 +26,8 @@ import android.view.View;
  * @author Kenneth Tu
  * @version 1.0.0
  */
-public final class Bitmaps {
-	public static int[] getImageSize(final String path) {
+public class Bitmaps {
+	public final static int[] getBitmapSize(final String path) {
 		final BitmapFactory.Options options = new BitmapFactory.Options();
 		options.inJustDecodeBounds = true;
 		BitmapFactory.decodeFile(path, options);
@@ -32,7 +35,35 @@ public final class Bitmaps {
 		return new int[] { options.outHeight, options.outWidth };
 	}
 
-	public static Bitmap getBitmap(final String path, final boolean isExif) {
+	public final static int getBitmapOrientation(final String path) {
+		int result = 0;
+		try {
+			ExifInterface exif;
+			exif = new ExifInterface(path);
+			final int orientation = exif.getAttributeInt(
+					ExifInterface.TAG_ORIENTATION,
+					ExifInterface.ORIENTATION_NORMAL);
+
+			switch (orientation) {
+			case ExifInterface.ORIENTATION_ROTATE_270:
+				result = 270;
+				break;
+			case ExifInterface.ORIENTATION_ROTATE_180:
+				result = 180;
+				break;
+			case ExifInterface.ORIENTATION_ROTATE_90:
+				result = 90;
+				break;
+			default:
+				result = 0;
+				break;
+			}
+		} catch (final IOException exception) {
+		}
+		return result;
+	}
+
+	public final static Bitmap getBitmap(final String path, final boolean isExif) {
 		Bitmap result = null;
 		final BitmapFactory.Options options = new BitmapFactory.Options();
 		options.inJustDecodeBounds = true;
@@ -61,7 +92,7 @@ public final class Bitmaps {
 
 			if (isExif) {
 				final Matrix matrix = new Matrix();
-				matrix.postRotate(getImageOrientation(path));
+				matrix.postRotate(getBitmapOrientation(path));
 				final Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap, 0, 0,
 						bitmap.getWidth(), bitmap.getHeight(), matrix, false);
 
@@ -78,12 +109,12 @@ public final class Bitmaps {
 		return result;
 	}
 
-	public static Bitmap getBitmap(final String path, final double size,
+	public final static Bitmap getBitmap(final String path, final double size,
 			final boolean isExif) {
 		return getBitmap(path, size, size, isExif);
 	}
 
-	public static Bitmap getBitmap(final String path, final double width,
+	public final static Bitmap getBitmap(final String path, final double width,
 			final double heigth, final boolean isExif) {
 		Bitmap result = null;
 		final BitmapFactory.Options options = new BitmapFactory.Options();
@@ -122,7 +153,7 @@ public final class Bitmaps {
 
 			if (isExif) {
 				final Matrix matrix = new Matrix();
-				matrix.postRotate(getImageOrientation(path));
+				matrix.postRotate(getBitmapOrientation(path));
 				final Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap, 0, 0,
 						bitmap.getWidth(), bitmap.getHeight(), matrix, false);
 
@@ -139,12 +170,12 @@ public final class Bitmaps {
 		return result;
 	}
 
-	public static Bitmap getBitmap(final Context context, final int resid,
+	public final static Bitmap getBitmap(final Context context, final int resid,
 			final double size) {
 		return getBitmap(context, resid, size, size);
 	}
 
-	public static Bitmap getBitmap(final Context context, final int resid,
+	public final static Bitmap getBitmap(final Context context, final int resid,
 			final double width, final double heigth) {
 		Bitmap result = null;
 		final BitmapFactory.Options options = new BitmapFactory.Options();
@@ -185,7 +216,7 @@ public final class Bitmaps {
 		return result;
 	}
 
-	public static Bitmap replaceColor(final Bitmap bitmap, final int fromColor,
+	public final static Bitmap replaceColor(final Bitmap bitmap, final int fromColor,
 			final int toColor) {
 		Bitmap result = null;
 		if (null != bitmap) {
@@ -203,7 +234,7 @@ public final class Bitmaps {
 		return result;
 	}
 
-	public static Bitmap view2Bitmap(final View view) {
+	public final static Bitmap getBitmap(final View view) {
 		final Bitmap bmImg = Bitmap.createBitmap(view.getWidth(),
 				view.getHeight(), Bitmap.Config.ARGB_4444);
 
@@ -214,7 +245,7 @@ public final class Bitmaps {
 				bmImg.getHeight() / 20, true);
 	}
 
-	public static Bitmap view2Bitmap(final View view, final int quality,
+	public final static Bitmap getBitmap(final View view, final int quality,
 			final int theWidth, final int theHeight) throws IOException {
 		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		view.setDrawingCacheEnabled(true);
@@ -230,10 +261,10 @@ public final class Bitmaps {
 		bitmap.recycle();
 		final byte[] bytes = baos.toByteArray();
 		baos.close();
-		return bytes2Bimap(bytes);
+		return getBitmap(bytes);
 	}
 
-	public static Bitmap bytes2Bimap(final byte... bytes) {
+	public final static Bitmap getBitmap(final byte... bytes) {
 		Bitmap result = null;
 		if (0 != bytes.length) {
 			result = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
@@ -241,9 +272,23 @@ public final class Bitmaps {
 		return result;
 	}
 
+	public final static Bitmap getBitmap(final Drawable drawable) {
+		if (drawable instanceof BitmapDrawable) {
+			return ((BitmapDrawable) drawable).getBitmap();
+		}
+
+		final Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(),
+				drawable.getIntrinsicHeight(), Config.RGB_565);
+		final Canvas canvas = new Canvas(bitmap);
+		drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+		drawable.draw(canvas);
+
+		return bitmap;
+	}
+
 	private final static int INITIALSIZELIMIT = 8;
 
-	public static int computeSampleSize(final BitmapFactory.Options options,
+	public final static int computeSampleSize(final BitmapFactory.Options options,
 			final int minSideLength, final double maxNumOfPixels)
 			throws IOException {
 		final int initialSize = computeInitialSampleSize(options,
@@ -261,7 +306,7 @@ public final class Bitmaps {
 		return roundedSize;
 	}
 
-	public static int computeInitialSampleSize(
+	public final static int computeInitialSampleSize(
 			final BitmapFactory.Options options, final int minSideLength,
 			final double maxNumOfPixels) throws IOException {
 		int result = 1;
@@ -281,34 +326,6 @@ public final class Bitmaps {
 			result = lowerBound;
 		} else {
 			result = upperBound;
-		}
-		return result;
-	}
-
-	public static int getImageOrientation(final String path) {
-		int result = 0;
-		try {
-			ExifInterface exif;
-			exif = new ExifInterface(path);
-			final int orientation = exif.getAttributeInt(
-					ExifInterface.TAG_ORIENTATION,
-					ExifInterface.ORIENTATION_NORMAL);
-
-			switch (orientation) {
-			case ExifInterface.ORIENTATION_ROTATE_270:
-				result = 270;
-				break;
-			case ExifInterface.ORIENTATION_ROTATE_180:
-				result = 180;
-				break;
-			case ExifInterface.ORIENTATION_ROTATE_90:
-				result = 90;
-				break;
-			default:
-				result = 0;
-				break;
-			}
-		} catch (final IOException exception) {
 		}
 		return result;
 	}

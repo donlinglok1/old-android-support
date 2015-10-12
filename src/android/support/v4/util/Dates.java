@@ -32,12 +32,12 @@ public class Dates {
 
 	private static Date myTime;
 
-	public static void setTime(final Date date) {
+	public final static void setTime(final Date date) {
 		myTime = new Date();
 		myTime.setTime(date.getTime());
 	}
 
-	public static Calendar getInstance() {
+	public final static Calendar getInstance() {
 		final Calendar calendar = Calendar.getInstance();
 		if (null != myTime) {
 			calendar.setTime(myTime);
@@ -45,59 +45,59 @@ public class Dates {
 		return calendar;
 	}
 
-	public static String format(final String formFormat, final String toFormat,
+	public final static String format(final String formFormat, final String toFormat,
 			final String date) throws ParseException {
 		final Calendar cal = getInstance();
 		cal.setTime(new SimpleDateFormat(formFormat, Locale.US).parse(date));
 		return new SimpleDateFormat(toFormat, Locale.US).format(cal.getTime());
 	}
 
-	public static String format(final DateFormat formFormat,
+	public final static String format(final DateFormat formFormat,
 			final String toFormat, final String date) throws ParseException {
 		final Calendar cal = getInstance();
 		cal.setTime(formFormat.parse(date));
 		return new SimpleDateFormat(toFormat, Locale.US).format(cal.getTime());
 	}
 
-	public static String format(final String formFormat,
+	public final static String format(final String formFormat,
 			final DateFormat toFormat, final String date) throws ParseException {
 		final Calendar cal = getInstance();
 		cal.setTime(new SimpleDateFormat(formFormat, Locale.US).parse(date));
 		return toFormat.format(cal.getTime());
 	}
 
-	public static String format(final DateFormat formFormat,
+	public final static String format(final DateFormat formFormat,
 			final DateFormat toFormat, final String date) throws ParseException {
 		final Calendar cal = getInstance();
 		cal.setTime(formFormat.parse(date));
 		return toFormat.format(cal.getTime());
 	}
 
-	public static Date format(final String formFormat, final String date)
+	public final static Date format(final String formFormat, final String date)
 			throws ParseException {
 		final Calendar cal = getInstance();
 		cal.setTime(new SimpleDateFormat(formFormat, Locale.US).parse(date));
 		return cal.getTime();
 	}
 
-	public static String format(final String formFormat, final Date date) {
+	public final static String format(final String formFormat, final Date date) {
 		final Calendar calendar = getInstance();
 		calendar.setTime(date);
 		return new SimpleDateFormat(formFormat, Locale.US).format(calendar
 				.getTime());
 	}
 
-	public static boolean isToday(final Date date) {
+	public final static boolean isToday(final Date date) {
 		return isToday(date, 0);
 	}
 
-	public static boolean isToday(final Date date, final int allowance) {
+	public final static boolean isToday(final Date date, final int allowance) {
 		final Calendar calendar = getInstance();
 		calendar.add(Calendar.HOUR, allowance);
 		return isSameDay(date, calendar.getTime());
 	}
 
-	public static boolean isSameDay(final Date date1, final Date date2) {
+	public final static boolean isSameDay(final Date date1, final Date date2) {
 		boolean result = false;
 		if (null != date1 && null != date2) {
 			final Calendar calendar1 = getInstance();
@@ -113,25 +113,25 @@ public class Dates {
 		return result;
 	}
 
-	public static String now() {
+	public final static String now() {
 		final Calendar calendar = getInstance();
 		return new SimpleDateFormat(FORMAT_DATETIME, Locale.US).format(calendar
 				.getTime());
 	}
 
-	public static int nowHour() {
+	public final static int nowHour() {
 		final Calendar calendar = getInstance();
 		return calendar.get(Calendar.HOUR_OF_DAY);
 	}
 
-	public static String add(final int millisecond) {
+	public final static String add(final int millisecond) {
 		final Calendar calendar = getInstance();
 		calendar.add(Calendar.MILLISECOND, millisecond);
 		return new SimpleDateFormat(FORMAT_DATETIME, Locale.US).format(calendar
 				.getTime());
 	}
 
-	public static String add(final Calendar calendar, final int millisecond) {
+	public final static String add(final Calendar calendar, final int millisecond) {
 		calendar.add(Calendar.MILLISECOND, millisecond);
 		return new SimpleDateFormat(FORMAT_DATETIME, Locale.US).format(calendar
 				.getTime());

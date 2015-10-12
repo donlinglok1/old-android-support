@@ -189,7 +189,7 @@ public class DiskLruCache implements Closeable {
 	/**
 	 * Returns the remainder of 'reader' as a string, closing it when done.
 	 */
-	public static String readFully(final Reader reader) throws IOException {
+	public final static String readFully(final Reader reader) throws IOException {
 		try {
 			final StringWriter writer = new StringWriter();
 			final char[] buffer = new char[1024];
@@ -210,7 +210,7 @@ public class DiskLruCache implements Closeable {
 	 * @throws java.io.EOFException
 	 *             if the stream is exhausted before the next newline character.
 	 */
-	public static String readAsciiLine(final InputStream in) throws IOException {
+	public final static String readAsciiLine(final InputStream in) throws IOException {
 		// TODO: support UTF-8 here instead
 
 		final StringBuilder result = new StringBuilder(80);
@@ -235,7 +235,7 @@ public class DiskLruCache implements Closeable {
 	 * Closes 'closeable', ignoring any checked exceptions. Does nothing if
 	 * 'closeable' is null.
 	 */
-	public static void closeQuietly(final Closeable closeable) {
+	public final static void closeQuietly(final Closeable closeable) {
 		if (closeable != null) {
 			try {
 				closeable.close();
@@ -250,7 +250,7 @@ public class DiskLruCache implements Closeable {
 	 * Recursively delete everything in {@code dir}.
 	 */
 	// TODO: this should specify paths as Strings rather than as Files
-	public static void deleteContents(final File dir) throws IOException {
+	public final static void deleteContents(final File dir) throws IOException {
 		final File[] files = dir.listFiles();
 		if (files == null) {
 			throw new IllegalArgumentException("not a directory: " + dir);
@@ -309,7 +309,7 @@ public class DiskLruCache implements Closeable {
 	 * @throws java.io.IOException
 	 *             if reading or writing the cache directory fails
 	 */
-	public static DiskLruCache open(final File directory, final int appVersion,
+	public final static DiskLruCache open(final File directory, final int appVersion,
 			final int valueCount, final long maxSize) throws IOException {
 		if (maxSize <= 0) {
 			throw new IllegalArgumentException("maxSize <= 0");

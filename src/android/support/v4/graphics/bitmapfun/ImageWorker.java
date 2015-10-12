@@ -202,7 +202,7 @@ public abstract class ImageWorker {
 	 *
 	 * @param imageView
 	 */
-	public static void cancelWork(final ImageView imageView) {
+	public final static void cancelWork(final ImageView imageView) {
 		final BitmapWorkerTask bitmapWorkerTask = getBitmapWorkerTask(imageView);
 		if (bitmapWorkerTask != null) {
 			bitmapWorkerTask.cancel(true);
@@ -218,7 +218,7 @@ public abstract class ImageWorker {
 	 * work in progress on this image view. Returns false if the work in
 	 * progress deals with the same data. The work is not stopped in that case.
 	 */
-	public static boolean cancelPotentialWork(final Object data,
+	public final static boolean cancelPotentialWork(final Object data,
 			final ImageView imageView) {
 		// BEGIN_INCLUDE(cancel_potential_work)
 		final BitmapWorkerTask bitmapWorkerTask = getBitmapWorkerTask(imageView);

@@ -3,13 +3,12 @@ package android.support.v4.graphics.drawable;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
-import android.graphics.Bitmap.Config;
 import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.support.v4.graphics.Bitmaps;
 import android.support.v4.lang.Strings;
-import android.support.v4.widget.TypedValue;
+import android.support.v4.widget.TypedValues;
 
 /*
  * Copyright (c) 2014 Kenneth Tu <don.ling.lok@gmail.com>
@@ -19,24 +18,24 @@ import android.support.v4.widget.TypedValue;
  * @author Kenneth Tu
  * @version 1.0.0
  */
-public final class Drawables {
-	public static Drawable getDrawable(final Context baseContext,
+public class Drawables {
+	public final static Drawable getDrawable(final Context baseContext,
 			final int resid, final int size) {
 		return getDrawable(baseContext, resid, size, size);
 	}
 
-	public static Drawable getDrawable(final Context baseContext,
+	public final static Drawable getDrawable(final Context baseContext,
 			final int resid, final int width, final int heigth) {
 		Drawable result = null;
 		try {
 			result = new BitmapDrawable(baseContext.getResources(),
 					Bitmap.createScaledBitmap(
-							drawable2Bitmap(getDrawable(baseContext, resid)),
+							Bitmaps.getBitmap(getDrawable(baseContext, resid)),
 							width, heigth, true));
 		} catch (final Exception exception) {
 			Strings.exceptionToJSONObject(exception);
 			result = new BitmapDrawable(baseContext.getResources(),
-					Bitmap.createScaledBitmap(drawable2Bitmap(baseContext
+					Bitmap.createScaledBitmap(Bitmaps.getBitmap(baseContext
 							.getResources().getDrawable(resid)), width, heigth,
 							true));
 		}
@@ -44,7 +43,7 @@ public final class Drawables {
 	}
 
 	@SuppressWarnings("deprecation")
-	public static Drawable getDrawable(final Context baseContext,
+	public final static Drawable getDrawable(final Context baseContext,
 			final int resId) {
 		final BitmapFactory.Options options = new BitmapFactory.Options();
 		options.inPurgeable = true;
@@ -65,25 +64,9 @@ public final class Drawables {
 				baseContext.getResources(), resId, options));
 	}
 
-	public static Bitmap drawable2Bitmap(final Drawable drawable) {
-		if (drawable instanceof BitmapDrawable) {
-			return ((BitmapDrawable) drawable).getBitmap();
-		}
-
-		final Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(),
-				drawable.getIntrinsicHeight(), Config.RGB_565);
-		final Canvas canvas = new Canvas(bitmap);
-		drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
-		drawable.draw(canvas);
-
-		return bitmap;
-	}
-
-	public static int dp2px(final int dipValue) {
-		final int result = (int) TypedValue.applyDimension(
-				TypedValue.COMPLEX_UNIT_DIP, dipValue, Resources.getSystem()
-						.getDisplayMetrics());
-		return result;
+	public final static int dp2px(final int dipValue) {
+		return (int) TypedValues.applyDimension(TypedValues.COMPLEX_UNIT_DIP,
+				dipValue, Resources.getSystem().getDisplayMetrics());
 	}
 
 }

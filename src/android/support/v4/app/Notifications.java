@@ -16,7 +16,7 @@ import android.net.Uri;
  */
 @SuppressWarnings("deprecation")
 public class Notifications {
-	public final static Notification showNoti(final Context context,
+	public final static Notification show(final Context context,
 			final String title, final String content, final int smallIcon,
 			final Uri sound, final boolean ongoing, final int notiId) {
 		final PendingIntent contentIntent = PendingIntent.getActivity(
@@ -26,11 +26,11 @@ public class Notifications {
 						context.getPackageName()),
 				PendingIntent.FLAG_CANCEL_CURRENT);
 
-		return showNoti(context, title, content, smallIcon, sound, ongoing,
-				notiId, contentIntent);
+		return show(context, title, content, smallIcon, sound, ongoing, notiId,
+				contentIntent);
 	}
 
-	public final static Notification showNoti(final Context context,
+	public final static Notification show(final Context context,
 			final String title, final String content, final int smallIcon,
 			final Uri sound, final boolean ongoing, final int notiId,
 			final PendingIntent pendingIntent) {
@@ -72,17 +72,13 @@ public class Notifications {
 		return notification;
 	}
 
-	/*
-	 * Remove all
-	 */
-	public final static void removeNotification(final Context context) {
+	public final static void removeAll(final Context context) {
 		final NotificationManager notificationManager = (NotificationManager) context
 				.getSystemService(Context.NOTIFICATION_SERVICE);
 		notificationManager.cancelAll();
 	}
 
-	public final static void removeNotification(final Context context,
-			final int notiId) {
+	public final static void remove(final Context context, final int notiId) {
 		final NotificationManager notificationManager = (NotificationManager) context
 				.getSystemService(Context.NOTIFICATION_SERVICE);
 		notificationManager.cancel(notiId);

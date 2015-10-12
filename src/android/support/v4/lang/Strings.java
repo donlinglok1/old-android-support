@@ -27,7 +27,7 @@ import net.minidev.json.JSONValue;
  * @author Kenneth Tu
  * @version 1.0.0
  */
-public final class Strings {
+public class Strings {
 	// http://www.robelle.com/smugbook/ascii.html
 
 	// DONT CHANGE THE SORTING!!!
@@ -125,7 +125,7 @@ public final class Strings {
 
 	private final static String DES = fString(UPPD, UPPE, UPPS);
 
-	public static JSONArray joinJSONArray(final JSONArray firstArray,
+	public final static JSONArray joinJSONArray(final JSONArray firstArray,
 			final JSONArray secArray) {
 		final StringBuffer buffer = new StringBuffer();
 
@@ -154,7 +154,7 @@ public final class Strings {
 		return (JSONArray) JSONValue.parse(valueOf(buffer));
 	}
 
-	public static JSONObject exceptionToJSONObject(final Exception exception) {
+	public final static JSONObject exceptionToJSONObject(final Exception exception) {
 		final StringWriter sWriter = new StringWriter();
 		exception.printStackTrace(new PrintWriter(sWriter));
 		final JSONObject temp = new JSONObject();
@@ -165,7 +165,7 @@ public final class Strings {
 	}
 
 	// @SuppressLint("TrulyRandom")
-	public static String encrypt(final String data, final String key) {
+	public final static String encrypt(final String data, final String key) {
 		String result = data;
 		try {
 			// System.out.println("size org:" + data.length());
@@ -192,7 +192,7 @@ public final class Strings {
 		return result;
 	}
 
-	public static String decrypt(final String data, final String key) {
+	public final static String decrypt(final String data, final String key) {
 		String result = data;
 		try {
 			if (null != data && !Strings.EMPTY.equals(data)) {
@@ -222,7 +222,7 @@ public final class Strings {
 		return result;
 	}
 
-	public static String fString(final String... words) {
+	public final static String fString(final String... words) {
 		final StringBuffer queryBuffer = new StringBuffer();
 		for (final String word : words) {
 			queryBuffer.append(word);
@@ -230,7 +230,7 @@ public final class Strings {
 		return valueOf(queryBuffer);
 	}
 
-	public static String compress(final String str) throws IOException {
+	public final static String compress(final String str) throws IOException {
 		String result = str;
 		if (null != str && str.length() > 0) {
 			final ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -242,7 +242,7 @@ public final class Strings {
 		return result;
 	}
 
-	public static String unCompress(final String str) throws IOException {
+	public final static String unCompress(final String str) throws IOException {
 		String result = str;
 		if (null != str && str.length() > 0) {
 			final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
@@ -260,7 +260,7 @@ public final class Strings {
 		return result;
 	}
 
-	public static boolean isNull(final Object object) {
+	public final static boolean isNull(final Object object) {
 		return null == object || valueOf(object).length() == 0;
 	}
 
@@ -274,7 +274,7 @@ public final class Strings {
 	 *         <code>obj.toString()</code> is returned.
 	 * @see java.lang.Object#toString()
 	 */
-	public static String valueOf(final Object obj) {
+	public final static String valueOf(final Object obj) {
 		return null == obj ? "" : obj.toString();
 	}
 
@@ -288,7 +288,7 @@ public final class Strings {
 	 *         <code>obj.toString()</code> is returned.
 	 * @see java.lang.Object#toString()
 	 */
-	public static String valueOf(final Object obj, final String defaultvalue) {
+	public final static String valueOf(final Object obj, final String defaultvalue) {
 		return isNull(obj) ? defaultvalue : obj.toString();
 	}
 
@@ -303,7 +303,7 @@ public final class Strings {
 	 * @return a newly allocated string representing the same sequence of
 	 *         characters contained in the character array argument.
 	 */
-	public static String valueOf(final char... data) {
+	public final static String valueOf(final char... data) {
 		return new String(data);
 	}
 
@@ -330,7 +330,7 @@ public final class Strings {
 	 *                is negative, or <code>offset+count</code> is larger than
 	 *                <code>data.length</code>.
 	 */
-	public static String valueOf(final char data[], final int offset,
+	public final static String valueOf(final char data[], final int offset,
 			final int count) {
 		return new String(data, offset, count);
 	}
@@ -348,7 +348,7 @@ public final class Strings {
 	 * @return a <code>String</code> that contains the characters of the
 	 *         specified subarray of the character array.
 	 */
-	public static String copyValueOf(final char data[], final int offset,
+	public final static String copyValueOf(final char data[], final int offset,
 			final int count) {
 		// All public String constructors now copy the data.
 		return new String(data, offset, count);
@@ -363,7 +363,7 @@ public final class Strings {
 	 * @return a <code>String</code> that contains the characters of the
 	 *         character array.
 	 */
-	public static String copyValueOf(final char... data) {
+	public final static String copyValueOf(final char... data) {
 		return copyValueOf(data, 0, data.length);
 	}
 
@@ -376,7 +376,7 @@ public final class Strings {
 	 *         <code>"true"</code> is returned; otherwise, a string equal to
 	 *         <code>"false"</code> is returned.
 	 */
-	public static String valueOf(final boolean booleans) {
+	public final static String valueOf(final boolean booleans) {
 		return booleans ? "true" : "false";
 	}
 
@@ -391,7 +391,7 @@ public final class Strings {
 	 * @return a string representation of the <code>int</code> argument.
 	 * @see java.lang.Integer#toString(int, int)
 	 */
-	public static String valueOf(final int ints) {
+	public final static String valueOf(final int ints) {
 		return Integer.toString(ints, 10);
 	}
 
@@ -406,7 +406,7 @@ public final class Strings {
 	 * @return a string representation of the <code>long</code> argument.
 	 * @see java.lang.Long#toString(long)
 	 */
-	public static String valueOf(final long longs) {
+	public final static String valueOf(final long longs) {
 		return Long.toString(longs, 10);
 	}
 
@@ -421,7 +421,7 @@ public final class Strings {
 	 * @return a string representation of the <code>float</code> argument.
 	 * @see java.lang.Float#toString(float)
 	 */
-	public static String valueOf(final float floats) {
+	public final static String valueOf(final float floats) {
 		return Float.toString(floats);
 	}
 
@@ -436,7 +436,7 @@ public final class Strings {
 	 * @return a string representation of the <code>double</code> argument.
 	 * @see java.lang.Double#toString(double)
 	 */
-	public static String valueOf(final double doubles) {
+	public final static String valueOf(final double doubles) {
 		return Double.toString(doubles);
 	}
 

@@ -21,7 +21,7 @@ import android.support.v4.lang.Strings;
  * @author Kenneth Tu
  * @version 1.0.0
  */
-public final class Sockets extends Socket {
+public class Sockets extends Socket {
 	public Sockets(final InetAddress serverAddr, final int serverport)
 			throws IOException {
 		super(serverAddr, serverport);
@@ -63,7 +63,6 @@ public final class Sockets extends Socket {
 		return encryptionKey;
 	}
 
-	// Preformance setting:
 	public final static int BUFFERSIZE = 32;
 
 	public final static int QUEUEFAILTRY = 3;

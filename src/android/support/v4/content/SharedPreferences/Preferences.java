@@ -15,72 +15,70 @@ import android.support.v4.lang.Strings;
  * @author Kenneth Tu
  * @version 1.0.0
  */
-public final class Preferences {
+public class Preferences {
 	public final static String SHAREDPREFERENCESNAME = "SharedPreference";
 
-	public static void setPreferences(final Context baseContext,
-			final String key, final boolean value) {
-		setPreferences(baseContext, SHAREDPREFERENCESNAME, key, value);
+	public final static void set(final Context baseContext, final String key,
+			final boolean value) {
+		set(baseContext, SHAREDPREFERENCESNAME, key, value);
 	}
 
-	public static void setPreferences(final Context baseContext,
-			final String key, final float value) {
-		setPreferences(baseContext, SHAREDPREFERENCESNAME, key, value);
+	public final static void set(final Context baseContext, final String key,
+			final float value) {
+		set(baseContext, SHAREDPREFERENCESNAME, key, value);
 	}
 
-	public static void setPreferences(final Context baseContext,
-			final String key, final int value) {
-		setPreferences(baseContext, SHAREDPREFERENCESNAME, key, value);
+	public final static void set(final Context baseContext, final String key,
+			final int value) {
+		set(baseContext, SHAREDPREFERENCESNAME, key, value);
 	}
 
-	public static void setPreferences(final Context baseContext,
-			final String key, final Long value) {
-		setPreferences(baseContext, SHAREDPREFERENCESNAME, key, value);
+	public final static void set(final Context baseContext, final String key,
+			final Long value) {
+		set(baseContext, SHAREDPREFERENCESNAME, key, value);
 	}
 
-	public static void setPreferences(final Context baseContext,
-			final String key, final String value) {
-		setPreferences(baseContext, SHAREDPREFERENCESNAME, key, value);
+	public final static void set(final Context baseContext, final String key,
+			final String value) {
+		set(baseContext, SHAREDPREFERENCESNAME, key, value);
 	}
 
-	public static boolean setPreferencesStringArray(final Context baseContext,
+	public final static boolean setArray(final Context baseContext,
 			final String arrayName, final ArrayList<?> array) {
-		return setPreferencesStringArray(baseContext, SHAREDPREFERENCESNAME,
-				arrayName, array);
+		return setArray(baseContext, SHAREDPREFERENCESNAME, arrayName, array);
 	}
 
-	public static boolean getBoolean(final Context baseContext,
-			final String key, final boolean defValue) {
-		return getBoolean(baseContext, SHAREDPREFERENCESNAME, key, defValue);
+	public final static boolean get(final Context baseContext, final String key,
+			final boolean defValue) {
+		return get(baseContext, SHAREDPREFERENCESNAME, key, defValue);
 	}
 
-	public static float getFloat(final Context baseContext, final String key,
+	public final static float get(final Context baseContext, final String key,
 			final float defValue) {
-		return getFloat(baseContext, SHAREDPREFERENCESNAME, key, defValue);
+		return get(baseContext, SHAREDPREFERENCESNAME, key, defValue);
 	}
 
-	public static int getInt(final Context baseContext, final String key,
+	public final static int get(final Context baseContext, final String key,
 			final int defValue) {
-		return getInt(baseContext, SHAREDPREFERENCESNAME, key, defValue);
+		return get(baseContext, SHAREDPREFERENCESNAME, key, defValue);
 	}
 
-	public static Long getLong(final Context baseContext, final String key,
+	public final static Long get(final Context baseContext, final String key,
 			final Long defValue) {
-		return getLong(baseContext, SHAREDPREFERENCESNAME, key, defValue);
+		return get(baseContext, SHAREDPREFERENCESNAME, key, defValue);
 	}
 
-	public static String getString(final Context baseContext, final String key,
+	public final static String get(final Context baseContext, final String key,
 			final String defValue) {
-		return getString(baseContext, SHAREDPREFERENCESNAME, key, defValue);
+		return get(baseContext, SHAREDPREFERENCESNAME, key, defValue);
 	}
 
-	public static ArrayList<?> getPreferencesStringArray(
-			final Context baseContext, final String arrayName) {
-		return getPreferencesStringArray(baseContext, SHAREDPREFERENCESNAME,
-				arrayName);
+	public final static ArrayList<?> getArray(final Context baseContext,
+			final String key) {
+		return getArray(baseContext, SHAREDPREFERENCESNAME, key);
 	}
 
-	public static void setPreferences(final Context baseContext,
+	public final static void set(final Context baseContext,
 			final String sharedPreferencesName, final String key,
 			final boolean value) {
 		final Editor editor = baseContext.getSharedPreferences(
@@ -89,7 +87,7 @@ public final class Preferences {
 		editor.commit();
 	}
 
-	public static void setPreferences(final Context baseContext,
+	public final static void set(final Context baseContext,
 			final String sharedPreferencesName, final String key,
 			final float value) {
 		final Editor editor = baseContext.getSharedPreferences(
@@ -98,7 +96,7 @@ public final class Preferences {
 		editor.commit();
 	}
 
-	public static void setPreferences(final Context baseContext,
+	public final static void set(final Context baseContext,
 			final String sharedPreferencesName, final String key,
 			final int value) {
 		final Editor editor = baseContext.getSharedPreferences(
@@ -107,7 +105,7 @@ public final class Preferences {
 		editor.commit();
 	}
 
-	public static void setPreferences(final Context baseContext,
+	public final static void set(final Context baseContext,
 			final String sharedPreferencesName, final String key,
 			final Long value) {
 		final Editor editor = baseContext.getSharedPreferences(
@@ -116,7 +114,7 @@ public final class Preferences {
 		editor.commit();
 	}
 
-	public static void setPreferences(final Context baseContext,
+	public final static void set(final Context baseContext,
 			final String sharedPreferencesName, final String key,
 			final String value) {
 		final Editor editor = baseContext.getSharedPreferences(
@@ -125,48 +123,48 @@ public final class Preferences {
 		editor.commit();
 	}
 
-	public static boolean setPreferencesStringArray(final Context baseContext,
-			final String sharedPreferencesName, final String arrayName,
+	public final static boolean setArray(final Context baseContext,
+			final String sharedPreferencesName, final String key,
 			final ArrayList<?> array) {
 		final Editor editor = baseContext.getSharedPreferences(
 				sharedPreferencesName, 0).edit();
-		editor.putInt(Strings.fString(arrayName, "_size"), array.size());
+		editor.putInt(Strings.fString(key, "_size"), array.size());
 		for (int i = 0; i < array.size(); i++) {
-			editor.putString(Strings.fString(arrayName, "_") + i,
+			editor.putString(Strings.fString(key, "_") + i,
 					(String) array.get(i));
 		}
 		return editor.commit();
 	}
 
-	public static boolean getBoolean(final Context baseContext,
+	public final static boolean get(final Context baseContext,
 			final String sharedPreferencesName, final String key,
 			final boolean defValue) {
 		return baseContext.getSharedPreferences(sharedPreferencesName, 0)
 				.getBoolean(key, defValue);
 	}
 
-	public static float getFloat(final Context baseContext,
+	public final static float get(final Context baseContext,
 			final String sharedPreferencesName, final String key,
 			final float defValue) {
 		return baseContext.getSharedPreferences(sharedPreferencesName, 0)
 				.getFloat(key, defValue);
 	}
 
-	public static int getInt(final Context baseContext,
+	public final static int get(final Context baseContext,
 			final String sharedPreferencesName, final String key,
 			final int defValue) {
 		return baseContext.getSharedPreferences(sharedPreferencesName, 0)
 				.getInt(key, defValue);
 	}
 
-	public static Long getLong(final Context baseContext,
+	public final static Long get(final Context baseContext,
 			final String sharedPreferencesName, final String key,
 			final Long defValue) {
 		return baseContext.getSharedPreferences(sharedPreferencesName, 0)
 				.getLong(key, defValue);
 	}
 
-	public static String getString(final Context baseContext,
+	public final static String get(final Context baseContext,
 			final String sharedPreferencesName, final String key,
 			final String defValue) {
 		String result = defValue;
@@ -178,16 +176,14 @@ public final class Preferences {
 		return result;
 	}
 
-	public static ArrayList<?> getPreferencesStringArray(
-			final Context baseContext, final String sharedPreferencesName,
-			final String arrayName) {
+	public final static ArrayList<?> getArray(final Context baseContext,
+			final String sharedPreferencesName, final String key) {
 		final SharedPreferences prefs = baseContext.getSharedPreferences(
 				sharedPreferencesName, 0);
-		final int size = prefs.getInt(Strings.fString(arrayName, "_size"), 0);
+		final int size = prefs.getInt(Strings.fString(key, "_size"), 0);
 		final ArrayList<String> array = new ArrayList<String>(size);
 		for (int i = 0; i < size; i++) {
-			array.add(i,
-					prefs.getString(Strings.fString(arrayName, "_") + i, null));
+			array.add(i, prefs.getString(Strings.fString(key, "_") + i, null));
 		}
 		return array;
 	}

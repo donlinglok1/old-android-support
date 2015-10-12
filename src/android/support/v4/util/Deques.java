@@ -203,7 +203,7 @@ import java.util.Stack;
  *            the type of elements held in this collection
  */
 
-public interface Deque<E> extends Queue<E> {
+public interface Deques<E> extends Queue<E> {
 	/**
 	 * Inserts the specified element at the front of this deque if it is
 	 * possible to do so immediately without violating capacity restrictions.

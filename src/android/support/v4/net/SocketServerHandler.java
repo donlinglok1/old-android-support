@@ -21,27 +21,27 @@ import android.support.v4.util.Dates;
  * @version 1.0.0
  */
 public class SocketServerHandler {
-	public interface ServerHandlerCallBack {
-		void onCallBack(SocketServerHandler handler, JSONObject action);
+	public interface ServerHandlerCallback {
+		void onCallback(SocketServerHandler handler, JSONObject action);
 
 		void onDisconnected(SocketServerHandler handler);
 	}
 
-	public transient ServerHandlerCallBack callBack;
+	public transient ServerHandlerCallback callback;
 
-	public void setCallback(final ServerHandlerCallBack callBack) {
-		this.callBack = callBack;
+	public void setCallback(final ServerHandlerCallback callback) {
+		this.callback = callback;
 	}
 
 	private transient ExecutorService threadPool;
 
-	public final void setThreadPool(final ExecutorService threadPool) {
+	public void setThreadPool(final ExecutorService threadPool) {
 		this.threadPool = threadPool;
 	}
 
 	public transient Sockets socket;
 
-	public final void connectToClient(final Sockets socket) {
+	public void connectToClient(final Sockets socket) {
 		this.socket = socket;
 		if (null != receiveFuture) {
 			receiveFuture.cancel(true);
@@ -56,7 +56,7 @@ public class SocketServerHandler {
 		keepAliveFuture = threadPool.submit(new KeepAlive());
 	}
 
-	public final void sendMessage(final String message) {
+	public void sendMessage(final String message) {
 		if (null != socket) {
 			try {
 				socket.send(message);
@@ -153,7 +153,7 @@ public class SocketServerHandler {
 		}
 	}
 
-	public final void onDisconnect() {
+	public void onDisconnect() {
 		if (null != keepAliveFuture) {
 			keepAliveFuture.cancel(true);
 			keepAliveFuture = null;
@@ -173,9 +173,8 @@ public class SocketServerHandler {
 			}
 			socket = null;
 		}
-		if (null != callBack) {
-			callBack.onDisconnected(SocketServerHandler.this);
-			callBack = null;
+		if (null != callback) {
+			callback.onDisconnected(SocketServerHandler.this);
 		}
 	}
 }

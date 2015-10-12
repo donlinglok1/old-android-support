@@ -111,7 +111,7 @@ public class ImageCache {
 	 * @return An existing retained ImageCache object or a new one if one did
 	 *         not exist
 	 */
-	public static ImageCache getInstance(final FragmentManager fragmentManager,
+	public final static ImageCache getInstance(final FragmentManager fragmentManager,
 			final ImageCacheParams cacheParams) {
 
 		// Search for, or create an instance of the non-UI RetainFragment
@@ -515,7 +515,7 @@ public class ImageCache {
 	/**
 	 * A holder class that contains cache parameters.
 	 */
-	public static class ImageCacheParams {
+	public final static class ImageCacheParams {
 		public int memCacheSize = DEFAULT_MEM_CACHE_SIZE;
 		public int diskCacheSize = DEFAULT_DISK_CACHE_SIZE;
 		public File diskCacheDir;
@@ -612,7 +612,7 @@ public class ImageCache {
 	 *            A unique directory name to append to the cache dir
 	 * @return The cache dir
 	 */
-	public static File getDiskCacheDir(final Context context,
+	public final static File getDiskCacheDir(final Context context,
 			final String uniqueName) {
 		// Check if media is mounted or storage is built-in, if so, try and use
 		// external cache dir
@@ -629,7 +629,7 @@ public class ImageCache {
 	 * A hashing method that changes a string (like a URL) into a hash suitable
 	 * for using as a disk filename.
 	 */
-	public static String hashKeyForDisk(final String key) {
+	public final static String hashKeyForDisk(final String key) {
 		String cacheKey;
 		try {
 			final MessageDigest mDigest = MessageDigest.getInstance("MD5");
@@ -664,7 +664,7 @@ public class ImageCache {
 	 * @return size in bytes
 	 */
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB_MR1)
-	public static int getBitmapSize(final BitmapDrawable value) {
+	public final static int getBitmapSize(final BitmapDrawable value) {
 		final Bitmap bitmap = value.getBitmap();
 
 		// From KitKat onward use getAllocationByteCount() as allocated bytes
@@ -689,7 +689,7 @@ public class ImageCache {
 	 *         otherwise.
 	 */
 	@TargetApi(VERSION_CODES.GINGERBREAD)
-	public static boolean isExternalStorageRemovable() {
+	public final static boolean isExternalStorageRemovable() {
 		if (Utils.hasGingerbread()) {
 			return Environment.isExternalStorageRemovable();
 		}
@@ -704,7 +704,7 @@ public class ImageCache {
 	 * @return The external cache dir
 	 */
 	@TargetApi(VERSION_CODES.FROYO)
-	public static File getExternalCacheDir(final Context context) {
+	public final static File getExternalCacheDir(final Context context) {
 		if (Utils.hasFroyo()) {
 			return context.getExternalCacheDir();
 		}
@@ -725,7 +725,7 @@ public class ImageCache {
 	 */
 	@SuppressWarnings("deprecation")
 	@TargetApi(VERSION_CODES.GINGERBREAD)
-	public static long getUsableSpace(final File path) {
+	public final static long getUsableSpace(final File path) {
 		if (Utils.hasGingerbread()) {
 			return path.getUsableSpace();
 		}
@@ -765,7 +765,7 @@ public class ImageCache {
 	 * A simple non-UI Fragment that stores a single Object and is retained over
 	 * configuration changes. It will be used to retain the ImageCache object.
 	 */
-	public static class RetainFragment extends Fragment {
+	public final static class RetainFragment extends Fragment {
 		private Object mObject;
 
 		/**

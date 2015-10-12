@@ -6,7 +6,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Environment;
-import android.support.v4.database.sqlite.SQLiteOpenHelpersTask.SQLiteCallback;
+import android.support.v4.database.sqlite.SQLiteHelpersTask.SQLiteCallback;
 
 /*
  * Copyright (c) 2014 Kenneth Tu <don.ling.lok@gmail.com>
@@ -16,7 +16,7 @@ import android.support.v4.database.sqlite.SQLiteOpenHelpersTask.SQLiteCallback;
  * @author Kenneth Tu
  * @version 1.0.0
  */
-public final class SQLiteOpenHelpers extends SQLiteOpenHelper {
+public class SQLiteHelpers extends SQLiteOpenHelper {
 	private transient final SQLiteDatabase sqLiteDatabase;
 
 	private final static String DB_NAME = "notification.wav";
@@ -27,7 +27,7 @@ public final class SQLiteOpenHelpers extends SQLiteOpenHelper {
 	public final static int SQLCIPHER_SYSTEM = 2;
 	public final static int SQLCIPHER_ANDROID_DATA = 3;
 
-	public SQLiteOpenHelpers(final Context context, final int version_code,
+	public SQLiteHelpers(final Context context, final int version_code,
 			final int dbStorageLocation) {
 		super(context, DB_NAME, null, version_code);
 		switch (dbStorageLocation) {

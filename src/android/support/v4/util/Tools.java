@@ -28,7 +28,7 @@ public class Tools {
 			return;
 		}
 
-		Preferences.setPreferences(context, "BADGE_COUNT_UPDATE", count);
+		Preferences.set(context, "BADGE_COUNT_UPDATE", count);
 
 		final Intent intent = new Intent(
 				"android.intent.action.BADGE_COUNT_UPDATE");

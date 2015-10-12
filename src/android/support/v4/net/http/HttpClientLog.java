@@ -1,4 +1,4 @@
-package android.support.v4.util.log;
+package android.support.v4.net.http;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -12,10 +12,9 @@ import java.util.logging.Logger;
 import android.util.Log;
 
 public class HttpClientLog {
-
 	private static DalvikLogHandler activeHandler;
 
-	public static class DalvikLogHandler extends Handler {
+	public final static class DalvikLogHandler extends Handler {
 
 		private final static String LOG_TAG = "HttpClient";
 
@@ -35,7 +34,7 @@ public class HttpClientLog {
 		}
 	}
 
-	public static void enable() {
+	public final static void enable() {
 		try {
 			final String config = "org.apache.http.impl.conn.level = FINEST\n"
 					+ "org.apache.http.impl.client.level = FINEST\n"

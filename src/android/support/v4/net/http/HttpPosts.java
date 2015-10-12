@@ -39,11 +39,15 @@ import android.support.v4.lang.Strings;
  * @author Kenneth Tu
  * @version 1.0.0
  */
-public final class HttpPosts {
+public class HttpPosts {
+	public interface HttpPostsCallback {
+		void onReturn(final String result);
+	}
+
 	private final static int TIMEOUTSOCKET = 5000 * 4;
 	private final static int TIMEOUTCONNECTION = 3000 * 4;
 
-	public static HttpClient createHttpClient() {
+	public final static HttpClient createHttpClient() {
 		final HttpParams params = new BasicHttpParams();
 		HttpProtocolParams.setVersion(params, HttpVersion.HTTP_1_1);
 		HttpProtocolParams.setContentCharset(params,
@@ -62,8 +66,13 @@ public final class HttpPosts {
 		return new DefaultHttpClient(conMgr, params);
 	}
 
-	public static String postBody(final String url, final String body) {
-		String reuslt = Strings.EMPTY;
+	public final static String postBody(final String url, final String body) {
+		return postBody(url, body, true);
+	}
+
+	public final static String postBody(final String url, final String body,
+			final boolean isGzip) {
+		String result = Strings.EMPTY;
 		try {
 			final HttpPost httppost = new HttpPost(url);
 			httppost.setHeader("Accept", "application/json");
@@ -79,42 +88,21 @@ public final class HttpPosts {
 			if (null != response) {
 				final HttpEntity entity = response.getEntity();
 
-				final ByteArrayBuffer byteArrayBuffer = new ByteArrayBuffer(
-						4096);
-				final GZIPInputStream gzipInputStream = new GZIPInputStream(
-						entity.getContent());
-				int length;
-				final byte[] tempbyte = new byte[4096];
-				while ((length = gzipInputStream.read(tempbyte)) != -1) {
-					byteArrayBuffer.append(tempbyte, 0, length);
+				if (isGzip) {
+					final ByteArrayBuffer byteArrayBuffer = new ByteArrayBuffer(
+							4096);
+					final GZIPInputStream gzipInputStream = new GZIPInputStream(
+							entity.getContent());
+					int length;
+					final byte[] tempbyte = new byte[4096];
+					while ((length = gzipInputStream.read(tempbyte)) != -1) {
+						byteArrayBuffer.append(tempbyte, 0, length);
+					}
+					result = HttpCrypt.decrypt(new String(byteArrayBuffer
+							.toByteArray(), "utf-8"));
+				} else {
+					result = HttpCrypt.decrypt(EntityUtils.toString(entity));
 				}
-				reuslt = HttpCrypt.decrypt(new String(byteArrayBuffer
-						.toByteArray(), "utf-8"));
-			}
-		} catch (final UnsupportedEncodingException exception) {
-		} catch (final ClientProtocolException exception) {
-		} catch (final IOException exception) {
-		}
-		return reuslt;
-	}
-
-	public static String postBodyNoGzip(final String url, final String body) {
-		String result = Strings.EMPTY;
-		try {
-			final HttpPost httppost = new HttpPost(url);
-			httppost.setHeader("Accept", "application/json");
-			httppost.setHeader("Content-type",
-					"application/json; charset=utf-8");
-			if (null != body) {
-				httppost.setEntity(new StringEntity(HttpCrypt.encrypt(body),
-						HTTP.UTF_8));
-			}
-			final HttpClient httpclient = createHttpClient();
-			final HttpResponse response = httpclient.execute(httppost);
-			if (null != response) {
-				final HttpEntity entity = response.getEntity();
-
-				result = HttpCrypt.decrypt(EntityUtils.toString(entity));
 			}
 		} catch (final UnsupportedEncodingException exception) {
 		} catch (final ClientProtocolException exception) {
@@ -123,8 +111,13 @@ public final class HttpPosts {
 		return result;
 	}
 
-	public static String postNameValuePair(final String url,
+	public final static String postNameValuePair(final String url,
 			final List<NameValuePair> nameValuePairs) {
+		return postNameValuePair(url, nameValuePairs, true);
+	}
+
+	public final static String postNameValuePair(final String url,
+			final List<NameValuePair> nameValuePairs, final boolean isGzip) {
 		String result = Strings.EMPTY;
 		try {
 			final HttpPost httppost = new HttpPost(url);
@@ -140,41 +133,21 @@ public final class HttpPosts {
 			if (null != response) {
 				final HttpEntity entity = response.getEntity();
 
-				final ByteArrayBuffer byteArrayBuffer = new ByteArrayBuffer(
-						4096);
-				final GZIPInputStream gzipInputStream = new GZIPInputStream(
-						entity.getContent());
-				int length;
-				final byte[] tempbyte = new byte[4096];
-				while ((length = gzipInputStream.read(tempbyte)) != -1) {
-					byteArrayBuffer.append(tempbyte, 0, length);
+				if (isGzip) {
+					final ByteArrayBuffer byteArrayBuffer = new ByteArrayBuffer(
+							4096);
+					final GZIPInputStream gzipInputStream = new GZIPInputStream(
+							entity.getContent());
+					int length;
+					final byte[] tempbyte = new byte[4096];
+					while ((length = gzipInputStream.read(tempbyte)) != -1) {
+						byteArrayBuffer.append(tempbyte, 0, length);
+					}
+					result = new String(byteArrayBuffer.toByteArray(), "utf-8");
+				} else {
+
+					result = EntityUtils.toString(entity);
 				}
-				result = new String(byteArrayBuffer.toByteArray(), "utf-8");
-			}
-		} catch (final UnsupportedEncodingException exception) {
-		} catch (final ClientProtocolException exception) {
-		} catch (final IOException exception) {
-		}
-		return result;
-	}
-
-	public static String postNameValuePairNoGzip(final String url,
-			final List<NameValuePair> nameValuePairs) {
-		String result = Strings.EMPTY;
-		try {
-			final HttpPost httppost = new HttpPost(url);
-			httppost.setHeader("Content-Type",
-					"application/x-www-form-urlencoded; charset=utf-8");
-			if (null != nameValuePairs) {
-				httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs,
-						HTTP.UTF_8));
-			}
-			final HttpClient httpclient = createHttpClient();
-			final HttpResponse response = httpclient.execute(httppost);
-			if (null != response) {
-				final HttpEntity entity = response.getEntity();
-
-				result = EntityUtils.toString(entity);
 			}
 		} catch (final UnsupportedEncodingException exception) {
 		} catch (final ClientProtocolException exception) {

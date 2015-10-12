@@ -8,30 +8,31 @@ import android.view.MotionEvent;
 import android.view.View;
 
 public class OnTouchVibrateListener implements View.OnTouchListener {
+	public final static String IS_VIBRATE = "isVibrate";
+	public final static int VIBRATE_TIME = 50;
+
 	private transient final Context baseContext;
 
-	private transient final OnTouchVibrateListenerCallBack callBack;
+	private transient final OnTouchVibrateListenerCallback callback;
 
-	public interface OnTouchVibrateListenerCallBack {
+	public interface OnTouchVibrateListenerCallback {
 		void onClick(View view);
 	}
 
 	public OnTouchVibrateListener(final Context baseContext,
-			final OnTouchVibrateListenerCallBack callBack) {
+			final OnTouchVibrateListenerCallback callback) {
 		this.baseContext = baseContext;
-		this.callBack = callBack;
+		this.callback = callback;
 	}
-
-	public final static String IS_VIBRATE = "isVibrate";
 
 	private transient final Handler handler = new Handler();
 	private transient final Runnable vibrateRunnable = new Runnable() {
 		@Override
 		public void run() {
-			if (Preferences.getInt(baseContext, IS_VIBRATE, 1) == 0) {
+			if (Preferences.get(baseContext, IS_VIBRATE, 1) == 0) {
 				((Vibrator) baseContext
 						.getSystemService(Context.VIBRATOR_SERVICE))
-						.vibrate(50);
+						.vibrate(VIBRATE_TIME);
 			}
 			toofast = false;
 		}
@@ -44,7 +45,7 @@ public class OnTouchVibrateListener implements View.OnTouchListener {
 		case MotionEvent.ACTION_DOWN:
 			toofast = true;
 			handler.removeCallbacks(vibrateRunnable);
-			handler.postDelayed(vibrateRunnable, 250);
+			handler.postDelayed(vibrateRunnable, 1000 / 4);
 			break;
 		case MotionEvent.ACTION_MOVE:
 			if ((int) motionEvent.getX() > view.getRight() - view.getLeft()
@@ -63,7 +64,7 @@ public class OnTouchVibrateListener implements View.OnTouchListener {
 				handler.post(vibrateRunnable);
 				toofast = false;
 				view.performClick();
-				callBack.onClick(view);
+				callback.onClick(view);
 			}
 			break;
 		default:

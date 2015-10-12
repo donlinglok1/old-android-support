@@ -5,6 +5,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.ConnectException;
 import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.Date;
@@ -35,13 +36,13 @@ public class SocketClientService extends Service {
 
 	private transient String serverIp;
 
-	public final void setServerIp(final String serverIp) {
+	public void setServerIp(final String serverIp) {
 		this.serverIp = serverIp;
 	}
 
 	private transient JSONObject greetings;
 
-	public final void setGreetings(final JSONObject greetings) {
+	public void setGreetings(final JSONObject greetings) {
 		this.greetings = greetings;
 	}
 
@@ -55,13 +56,13 @@ public class SocketClientService extends Service {
 
 	private transient ClientCallback callback;
 
-	public final void setCallback(final ClientCallback callback) {
+	public void setCallback(final ClientCallback callback) {
 		this.callback = callback;
 	}
 
 	private transient ExecutorService threadPool;
 
-	public final void setThreadPool(final ExecutorService threadPool) {
+	public void setThreadPool(final ExecutorService threadPool) {
 		this.threadPool = threadPool;
 	}
 
@@ -73,7 +74,7 @@ public class SocketClientService extends Service {
 
 	private transient Sockets socket;
 
-	public final void connectToServer() {
+	public void connectToServer() {
 		if (null != connectToServerFuture) {
 			connectToServerFuture.cancel(true);
 			connectToServerFuture = null;
@@ -100,7 +101,6 @@ public class SocketClientService extends Service {
 						Sockets.SERVERPORT);
 				socket.setReceiveBufferSize(Sockets.BUFFERSIZE * 1024);
 				socket.setSendBufferSize(Sockets.BUFFERSIZE / 2 * 1024);
-				// socket[i].setSoLinger(true, 0);
 				socket.setTcpNoDelay(true);
 				socket.setKeepAlive(true);
 				socket.setOOBInline(false);
@@ -133,6 +133,8 @@ public class SocketClientService extends Service {
 				if (null != callback) {
 					callback.onConnected(socket);
 				}
+			} catch (final ConnectException exception) {
+				onDisconnect();
 			} catch (final RejectedExecutionException exception) {
 				onDisconnect();
 			} catch (final Exception exception) {
@@ -142,7 +144,7 @@ public class SocketClientService extends Service {
 		}
 	}
 
-	public final void sendMessage(final String message) {
+	public void sendMessage(final String message) {
 		if (null != socket) {
 			try {
 				socket.send(message);
@@ -167,7 +169,7 @@ public class SocketClientService extends Service {
 	private transient final ArrayList<JSONObject> queryListLOW = new ArrayList<JSONObject>();
 	private transient final ArrayList<JSONObject> queryListHIG = new ArrayList<JSONObject>();
 
-	public final void addMessage(final JSONObject jObject, final int priority) {
+	public void addMessage(final JSONObject jObject, final int priority) {
 		if (!Strings.isNull(jObject.get(Sockets.ACTION))) {
 			for (int i = 0; i < queryListHIG.size(); i++) {
 				if (jObject.get(Sockets.ACTION).equals(
@@ -270,9 +272,11 @@ public class SocketClientService extends Service {
 		}
 	}
 
-	public final void readMessage(final String message) {
+	public void readMessage(final String message) {
 		removeMessage(message);
-		callback.onRead(message);
+		if (null != callback) {
+			callback.onRead(message);
+		}
 	}
 
 	private transient Future<?> receiveFuture;
@@ -357,7 +361,7 @@ public class SocketClientService extends Service {
 		}
 	}
 
-	public final void onDisconnect() {
+	public void onDisconnect() {
 		if (null != connectToServerFuture) {
 			connectToServerFuture.cancel(true);
 			connectToServerFuture = null;
@@ -387,7 +391,6 @@ public class SocketClientService extends Service {
 		}
 		if (null != callback) {
 			callback.onDisconnected();
-			callback = null;
 		}
 	}
 
@@ -399,7 +402,7 @@ public class SocketClientService extends Service {
 
 	/*
 	 * Auto run after onCreate();
-	 *
+	 * 
 	 * @see android.app.Service#onStartCommand(android.content.Intent, int, int)
 	 */
 	@Override
@@ -421,7 +424,7 @@ public class SocketClientService extends Service {
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see android.app.Service#onBind(android.content.Intent)
 	 */
 	@Override
@@ -431,7 +434,7 @@ public class SocketClientService extends Service {
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see android.app.Service#onUnbind(android.content.Intent)
 	 */
 	@Override

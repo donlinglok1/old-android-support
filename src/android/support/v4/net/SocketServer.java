@@ -17,11 +17,11 @@ public class SocketServer {
 
 	private transient ServerCallback callback;
 
-	public final void setCallback(final ServerCallback callback) {
+	public void setCallback(final ServerCallback callback) {
 		this.callback = callback;
 	}
 
-	public final void waitForClient() {
+	public void waitForClient() {
 		try {
 			final ServerSockets serverSocket = new ServerSockets(
 					Sockets.SERVERPORT);
@@ -30,7 +30,6 @@ public class SocketServer {
 				final Sockets socket = serverSocket.accept();
 				socket.setReceiveBufferSize(Sockets.BUFFERSIZE / 2 * 1024);
 				socket.setSendBufferSize(Sockets.BUFFERSIZE * 1024);
-				// socket.setSoLinger(true, 0);
 				socket.setTcpNoDelay(true);
 				socket.setKeepAlive(true);
 				socket.setOOBInline(false);

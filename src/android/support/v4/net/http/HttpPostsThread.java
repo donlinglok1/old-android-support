@@ -32,12 +32,7 @@ public class HttpPostsThread extends Thread {
 
 	@Override
 	public void run() {
-		if (isGzip) {
-			callback.onReturn(HttpPosts.postBody(url,
-					Strings.valueOf(dateObject)));
-		} else {
-			callback.onReturn(HttpPosts.postBodyNoGzip(url,
-					Strings.valueOf(dateObject)));
-		}
+		callback.onReturn(HttpPosts.postBody(url, Strings.valueOf(dateObject),
+				isGzip));
 	}
 }

@@ -22,7 +22,7 @@ import android.util.DisplayMetrics;
  * Container for a dynamically typed data value. Primarily used with
  * {@link android.content.res.Resources} for holding resource values.
  */
-public class TypedValue {
+public class TypedValues {
 	/** The value contains no data. */
 	public final static int TYPE_NULL = 0x00;
 
@@ -233,11 +233,11 @@ public class TypedValue {
 	 * Return the data for this value as a float. Only use for values whose type
 	 * is {@link #TYPE_FLOAT}.
 	 */
-	public final float getFloat() {
+	public float getFloat() {
 		return Float.intBitsToFloat(data);
 	}
 
-	private final static float MANTISSA_MULT = 1.0f / (1 << TypedValue.COMPLEX_MANTISSA_SHIFT);
+	private final static float MANTISSA_MULT = 1.0f / (1 << TypedValues.COMPLEX_MANTISSA_SHIFT);
 	private final static float[] RADIX_MULTS = new float[] {
 			1.0f * MANTISSA_MULT, 1.0f / (1 << 7) * MANTISSA_MULT,
 			1.0f / (1 << 15) * MANTISSA_MULT, 1.0f / (1 << 23) * MANTISSA_MULT };
@@ -253,10 +253,10 @@ public class TypedValue {
 	 *
 	 * @return A floating point value corresponding to the complex data.
 	 */
-	public static float complexToFloat(final int complex) {
-		return (complex & TypedValue.COMPLEX_MANTISSA_MASK << TypedValue.COMPLEX_MANTISSA_SHIFT)
-				* RADIX_MULTS[complex >> TypedValue.COMPLEX_RADIX_SHIFT
-						& TypedValue.COMPLEX_RADIX_MASK];
+	public final static float complexToFloat(final int complex) {
+		return (complex & TypedValues.COMPLEX_MANTISSA_MASK << TypedValues.COMPLEX_MANTISSA_SHIFT)
+				* RADIX_MULTS[complex >> TypedValues.COMPLEX_RADIX_SHIFT
+						& TypedValues.COMPLEX_RADIX_MASK];
 	}
 
 	/**
@@ -273,7 +273,7 @@ public class TypedValue {
 	 * @return The complex floating point value multiplied by the appropriate
 	 *         metrics depending on its unit.
 	 */
-	public static float complexToDimension(final int data,
+	public final static float complexToDimension(final int data,
 			final DisplayMetrics metrics) {
 		return applyDimension(data >> COMPLEX_UNIT_SHIFT & COMPLEX_UNIT_MASK,
 				complexToFloat(data), metrics);
@@ -295,7 +295,7 @@ public class TypedValue {
 	 * @return The number of pixels specified by the data and its desired
 	 *         multiplier and units.
 	 */
-	public static int complexToDimensionPixelOffset(final int data,
+	public final static int complexToDimensionPixelOffset(final int data,
 			final DisplayMetrics metrics) {
 		return (int) applyDimension(data >> COMPLEX_UNIT_SHIFT
 				& COMPLEX_UNIT_MASK, complexToFloat(data), metrics);
@@ -319,7 +319,7 @@ public class TypedValue {
 	 * @return The number of pixels specified by the data and its desired
 	 *         multiplier and units.
 	 */
-	public static int complexToDimensionPixelSize(final int data,
+	public final static int complexToDimensionPixelSize(final int data,
 			final DisplayMetrics metrics) {
 		final float value = complexToFloat(data);
 		final float f = applyDimension(data >> COMPLEX_UNIT_SHIFT
@@ -337,15 +337,15 @@ public class TypedValue {
 		return -1;
 	}
 
-	public static float complexToDimensionNoisy(final int data,
+	public final static float complexToDimensionNoisy(final int data,
 			final DisplayMetrics metrics) {
 		final float res = complexToDimension(data, metrics);
 		System.out
 				.println("Dimension (0x"
-						+ (data >> TypedValue.COMPLEX_MANTISSA_SHIFT & TypedValue.COMPLEX_MANTISSA_MASK)
+						+ (data >> TypedValues.COMPLEX_MANTISSA_SHIFT & TypedValues.COMPLEX_MANTISSA_MASK)
 						+ "*"
-						+ RADIX_MULTS[data >> TypedValue.COMPLEX_RADIX_SHIFT
-								& TypedValue.COMPLEX_RADIX_MASK]
+						+ RADIX_MULTS[data >> TypedValues.COMPLEX_RADIX_SHIFT
+								& TypedValues.COMPLEX_RADIX_MASK]
 						/ MANTISSA_MULT
 						+ ")"
 						+ DIMENSION_UNIT_STRS[data >> COMPLEX_UNIT_SHIFT
@@ -369,7 +369,7 @@ public class TypedValue {
 	 * @return The complex floating point value multiplied by the appropriate
 	 *         metrics depending on its unit.
 	 */
-	public static float applyDimension(final int unit, final float value,
+	public final static float applyDimension(final int unit, final float value,
 			final DisplayMetrics metrics) {
 		switch (unit) {
 		case COMPLEX_UNIT_PX:
@@ -420,7 +420,7 @@ public class TypedValue {
 	 * @return The complex floating point value multiplied by the appropriate
 	 *         base value depending on its unit.
 	 */
-	public static float complexToFraction(final int data, final float base,
+	public final static float complexToFraction(final int data, final float base,
 			final float pbase) {
 		switch (data >> COMPLEX_UNIT_SHIFT & COMPLEX_UNIT_MASK) {
 		case COMPLEX_UNIT_FRACTION:
@@ -457,7 +457,7 @@ public class TypedValue {
 	 * @return CharSequence The coerced string value. If the value is null or
 	 *         the type is not known, null is returned.
 	 */
-	public final CharSequence coerceToString() {
+	public CharSequence coerceToString() {
 		final int t = type;
 		if (t == TYPE_STRING) {
 			return string;
@@ -514,7 +514,7 @@ public class TypedValue {
 		return null;
 	}
 
-	public void setTo(final TypedValue other) {
+	public void setTo(final TypedValues other) {
 		type = other.type;
 		string = other.string;
 		data = other.data;
