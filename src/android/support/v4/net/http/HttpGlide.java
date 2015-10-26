@@ -50,7 +50,7 @@ public class HttpGlide {
 						}
 					});
 				}
-			}, path, file, false);
+			}, path, file, false).execute();
 		}
 	}
 }

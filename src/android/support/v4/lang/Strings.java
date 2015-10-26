@@ -154,7 +154,8 @@ public class Strings {
 		return (JSONArray) JSONValue.parse(valueOf(buffer));
 	}
 
-	public final static JSONObject exceptionToJSONObject(final Exception exception) {
+	public final static JSONObject exceptionToJSONObject(
+			final Exception exception) {
 		final StringWriter sWriter = new StringWriter();
 		exception.printStackTrace(new PrintWriter(sWriter));
 		final JSONObject temp = new JSONObject();
@@ -288,7 +289,8 @@ public class Strings {
 	 *         <code>obj.toString()</code> is returned.
 	 * @see java.lang.Object#toString()
 	 */
-	public final static String valueOf(final Object obj, final String defaultvalue) {
+	public final static String valueOf(final Object obj,
+			final String defaultvalue) {
 		return isNull(obj) ? defaultvalue : obj.toString();
 	}
 

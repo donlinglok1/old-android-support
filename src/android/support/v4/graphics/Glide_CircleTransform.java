@@ -20,7 +20,7 @@ public class Glide_CircleTransform extends BitmapTransformation {
 		return circleCrop(pool, toTransform);
 	}
 
-	private static Bitmap circleCrop(final BitmapPool pool, final Bitmap source) {
+	private Bitmap circleCrop(final BitmapPool pool, final Bitmap source) {
 		if (source == null) {
 			return null;
 		}

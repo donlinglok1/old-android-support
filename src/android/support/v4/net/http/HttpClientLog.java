@@ -14,7 +14,7 @@ import android.util.Log;
 public class HttpClientLog {
 	private static DalvikLogHandler activeHandler;
 
-	public final static class DalvikLogHandler extends Handler {
+	public final class DalvikLogHandler extends Handler {
 
 		private final static String LOG_TAG = "HttpClient";
 
@@ -34,7 +34,7 @@ public class HttpClientLog {
 		}
 	}
 
-	public final static void enable() {
+	public final void enable() {
 		try {
 			final String config = "org.apache.http.impl.conn.level = FINEST\n"
 					+ "org.apache.http.impl.client.level = FINEST\n"
