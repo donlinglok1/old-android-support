@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package android.support.v4.graphics.bitmapfun;
+package android.support.v4.graphics;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;

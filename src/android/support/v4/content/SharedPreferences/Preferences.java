@@ -48,8 +48,8 @@ public class Preferences {
 		return setArray(baseContext, SHAREDPREFERENCESNAME, arrayName, array);
 	}
 
-	public final static boolean get(final Context baseContext, final String key,
-			final boolean defValue) {
+	public final static boolean get(final Context baseContext,
+			final String key, final boolean defValue) {
 		return get(baseContext, SHAREDPREFERENCESNAME, key, defValue);
 	}
 

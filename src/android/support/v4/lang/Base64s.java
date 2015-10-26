@@ -7,14 +7,13 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import android.graphics.Bitmap;
-import android.support.v4.graphics.bitmapfun.ImageResizer;
+import android.support.v4.graphics.Bitmaps;
 import android.util.Base64;
 import android.util.Base64OutputStream;
 
 public class Base64s {
 	public final static String imgToBase64(final String filePath) {
-		final Bitmap bitmap = ImageResizer.decodeSampledBitmapFromFile(
-				filePath, 1536, 1536, null);
+		final Bitmap bitmap = Bitmaps.getBitmap(filePath, 1536, 1536, true);
 		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		bitmap.compress(Bitmap.CompressFormat.JPEG, 90, baos);
 		final byte[] byteArrayImage = baos.toByteArray();

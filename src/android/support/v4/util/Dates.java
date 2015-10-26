@@ -45,8 +45,8 @@ public class Dates {
 		return calendar;
 	}
 
-	public final static String format(final String formFormat, final String toFormat,
-			final String date) throws ParseException {
+	public final static String format(final String formFormat,
+			final String toFormat, final String date) throws ParseException {
 		final Calendar cal = getInstance();
 		cal.setTime(new SimpleDateFormat(formFormat, Locale.US).parse(date));
 		return new SimpleDateFormat(toFormat, Locale.US).format(cal.getTime());
@@ -131,7 +131,8 @@ public class Dates {
 				.getTime());
 	}
 
-	public final static String add(final Calendar calendar, final int millisecond) {
+	public final static String add(final Calendar calendar,
+			final int millisecond) {
 		calendar.add(Calendar.MILLISECOND, millisecond);
 		return new SimpleDateFormat(FORMAT_DATETIME, Locale.US).format(calendar
 				.getTime());

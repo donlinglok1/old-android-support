@@ -8,22 +8,17 @@ import java.io.OutputStream;
 
 import android.content.Context;
 import android.content.res.AssetManager;
+import android.os.AsyncTask;
 import android.os.Environment;
-import android.support.v4.graphics.bitmapfun.AsyncTask;
 import android.support.v4.lang.Strings;
 
 public class Assets extends AsyncTask<Void, Void, String> {
 	private transient final Context context;
 	private transient AssetsCallback callback;
+	private transient String[] dontCopy;
 
 	public interface AssetsCallback {
 		void onReturn(Boolean result);
-	}
-
-	public Assets(final Context context, final AssetsCallback callback) {
-		super();
-		this.context = context;
-		this.callback = callback;
 	}
 
 	public Assets(final Context context) {
@@ -31,27 +26,41 @@ public class Assets extends AsyncTask<Void, Void, String> {
 		this.context = context;
 	}
 
+	public Assets(final Context context, final String... dontCopy) {
+		super();
+		this.context = context;
+		this.dontCopy = dontCopy;
+	}
+
+	public Assets(final Context context, final AssetsCallback callback,
+			final String... dontCopy) {
+		super();
+		this.context = context;
+		this.callback = callback;
+		this.dontCopy = dontCopy;
+	}
+
 	@Override
 	public String doInBackground(final Void... params) {
 		try {
 			copyAssets(context);
-			callback.onReturn(true);
+			if (null != callback) {
+				callback.onReturn(true);
+			}
 		} catch (final IOException exception) {
 			Strings.exceptionToJSONObject(exception);
-			callback.onReturn(false);
+			if (null != callback) {
+				callback.onReturn(false);
+			}
 		}
 		return Strings.EMPTY;
 	}
 
-	private final static String[] NOCOPYFILE = { "fonts", "googlemap",
-			"images", "offlinemap", "sounds", "webkit",
-			"crashlytics-build.properties", "icudt46l.zip" };
-
-	public final static void copyAssets(final Context context) throws IOException {
+	private void copyAssets(final Context context) throws IOException {
 		copyAssets(context, Strings.EMPTY);
 	}
 
-	public final static void copyAssets(final Context context, final String folderName)
+	private void copyAssets(final Context context, final String folderName)
 			throws IOException {
 		final String dirPathString = Strings.fString(
 				Strings.valueOf(Environment.getExternalStorageDirectory()),
@@ -69,7 +78,7 @@ public class Assets extends AsyncTask<Void, Void, String> {
 			for (final String file : files) {
 				try {
 					boolean isNoCopyFile = false;
-					for (final String element : NOCOPYFILE) {
+					for (final String element : dontCopy) {
 						if (element.equals(file)) {
 							isNoCopyFile = true;
 						}

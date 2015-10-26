@@ -1,7 +1,12 @@
 package android.support.v4.net.http;
 
+import java.util.List;
+
 import net.minidev.json.JSONObject;
-import android.support.v4.graphics.bitmapfun.AsyncTask;
+
+import org.apache.http.NameValuePair;
+
+import android.os.AsyncTask;
 import android.support.v4.lang.Strings;
 
 /*
@@ -13,7 +18,8 @@ import android.support.v4.lang.Strings;
  * @version 1.0.0
  */
 public class HttpPostsTask extends AsyncTask<Void, Void, String> {
-	private transient final JSONObject dateObject;
+	private transient JSONObject dateObject;
+	private transient List<NameValuePair> dateObject2;
 	private transient final String url;
 	private transient final HttpPostsTaskCallback callback;
 	private transient final boolean isGzip;
@@ -31,9 +37,23 @@ public class HttpPostsTask extends AsyncTask<Void, Void, String> {
 		this.isGzip = isGzip;
 	}
 
+	public HttpPostsTask(final HttpPostsTaskCallback callback,
+			final String url, final List<NameValuePair> dateObject,
+			final boolean isGzip) {
+		super();
+		this.callback = callback;
+		this.url = url;
+		dateObject2 = dateObject;
+		this.isGzip = isGzip;
+	}
+
 	@Override
 	public String doInBackground(final Void... params) {
-		return HttpPosts.postBody(url, Strings.valueOf(dateObject), isGzip);
+		if (null == dateObject) {
+			return HttpPosts.postNameValuePair(url, dateObject2, isGzip);
+		} else {
+			return HttpPosts.postBody(url, Strings.valueOf(dateObject), isGzip);
+		}
 	}
 
 	@Override

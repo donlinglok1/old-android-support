@@ -170,13 +170,13 @@ public class Bitmaps {
 		return result;
 	}
 
-	public final static Bitmap getBitmap(final Context context, final int resid,
-			final double size) {
+	public final static Bitmap getBitmap(final Context context,
+			final int resid, final double size) {
 		return getBitmap(context, resid, size, size);
 	}
 
-	public final static Bitmap getBitmap(final Context context, final int resid,
-			final double width, final double heigth) {
+	public final static Bitmap getBitmap(final Context context,
+			final int resid, final double width, final double heigth) {
 		Bitmap result = null;
 		final BitmapFactory.Options options = new BitmapFactory.Options();
 		options.inJustDecodeBounds = true;
@@ -216,8 +216,8 @@ public class Bitmaps {
 		return result;
 	}
 
-	public final static Bitmap replaceColor(final Bitmap bitmap, final int fromColor,
-			final int toColor) {
+	public final static Bitmap replaceColor(final Bitmap bitmap,
+			final int fromColor, final int toColor) {
 		Bitmap result = null;
 		if (null != bitmap) {
 			final int width = bitmap.getWidth();
@@ -288,9 +288,9 @@ public class Bitmaps {
 
 	private final static int INITIALSIZELIMIT = 8;
 
-	public final static int computeSampleSize(final BitmapFactory.Options options,
-			final int minSideLength, final double maxNumOfPixels)
-			throws IOException {
+	public final static int computeSampleSize(
+			final BitmapFactory.Options options, final int minSideLength,
+			final double maxNumOfPixels) throws IOException {
 		final int initialSize = computeInitialSampleSize(options,
 				minSideLength, maxNumOfPixels);
 		int roundedSize;

@@ -1,6 +1,11 @@
 package android.support.v4.net.http;
 
+import java.util.List;
+
 import net.minidev.json.JSONObject;
+
+import org.apache.http.NameValuePair;
+
 import android.support.v4.lang.Strings;
 
 /*
@@ -12,7 +17,8 @@ import android.support.v4.lang.Strings;
  * @version 1.0.0
  */
 public class HttpPostsThread extends Thread {
-	private transient final JSONObject dateObject;
+	private transient JSONObject dateObject;
+	private transient List<NameValuePair> dateObject2;
 	private transient final String url;
 	private transient final HttpPostsThreadCallback callback;
 	private transient final boolean isGzip;
@@ -30,9 +36,24 @@ public class HttpPostsThread extends Thread {
 		this.isGzip = isGzip;
 	}
 
+	public HttpPostsThread(final HttpPostsThreadCallback callback,
+			final String url, final List<NameValuePair> dateObject,
+			final boolean isGzip) {
+		super();
+		this.callback = callback;
+		this.url = url;
+		dateObject2 = dateObject;
+		this.isGzip = isGzip;
+	}
+
 	@Override
 	public void run() {
-		callback.onReturn(HttpPosts.postBody(url, Strings.valueOf(dateObject),
-				isGzip));
+		if (null == dateObject) {
+			callback.onReturn(HttpPosts.postNameValuePair(url, dateObject2,
+					isGzip));
+		} else {
+			callback.onReturn(HttpPosts.postBody(url,
+					Strings.valueOf(dateObject), isGzip));
+		}
 	}
 }

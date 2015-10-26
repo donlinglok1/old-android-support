@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import android.graphics.Bitmap;
-import android.support.v4.graphics.bitmapfun.AsyncTask;
+import android.os.AsyncTask;
 import android.support.v4.os.storage.Files;
 
 public class ImageZipTask extends AsyncTask<Void, Void, String> {
