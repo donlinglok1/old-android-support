@@ -12,8 +12,8 @@ import android.util.Base64;
 import android.util.Base64OutputStream;
 
 public class Base64s {
-	public final static String imgToBase64(final String filePath) {
-		final Bitmap bitmap = Bitmaps.getBitmap(filePath, 1536, 1536, true);
+	public final static String imgToBase64(final String filePath, final int size) {
+		final Bitmap bitmap = Bitmaps.getBitmap(filePath, size, true);
 		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		bitmap.compress(Bitmap.CompressFormat.JPEG, 90, baos);
 		final byte[] byteArrayImage = baos.toByteArray();

@@ -14,11 +14,13 @@
  * limitations under the License.
  */
 
-package android.support.v4.graphics;
+package android.support.v4.graphics.bitmapfun;
 
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.support.v4.BuildConfig;
+import android.util.Log;
 
 /**
  * A BitmapDrawable that keeps track of whether it is being displayed or cached.
@@ -28,7 +30,7 @@ import android.graphics.drawable.BitmapDrawable;
  */
 public class RecyclingBitmapDrawable extends BitmapDrawable {
 
-	final static String TAG = "CountingBitmapDrawable";
+	static final String TAG = "CountingBitmapDrawable";
 
 	private int mCacheRefCount = 0;
 	private int mDisplayRefCount = 0;
@@ -91,10 +93,10 @@ public class RecyclingBitmapDrawable extends BitmapDrawable {
 		// has been displayed, then recycle
 		if (mCacheRefCount <= 0 && mDisplayRefCount <= 0 && mHasBeenDisplayed
 				&& hasValidBitmap()) {
-			// if (BuildConfig.DEBUG) {
-			// Log.d(TAG, "No longer being used or cached so recycling. "
-			// + toString());
-			// }
+			if (BuildConfig.DEBUG) {
+				Log.d(TAG, "No longer being used or cached so recycling. "
+						+ toString());
+			}
 
 			getBitmap().recycle();
 		}

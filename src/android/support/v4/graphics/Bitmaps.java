@@ -1,13 +1,8 @@
 package android.support.v4.graphics;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.lang.ref.SoftReference;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.BitmapFactory;
@@ -16,6 +11,7 @@ import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.media.ExifInterface;
+import android.support.v4.graphics.bitmapfun.ImageResizer;
 import android.view.View;
 
 /*
@@ -64,157 +60,181 @@ public class Bitmaps {
 	}
 
 	public final static Bitmap getBitmap(final String path, final boolean isExif) {
-		Bitmap result = null;
-		final BitmapFactory.Options options = new BitmapFactory.Options();
-		options.inJustDecodeBounds = true;
-
-		try {
-			BitmapFactory.decodeStream(new FileInputStream(new File(path)),
-					null, options);
-
-			options.inJustDecodeBounds = false;
-			options.inPurgeable = true;
-			options.inInputShareable = true;
-			options.inPreferredConfig = Bitmap.Config.RGB_565;
-
-			if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
-				try {
-					BitmapFactory.Options.class.getField("inNativeAlloc")
-							.setBoolean(options, true);
-				} catch (final IllegalArgumentException exception) {
-				} catch (final IllegalAccessException exception) {
-				} catch (final NoSuchFieldException exception) {
-				}
-			}
-
-			final Bitmap bitmap = BitmapFactory.decodeStream(
-					new FileInputStream(new File(path)), null, options);
-
-			if (isExif) {
-				final Matrix matrix = new Matrix();
-				matrix.postRotate(getBitmapOrientation(path));
-				final Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap, 0, 0,
-						bitmap.getWidth(), bitmap.getHeight(), matrix, false);
-
-				final SoftReference<Bitmap> softBitmap = new SoftReference<Bitmap>(
-						rotatedBitmap);
-				result = softBitmap.get();
-			} else {
-				final SoftReference<Bitmap> softBitmap = new SoftReference<Bitmap>(
-						bitmap);
-				result = softBitmap.get();
-			}
-		} catch (final FileNotFoundException exception) {
-		}
-		return result;
+		final int[] size = getBitmapSize(path);
+		return ImageResizer.decodeSampledBitmapFromFile(path, size[0], size[1],
+				null);
 	}
 
 	public final static Bitmap getBitmap(final String path, final double size,
 			final boolean isExif) {
-		return getBitmap(path, size, size, isExif);
+		return ImageResizer.decodeSampledBitmapFromFile(path, (int) size,
+				(int) size, null);
 	}
 
 	public final static Bitmap getBitmap(final String path, final double width,
-			final double heigth, final boolean isExif) {
-		Bitmap result = null;
-		final BitmapFactory.Options options = new BitmapFactory.Options();
-		options.inJustDecodeBounds = true;
-
-		try {
-			BitmapFactory.decodeStream(new FileInputStream(new File(path)),
-					null, options);
-
-			final int width_tmp = options.outWidth;
-			final int height_tmp = options.outHeight;
-			final int minSideLength = Math.min(width_tmp, height_tmp);
-			try {
-				options.inSampleSize = computeSampleSize(options,
-						minSideLength, width * heigth);
-			} catch (final IOException exception) {
-			}
-
-			options.inJustDecodeBounds = false;
-			options.inPurgeable = true;
-			options.inInputShareable = true;
-			options.inPreferredConfig = Bitmap.Config.RGB_565;
-
-			if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
-				try {
-					BitmapFactory.Options.class.getField("inNativeAlloc")
-							.setBoolean(options, true);
-				} catch (final IllegalArgumentException exception) {
-				} catch (final IllegalAccessException exception) {
-				} catch (final NoSuchFieldException exception) {
-				}
-			}
-
-			final Bitmap bitmap = BitmapFactory.decodeStream(
-					new FileInputStream(new File(path)), null, options);
-
-			if (isExif) {
-				final Matrix matrix = new Matrix();
-				matrix.postRotate(getBitmapOrientation(path));
-				final Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap, 0, 0,
-						bitmap.getWidth(), bitmap.getHeight(), matrix, false);
-
-				final SoftReference<Bitmap> softBitmap = new SoftReference<Bitmap>(
-						rotatedBitmap);
-				result = softBitmap.get();
-			} else {
-				final SoftReference<Bitmap> softBitmap = new SoftReference<Bitmap>(
-						bitmap);
-				result = softBitmap.get();
-			}
-		} catch (final FileNotFoundException exception) {
-		}
-		return result;
+			final double height, final boolean isExif) {
+		return ImageResizer.decodeSampledBitmapFromFile(path, (int) width,
+				(int) height, null);
 	}
 
-	public final static Bitmap getBitmap(final Context context,
-			final int resid, final double size) {
-		return getBitmap(context, resid, size, size);
-	}
+	// public final static Bitmap getBitmap(final String path, final boolean
+	// isExif) {
+	// Bitmap result = null;
+	// final BitmapFactory.Options options = new BitmapFactory.Options();
+	// options.inJustDecodeBounds = true;
+	//
+	// try {
+	// BitmapFactory.decodeStream(new FileInputStream(new File(path)),
+	// null, options);
+	//
+	// options.inJustDecodeBounds = false;
+	// options.inPurgeable = true;
+	// options.inInputShareable = true;
+	// options.inPreferredConfig = Bitmap.Config.RGB_565;
+	//
+	// if (android.os.Build.VERSION.SDK_INT <
+	// android.os.Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+	// try {
+	// BitmapFactory.Options.class.getField("inNativeAlloc")
+	// .setBoolean(options, true);
+	// } catch (final IllegalArgumentException exception) {
+	// } catch (final IllegalAccessException exception) {
+	// } catch (final NoSuchFieldException exception) {
+	// }
+	// }
+	//
+	// final Bitmap bitmap = BitmapFactory.decodeStream(
+	// new FileInputStream(new File(path)), null, options);
+	//
+	// if (isExif) {
+	// final Matrix matrix = new Matrix();
+	// matrix.postRotate(getBitmapOrientation(path));
+	// final Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap, 0, 0,
+	// bitmap.getWidth(), bitmap.getHeight(), matrix, false);
+	//
+	// final SoftReference<Bitmap> softBitmap = new SoftReference<Bitmap>(
+	// rotatedBitmap);
+	// result = softBitmap.get();
+	// } else {
+	// final SoftReference<Bitmap> softBitmap = new SoftReference<Bitmap>(
+	// bitmap);
+	// result = softBitmap.get();
+	// }
+	// } catch (final FileNotFoundException exception) {
+	// }
+	// return result;
+	// }
 
-	public final static Bitmap getBitmap(final Context context,
-			final int resid, final double width, final double heigth) {
-		Bitmap result = null;
-		final BitmapFactory.Options options = new BitmapFactory.Options();
-		options.inJustDecodeBounds = true;
+	// public final static Bitmap getBitmap(final String path, final double
+	// size,
+	// final boolean isExif) {
+	// return getBitmap(path, size, size, isExif);
+	// }
+	//
+	// public final static Bitmap getBitmap(final String path, final double
+	// width,
+	// final double heigth, final boolean isExif) {
+	// Bitmap result = null;
+	// final BitmapFactory.Options options = new BitmapFactory.Options();
+	// options.inJustDecodeBounds = true;
+	//
+	// try {
+	// BitmapFactory.decodeStream(new FileInputStream(new File(path)),
+	// null, options);
+	//
+	// final int width_tmp = options.outWidth;
+	// final int height_tmp = options.outHeight;
+	// final int minSideLength = Math.min(width_tmp, height_tmp);
+	// try {
+	// options.inSampleSize = computeSampleSize(options,
+	// minSideLength, width * heigth);
+	// } catch (final IOException exception) {
+	// }
+	//
+	// options.inJustDecodeBounds = false;
+	// options.inPurgeable = true;
+	// options.inInputShareable = true;
+	// options.inPreferredConfig = Bitmap.Config.RGB_565;
+	//
+	// if (android.os.Build.VERSION.SDK_INT <
+	// android.os.Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+	// try {
+	// BitmapFactory.Options.class.getField("inNativeAlloc")
+	// .setBoolean(options, true);
+	// } catch (final IllegalArgumentException exception) {
+	// } catch (final IllegalAccessException exception) {
+	// } catch (final NoSuchFieldException exception) {
+	// }
+	// }
+	//
+	// final Bitmap bitmap = BitmapFactory.decodeStream(
+	// new FileInputStream(new File(path)), null, options);
+	//
+	// if (isExif) {
+	// final Matrix matrix = new Matrix();
+	// matrix.postRotate(getBitmapOrientation(path));
+	// final Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap, 0, 0,
+	// bitmap.getWidth(), bitmap.getHeight(), matrix, false);
+	//
+	// final SoftReference<Bitmap> softBitmap = new SoftReference<Bitmap>(
+	// rotatedBitmap);
+	// result = softBitmap.get();
+	// } else {
+	// final SoftReference<Bitmap> softBitmap = new SoftReference<Bitmap>(
+	// bitmap);
+	// result = softBitmap.get();
+	// }
+	// } catch (final FileNotFoundException exception) {
+	// }
+	// return result;
+	// }
 
-		BitmapFactory.decodeResource(context.getResources(), resid, options);
-
-		final int width_tmp = options.outWidth;
-		final int height_tmp = options.outHeight;
-		final int minSideLength = Math.min(width_tmp, height_tmp);
-		try {
-			options.inSampleSize = computeSampleSize(options, minSideLength,
-					width * heigth);
-		} catch (final IOException exception) {
-		}
-
-		options.inJustDecodeBounds = false;
-		options.inPurgeable = true;
-		options.inInputShareable = true;
-		options.inPreferredConfig = Bitmap.Config.RGB_565;
-
-		if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
-			try {
-				BitmapFactory.Options.class.getField("inNativeAlloc")
-						.setBoolean(options, true);
-			} catch (final IllegalArgumentException exception) {
-			} catch (final IllegalAccessException exception) {
-			} catch (final NoSuchFieldException exception) {
-			}
-		}
-
-		final Bitmap bitmap = BitmapFactory.decodeResource(
-				context.getResources(), resid, options);
-
-		final SoftReference<Bitmap> softBitmap = new SoftReference<Bitmap>(
-				bitmap);
-		result = softBitmap.get();
-		return result;
-	}
+	// public final static Bitmap getBitmap(final Context context,
+	// final int resid, final double size) {
+	// return getBitmap(context, resid, size, size);
+	// }
+	//
+	// public final static Bitmap getBitmap(final Context context,
+	// final int resid, final double width, final double heigth) {
+	// Bitmap result = null;
+	// final BitmapFactory.Options options = new BitmapFactory.Options();
+	// options.inJustDecodeBounds = true;
+	//
+	// BitmapFactory.decodeResource(context.getResources(), resid, options);
+	//
+	// final int width_tmp = options.outWidth;
+	// final int height_tmp = options.outHeight;
+	// final int minSideLength = Math.min(width_tmp, height_tmp);
+	// try {
+	// options.inSampleSize = computeSampleSize(options, minSideLength,
+	// width * heigth);
+	// } catch (final IOException exception) {
+	// }
+	//
+	// options.inJustDecodeBounds = false;
+	// options.inPurgeable = true;
+	// options.inInputShareable = true;
+	// options.inPreferredConfig = Bitmap.Config.RGB_565;
+	//
+	// if (android.os.Build.VERSION.SDK_INT <
+	// android.os.Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+	// try {
+	// BitmapFactory.Options.class.getField("inNativeAlloc")
+	// .setBoolean(options, true);
+	// } catch (final IllegalArgumentException exception) {
+	// } catch (final IllegalAccessException exception) {
+	// } catch (final NoSuchFieldException exception) {
+	// }
+	// }
+	//
+	// final Bitmap bitmap = BitmapFactory.decodeResource(
+	// context.getResources(), resid, options);
+	//
+	// final SoftReference<Bitmap> softBitmap = new SoftReference<Bitmap>(
+	// bitmap);
+	// result = softBitmap.get();
+	// return result;
+	// }
 
 	public final static Bitmap replaceColor(final Bitmap bitmap,
 			final int fromColor, final int toColor) {
@@ -241,12 +261,12 @@ public class Bitmaps {
 		final Canvas canvas = new Canvas(bmImg);
 		view.draw(canvas);
 
-		return Bitmap.createScaledBitmap(bmImg, bmImg.getWidth() / 20,
-				bmImg.getHeight() / 20, true);
+		return Bitmap.createScaledBitmap(bmImg, bmImg.getWidth(),
+				bmImg.getHeight(), true);
 	}
 
-	public final static Bitmap getBitmap(final View view, final int quality,
-			final int theWidth, final int theHeight) throws IOException {
+	public final static Bitmap getBitmap(final View view, final int outWidth,
+			final int outHeight, final int quality) throws IOException {
 		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		view.setDrawingCacheEnabled(true);
 		view.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_LOW);
@@ -254,7 +274,7 @@ public class Bitmaps {
 		final int width = view.getDrawingCache().getWidth();
 		final int height = view.getDrawingCache().getHeight();
 		final Matrix mat = new Matrix();
-		mat.postScale(theWidth / width, theHeight / height);
+		mat.postScale(outWidth / width, outHeight / height);
 		final Bitmap bitmap = Bitmap.createBitmap(view.getDrawingCache(), 0, 0,
 				width, height, mat, false);
 		bitmap.compress(Bitmap.CompressFormat.PNG, quality, baos);

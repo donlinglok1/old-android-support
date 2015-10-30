@@ -16,34 +16,34 @@
 
 package android.support.v4.util;
 
-import android.annotation.TargetApi;
 import android.os.Build;
 import android.os.Build.VERSION_CODES;
-import android.os.StrictMode;
 
 /**
  * Class containing some static utility methods.
  */
-public class Utils {
-	public Utils() {
+public class Versions {
+	public Versions() {
 	};
 
-	@TargetApi(VERSION_CODES.HONEYCOMB)
-	public final static void enableStrictMode(final Class<?> cla) {
-		if (Utils.hasGingerbread()) {
-			final StrictMode.ThreadPolicy.Builder threadPolicyBuilder = new StrictMode.ThreadPolicy.Builder()
-					.detectAll().penaltyLog();
-			final StrictMode.VmPolicy.Builder vmPolicyBuilder = new StrictMode.VmPolicy.Builder()
-					.detectAll().penaltyLog();
-
-			if (Utils.hasHoneycomb()) {
-				threadPolicyBuilder.penaltyFlashScreen();
-				vmPolicyBuilder.setClassInstanceLimit(cla, 1);
-			}
-			StrictMode.setThreadPolicy(threadPolicyBuilder.build());
-			StrictMode.setVmPolicy(vmPolicyBuilder.build());
-		}
-	}
+	// @TargetApi(VERSION_CODES.HONEYCOMB)
+	// public final static void enableStrictMode(final Class<?> cla) {
+	// if (Utils.hasGingerbread()) {
+	// final StrictMode.ThreadPolicy.Builder threadPolicyBuilder = new
+	// StrictMode.ThreadPolicy.Builder()
+	// .detectAll().penaltyLog();
+	// final StrictMode.VmPolicy.Builder vmPolicyBuilder = new
+	// StrictMode.VmPolicy.Builder()
+	// .detectAll().penaltyLog();
+	//
+	// if (Utils.hasHoneycomb()) {
+	// threadPolicyBuilder.penaltyFlashScreen();
+	// vmPolicyBuilder.setClassInstanceLimit(cla, 1);
+	// }
+	// StrictMode.setThreadPolicy(threadPolicyBuilder.build());
+	// StrictMode.setVmPolicy(vmPolicyBuilder.build());
+	// }
+	// }
 
 	public final static boolean hasFroyo() {
 		// Can use final static constants like FROYO, declared in later versions
@@ -68,7 +68,7 @@ public class Utils {
 		return Build.VERSION.SDK_INT >= VERSION_CODES.JELLY_BEAN;
 	}
 
-	// public final static boolean hasKitKat() {
-	// return Build.VERSION.SDK_INT >= VERSION_CODES.KITKAT;
-	// }
+	public final static boolean hasKitKat() {
+		return Build.VERSION.SDK_INT >= VERSION_CODES.KITKAT;
+	}
 }

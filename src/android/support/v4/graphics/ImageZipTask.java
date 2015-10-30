@@ -39,7 +39,7 @@ public class ImageZipTask extends AsyncTask<Void, Void, String> {
 			FileOutputStream out = null;
 			try {
 				final Bitmap bitmap = Bitmaps.getBitmap(imgPath, compressSize,
-						compressSize, true);
+						true);
 
 				out = new FileOutputStream(imgPath);
 				bitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);

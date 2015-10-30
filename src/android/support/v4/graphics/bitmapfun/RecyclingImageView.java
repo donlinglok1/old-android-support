@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package android.support.v4.graphics;
+package android.support.v4.graphics.bitmapfun;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -40,7 +40,7 @@ public class RecyclingImageView extends ImageView {
 	 * @see android.widget.ImageView#onDetachedFromWindow()
 	 */
 	@Override
-	public void onDetachedFromWindow() {
+	protected void onDetachedFromWindow() {
 		// This has been detached from Window, so clear the drawable
 		setImageDrawable(null);
 

@@ -18,22 +18,16 @@ import android.net.Uri;
 public class Notifications {
 	public final static Notification show(final Context context,
 			final String title, final String content, final int smallIcon,
-			final Uri sound, final boolean ongoing, final int notiId) {
-		final PendingIntent contentIntent = PendingIntent.getActivity(
-				context,
-				0,
-				context.getPackageManager().getLaunchIntentForPackage(
-						context.getPackageName()),
-				PendingIntent.FLAG_CANCEL_CURRENT);
-
-		return show(context, title, content, smallIcon, sound, ongoing, notiId,
-				contentIntent);
+			final Uri sound, final boolean ongoing, final boolean isVibrate,
+			final int notiId) {
+		return show(context, title, content, smallIcon, sound, ongoing,
+				isVibrate, notiId, null);
 	}
 
 	public final static Notification show(final Context context,
 			final String title, final String content, final int smallIcon,
-			final Uri sound, final boolean ongoing, final int notiId,
-			final PendingIntent pendingIntent) {
+			final Uri sound, final boolean ongoing, final boolean isVibrate,
+			final int notiId, final PendingIntent pendingIntent) {
 		final NotificationManager notificationManager = (NotificationManager) context
 				.getSystemService(Context.NOTIFICATION_SERVICE);
 
@@ -45,9 +39,11 @@ public class Notifications {
 		if (null == sound) {
 			notification.defaults |= Notification.DEFAULT_SOUND;
 		} else {
-			notification.sound = sound;
+			if (isVibrate) {
+				notification.sound = sound;
+				notification.defaults |= Notification.DEFAULT_VIBRATE;
+			}
 		}
-		notification.defaults |= Notification.DEFAULT_VIBRATE;
 
 		if (null == pendingIntent) {
 			notification.setLatestEventInfo(context, title, content,

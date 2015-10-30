@@ -22,9 +22,9 @@ public class SocketServer {
 	}
 
 	public void waitForClient() {
+		ServerSockets serverSocket = null;
 		try {
-			final ServerSockets serverSocket = new ServerSockets(
-					Sockets.SERVERPORT);
+			serverSocket = new ServerSockets(Sockets.SERVERPORT);
 
 			while (null != serverSocket) {
 				final Sockets socket = serverSocket.accept();
@@ -41,7 +41,14 @@ public class SocketServer {
 					callback.onConnected(socket);
 				}
 			}
-		} catch (final IOException exception) {
+		} catch (final Exception exception) {
+			if (null != serverSocket) {
+				try {
+					serverSocket.close();
+				} catch (final IOException e) {
+				}
+			}
 		}
+
 	}
 }
