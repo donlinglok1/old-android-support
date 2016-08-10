@@ -11,6 +11,7 @@
         <ignore path="src/android/support/v4/widget/RefreshableView.java" />
     </issue>
     <issue id="Instantiatable" severity="ignore" />
+    <issue id="OldTargetApi" severity="ignore" />
     <issue id="Registered" severity="ignore">
         <ignore path="src/android/support/v4/net/SocketClientService.java" />
         <ignore path="src/android/support/v4/net/SocketClientService_0511.java" />

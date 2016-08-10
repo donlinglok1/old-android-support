@@ -2,6 +2,8 @@
 <pmd>
     <useProjectRuleSet>false</useProjectRuleSet>
     <ruleSetFile>.ruleset</ruleSetFile>
+    <excludePatterns/>
+    <includePatterns/>
     <rules>
         <rule>
             <name>UnnecessaryParentheses</name>

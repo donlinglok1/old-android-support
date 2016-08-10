@@ -2,55 +2,58 @@ package android.support.v4.net.http;
 
 import java.io.File;
 
-import android.app.Activity;
-import android.support.v4.lang.Strings;
-import android.support.v4.net.http.HttpDownload.HttpDownloadCallback;
-import android.widget.ImageView;
-
 import com.bumptech.glide.Glide;
 
-public class HttpGlide {
-	public void load(final Activity context, final String path,
-			final ImageView imageView) {
-		final String file = path.substring(path.lastIndexOf('/') + 1,
-				path.length());
-		if (new File(file).exists()) {
-			try {
-				Glide.with(context).load(new File(file)).centerCrop()
-						.into(imageView);
-			} catch (final Exception exception) {
-			}
-		} else {
-			new HttpDownload(context, new HttpDownloadCallback() {
-				@Override
-				public void onSuccess(final File outputFile) {
-					context.runOnUiThread(new Runnable() {
-						@Override
-						public void run() {
-							try {
-								Glide.with(context).load(outputFile)
-										.centerCrop().into(imageView);
-							} catch (final Exception exception) {
-							}
-						}
-					});
-				}
+import android.app.Activity;
+import android.support.v4.net.http.HttpDownloadTask.HttpDownloadTaskCallback;
+import android.support.v4.util.Tools;
+import android.widget.ImageView;
 
-				@Override
-				public void onFail(final Exception exception) {
-					context.runOnUiThread(new Runnable() {
-						@Override
-						public void run() {
-							try {
-								Glide.with(context).load(path).centerCrop()
-										.into(imageView);
-							} catch (final Exception exception2) {
-								Strings.exceptionToJSONObject(exception2);
-							}
-						}
-					});
-				}
-			}, path, file, false).execute();
+/*
+ * Copyright (c) 2014 Kenneth Tu <don.ling.lok@gmail.com>
+ *
+ * All rights reserved. No warranty, explicit or implicit, provided.
+ *
+ * @author Kenneth Tu
+ * @version 1.0.0
+ */
+public class HttpGlide {
+    public void load(final Activity context, final String path, final ImageView imageView) {
+	final String file = path.substring(path.lastIndexOf('/') + 1, path.length());
+	if (new File(file).exists()) {
+	    try {
+		Glide.with(context).load(new File(file)).centerCrop().into(imageView);
+	    } catch (final Exception exception) {
+	    }
+	} else {
+	    new HttpDownloadTask(context, new HttpDownloadTaskCallback() {
+		@Override
+		public void onSuccess(final File outputFile) {
+		    context.runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+			    try {
+				Glide.with(context).load(outputFile).centerCrop().into(imageView);
+			    } catch (final Exception exception) {
+			    }
+			}
+		    });
 		}
+
+		@Override
+		public void onFail(final Exception exception) {
+		    context.runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+			    try {
+				Glide.with(context).load(path).centerCrop().into(imageView);
+			    } catch (final Exception exception2) {
+				Tools.exceptionToJSONObject(exception2);
+			    }
+			}
+		    });
+		}
+	    }, path, file, false).execute();
 	}
+    }
 }

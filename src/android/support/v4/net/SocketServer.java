@@ -11,44 +11,43 @@ import java.io.IOException;
  * @version 1.0.0
  */
 public class SocketServer {
-	public interface ServerCallback {
-		void onConnected(Sockets socket);
-	}
+    public interface SocketServerCallback {
+	void onConnected(Sockets socket);
+    }
 
-	private transient ServerCallback callback;
+    private transient SocketServerCallback callback;
 
-	public void setCallback(final ServerCallback callback) {
-		this.callback = callback;
-	}
+    public void setCallback(final SocketServerCallback callback) {
+	this.callback = callback;
+    }
 
-	public void waitForClient() {
-		ServerSockets serverSocket = null;
-		try {
-			serverSocket = new ServerSockets(Sockets.SERVERPORT);
+    public void waitForClient() {
+	ServerSockets serverSocket = null;
+	try {
+	    serverSocket = new ServerSockets(Sockets.SERVERPORT);
 
-			while (null != serverSocket) {
-				final Sockets socket = serverSocket.accept();
-				socket.setReceiveBufferSize(Sockets.BUFFERSIZE / 2 * 1024);
-				socket.setSendBufferSize(Sockets.BUFFERSIZE * 1024);
-				socket.setTcpNoDelay(true);
-				socket.setKeepAlive(true);
-				socket.setOOBInline(false);
-				socket.setTrafficClass(0x04 | 0x10);
-				socket.setPerformancePreferences(1, 3, 2);
-				socket.setSoTimeout(30 * 1000);
+	    while (null != serverSocket) {
+		final Sockets socket = serverSocket.accept();
+		socket.setReceiveBufferSize(Sockets.BUFFERSIZE / 2 * 1024);
+		socket.setSendBufferSize(Sockets.BUFFERSIZE * 1024);
+		socket.setTcpNoDelay(true);
+		socket.setKeepAlive(true);
+		socket.setOOBInline(false);
+		socket.setTrafficClass(0x04 | 0x10);
+		socket.setPerformancePreferences(1, 3, 2);
+		socket.setSoTimeout(30 * 1000);
 
-				if (null != callback) {
-					callback.onConnected(socket);
-				}
-			}
-		} catch (final Exception exception) {
-			if (null != serverSocket) {
-				try {
-					serverSocket.close();
-				} catch (final IOException e) {
-				}
-			}
+		if (null != callback) {
+		    callback.onConnected(socket);
 		}
-
+	    }
+	} catch (final Exception exception) {
+	    if (null != serverSocket) {
+		try {
+		    serverSocket.close();
+		} catch (final IOException e) {
+		}
+	    }
 	}
+    }
 }

@@ -10,8 +10,10 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.net.SocketImpl;
 
-import net.minidev.json.JSONObject;
+import android.support.v4.lang.Base64s;
+import android.support.v4.lang.NString;
 import android.support.v4.lang.Strings;
+import net.minidev.json.JSONObject;
 
 /*
  * Copyright (c) 2014 Kenneth Tu <don.ling.lok@gmail.com>
@@ -22,94 +24,88 @@ import android.support.v4.lang.Strings;
  * @version 1.0.0
  */
 public class Sockets extends Socket {
-	public Sockets(final InetAddress serverAddr, final int serverport)
-			throws IOException {
-		super(serverAddr, serverport);
+    public Sockets(final InetAddress serverAddr, final int serverport) throws IOException {
+	super(serverAddr, serverport);
+    }
+
+    public Sockets(final SocketImpl socketImpl) throws SocketException {
+	super(socketImpl);
+    }
+
+    public Sockets() throws SocketException {
+	super();
+    }
+
+    private transient String idString;
+
+    public void setIdString(final String idString) {
+	this.idString = idString;
+    }
+
+    public String getIdString() {
+	return idString;
+    }
+
+    private transient JSONObject propertiesObject;
+
+    public void setProperties(final JSONObject propertiesObject) {
+	this.propertiesObject = propertiesObject;
+    }
+
+    public JSONObject getProperties() {
+	return propertiesObject;
+    }
+
+    private transient String encryptionKey = NString.parse(Strings.UPPK, Strings.LOWE, Strings.LOWN, Strings.LOWN,
+	    Strings.LOWN, Strings.LOWE, Strings.LOWT, Strings.LOWH);
+
+    public void setEncryptionKey(final String encryptionKey) {
+	this.encryptionKey = encryptionKey;
+    }
+
+    public String getEncryptionKey() {
+	return encryptionKey;
+    }
+
+    public static final int BUFFERSIZE = 32;
+
+    public static final int QUEUEFAILTRY = 3;
+    public static final int PROPOSESPEED = 1000 / 10;
+
+    public static final int KEEPALIVEFAILTRY = 2;
+    public static final int KEEPALIVESPEED = 1000 * 6;
+
+    public static final int SERVERPORT = 40;
+
+    public static final int ENCRYPTSIZELIMIT = 10;
+
+    public void send(final String message) throws IOException {
+	if (!isOutputShutdown() && !isClosed()) {
+	    final OutputStream out = new BufferedOutputStream(getOutputStream());
+	    final PrintWriter writer = new PrintWriter(new OutputStreamWriter(out, "UTF-8"));
+
+	    String outMessage = message;
+	    if (outMessage.length() >= ENCRYPTSIZELIMIT) {
+		outMessage = Base64s.encrypt(outMessage, getEncryptionKey());
+	    }
+
+	    writer.println(outMessage);
+	    writer.flush();
 	}
+    }
 
-	public Sockets(final SocketImpl socketImpl) throws SocketException {
-		super(socketImpl);
-	}
+    public static final String SENDER = NString.parse(Strings.LOWS, Strings.UPPE, Strings.LOWN);
+    public static final String RECEIVER = NString.parse(Strings.LOWR, Strings.UPPE, Strings.LOWC, Strings.UPPV);
+    public static final String MSG_CODE = NString.parse(Strings.LOWC, Strings.LOWO, Strings.LOWD, Strings.LOWE);
+    public static final String ACTION = NString.parse(Strings.UPPA, Strings.UPPC, Strings.UPPT, Strings.UPPI,
+	    Strings.UPPO, Strings.UPPN);
+    public static final String RETURN = NString.parse(Strings.UPPR, Strings.UPPE, Strings.UPPT, Strings.UPPU,
+	    Strings.UPPR, Strings.UPPN);
 
-	private transient String idString;
-
-	public void setIdString(final String idString) {
-		this.idString = idString;
-	}
-
-	public String getIdString() {
-		return idString;
-	}
-
-	private transient JSONObject propertiesObject;
-
-	public void setProperties(final JSONObject propertiesObject) {
-		this.propertiesObject = propertiesObject;
-	}
-
-	public JSONObject getProperties() {
-		return propertiesObject;
-	}
-
-	private transient String encryptionKey = Strings.fString(Strings.UPPK,
-			Strings.LOWE, Strings.LOWN, Strings.LOWN, Strings.LOWN,
-			Strings.LOWE, Strings.LOWT, Strings.LOWH);
-
-	public void setEncryptionKey(final String encryptionKey) {
-		this.encryptionKey = encryptionKey;
-	}
-
-	public String getEncryptionKey() {
-		return encryptionKey;
-	}
-
-	public final static int BUFFERSIZE = 32;
-
-	public final static int QUEUEFAILTRY = 3;
-	public final static int PROPOSESPEED = 1000 / 10;
-
-	public final static int KEEPALIVEFAILTRY = 2;
-	public final static int KEEPALIVESPEED = 1000 * 4;
-
-	public final static int SERVERPORT = 40;
-
-	public final static int ENCRYPTSIZELIMIT = 10;
-
-	public void send(final String message) throws IOException {
-		if (!isOutputShutdown() && !isClosed()) {
-			final OutputStream out = new BufferedOutputStream(getOutputStream());
-			final PrintWriter writer = new PrintWriter(new OutputStreamWriter(
-					out, "UTF-8"));
-
-			String outMessage = message;
-			if (outMessage.length() >= ENCRYPTSIZELIMIT) {
-				outMessage = Strings.encrypt(outMessage, getEncryptionKey());
-			}
-
-			writer.println(outMessage);
-			writer.flush();
-		}
-	}
-
-	public final static String SENDER = Strings.fString(Strings.LOWS,
-			Strings.UPPE, Strings.LOWN);
-	public final static String RECEIVER = Strings.fString(Strings.LOWR,
-			Strings.UPPE, Strings.LOWC, Strings.UPPV);
-	public final static String MSG_CODE = Strings.fString(Strings.LOWC,
-			Strings.LOWO, Strings.LOWD, Strings.LOWE);
-	public final static String ACTION = Strings.fString(Strings.UPPA,
-			Strings.UPPC, Strings.UPPT, Strings.UPPI, Strings.UPPO,
-			Strings.UPPN);
-	public final static String RETURN = Strings.fString(Strings.UPPR,
-			Strings.UPPE, Strings.UPPT, Strings.UPPU, Strings.UPPR,
-			Strings.UPPN);
-
-	public final static String KEEPALIVE = Strings.LOWK;
-	public final static String KEEPALIVE_REACTION = Strings.LOWT;
-	public final static String DISCONNECT = Strings.fString(Strings.UPPD,
-			Strings.UPPI, Strings.UPPS, Strings.UPPC, Strings.UPPO,
-			Strings.UPPN);
-	public final static String DUPLICATE_LOGIN = Strings.fString(Strings.UPPD,
-			Strings.UPPU, Strings.UPPP, Strings.UPPL, Strings.UPPO,
-			Strings.UPPG);
+    public static final String KEEPALIVE = Strings.LOWK;
+    public static final String KEEPALIVE_REACTION = Strings.LOWT;
+    public static final String DISCONNECT = NString.parse(Strings.UPPD, Strings.UPPI, Strings.UPPS, Strings.UPPC,
+	    Strings.UPPO, Strings.UPPN);
+    public static final String DUPLICATE_LOGIN = NString.parse(Strings.UPPD, Strings.UPPU, Strings.UPPP, Strings.UPPL,
+	    Strings.UPPO, Strings.UPPG);
 }
