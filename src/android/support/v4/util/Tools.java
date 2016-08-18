@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.math.BigDecimal;
 import java.util.List;
@@ -12,13 +13,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.n.NString;
 import android.content.pm.ResolveInfo;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
 import android.support.v4.content.SharedPreferences.Preferences;
 import android.support.v4.lang.It;
-import android.support.v4.lang.NString;
 import android.support.v4.lang.Strings;
 import android.util.Log;
 import net.minidev.json.JSONArray;
@@ -52,7 +53,7 @@ public class Tools {
 
     public static JSONObject exceptionToJSONObject(final Exception exception) {
 	final StringWriter sWriter = new StringWriter();
-	// exception.printStackTrace(new PrintWriter(sWriter));
+	exception.printStackTrace(new PrintWriter(sWriter));
 	final JSONObject temp = new JSONObject();
 	temp.put("Exception", NString.parse(sWriter));
 

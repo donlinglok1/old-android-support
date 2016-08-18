@@ -1,10 +1,9 @@
-package android.support.v4.n;
+package android.n;
 
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.graphics.drawable.Drawables;
 import android.support.v4.view.VibrateListener;
 import android.support.v4.view.VibrateListener.Callback;
@@ -25,15 +24,23 @@ import android.widget.TextView;
  *
  */
 public class NFragment extends Fragment {
-    public transient FragmentActivity activity;
+    public transient NFragmentActivity activity;
     public transient Context appContext;
 
     @Override
     public void onAttach(final Activity activity) {
 	super.onAttach(activity);
 
-	this.activity = (FragmentActivity) activity;
+	this.activity = (NFragmentActivity) activity;
 	appContext = activity.getApplicationContext();
+    }
+
+    public void alert(final String msg) {
+	activity.alert(msg, 1);
+    }
+
+    public void alert(final String msg, final int second) {
+	activity.alert(msg, second);
     }
 
     public void setVClick(final View view, final Callback callback) {
@@ -47,16 +54,28 @@ public class NFragment extends Fragment {
     }
 
     public View setIconPadding(final TextView view, final int dp) {
-	view.setCompoundDrawablePadding(Drawables.dp2px(dp));
+	view.setCompoundDrawablePadding(dp);
 	return view;
     }
 
-    public Drawable getImage(final int resId, final int db) {
-	return getImage(resId, Drawables.dp2px(db), Drawables.dp2px(db));
+    public Drawable getImage(final int resId, final int dp) {
+	return getImage(resId, dp, dp);
     }
 
-    public Drawable getImage(final int resId, final int db, final int db2) {
-	return Drawables.get(appContext, resId, Drawables.dp2px(db), Drawables.dp2px(db2));
+    public Drawable getImage(final int resId, final int dp, final int dp2) {
+	return Drawables.get(appContext, resId, Drawables.dp2px(dp), Drawables.dp2px(dp2));
+    }
+
+    public Drawable getImageByPx(final int resId, final int px) {
+	return getImageByPx(resId, px, px);
+    }
+
+    public Drawable getImageByPx(final int resId, final int px, final int px2) {
+	return Drawables.get(appContext, resId, px, px2);
+    }
+
+    public int getRColor(final int resId) {
+	return appContext.getResources().getColor(resId);
     }
 
     /**

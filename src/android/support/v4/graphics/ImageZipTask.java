@@ -17,10 +17,10 @@ import android.support.v4.os.storage.Files;
  * @version 1.0.0
  */
 public class ImageZipTask extends AsyncTask<Void, Void, String> {
-    private transient final ArrayList<String> imageArrayList;
-    private transient final int compressSize;
-    private transient final String uploadFilePath;
-    private transient final ImageZipTaskCallback callback;
+    private final transient ArrayList<String> imageArrayList;
+    private final transient int compressSize;
+    private final transient String uploadFilePath;
+    private final transient ImageZipTaskCallback callback;
 
     public interface ImageZipTaskCallback {
 	void onReturn(String result);

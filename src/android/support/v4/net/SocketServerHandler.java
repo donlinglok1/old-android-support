@@ -9,8 +9,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
+import android.n.NDate;
 import android.support.v4.lang.Base64s;
-import android.support.v4.util.Dates;
 import android.support.v4.util.Tools;
 import net.minidev.json.JSONObject;
 
@@ -60,8 +60,8 @@ public class SocketServerHandler {
 	    try {
 		socket.send(message);
 		if (!Sockets.KEEPALIVE_REACTION.equals(message)) {
-		    System.out.println(
-			    "[" + Dates.now() + "]" + "_SocketServerSend-->" + message + "_" + socket.getProperties());
+		    System.out.println("[" + NDate.getDate() + "]" + "_SocketServerSend-->" + message + "_"
+			    + socket.getProperties());
 		}
 	    } catch (final IOException exception) {
 		Tools.exceptionToJSONObject(exception);
@@ -71,8 +71,8 @@ public class SocketServerHandler {
 
     public void readMessage(final String message) {
 	if (null != socket && !Sockets.KEEPALIVE.equals(message)) {
-	    System.out
-		    .println("[" + Dates.now() + "]" + "_SocketServerRead-->" + message + "_" + socket.getProperties());
+	    System.out.println(
+		    "[" + NDate.getDate() + "]" + "_SocketServerRead-->" + message + "_" + socket.getProperties());
 	}
     }
 

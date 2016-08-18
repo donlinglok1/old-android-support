@@ -11,15 +11,15 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.SecretKeySpec;
 
-import android.support.v4.lang.NString;
+import android.n.NString;
 import android.support.v4.lang.Strings;
 import android.support.v4.util.Tools;
 
 public class HttpCrypt {
-    private static final String AES = NString.parse(Strings.UPPA, Strings.UPPE, Strings.UPPS);
+    private static final String AES = NString.add(Strings.UPPA, Strings.UPPE, Strings.UPPS);
 
     public static final String decrypt(final String plaintext) {
-	return decrypt(plaintext, NString.parse(Strings.FIVE, Strings.SEVEN, Strings.TWO, Strings.THREE, Strings.EIGHT,
+	return decrypt(plaintext, NString.add(Strings.FIVE, Strings.SEVEN, Strings.TWO, Strings.THREE, Strings.EIGHT,
 		Strings.ZERO, Strings.ZERO, Strings.FOUR, Strings.LOWE, Strings.SEVEN, Strings.EIGHT, Strings.FOUR,
 		Strings.FOUR, Strings.NINE, Strings.EIGHT, Strings.LOWB, Strings.LOWB, Strings.LOWC, Strings.TWO,
 		Strings.LOWF, Strings.EIGHT, Strings.LOWB, Strings.LOWF, Strings.NINE, Strings.EIGHT, Strings.FOUR,
@@ -27,7 +27,7 @@ public class HttpCrypt {
     }
 
     public static final String encrypt(final String plaintext) {
-	return encrypt(plaintext, NString.parse(Strings.FIVE, Strings.SEVEN, Strings.TWO, Strings.THREE, Strings.EIGHT,
+	return encrypt(plaintext, NString.add(Strings.FIVE, Strings.SEVEN, Strings.TWO, Strings.THREE, Strings.EIGHT,
 		Strings.ZERO, Strings.ZERO, Strings.FOUR, Strings.LOWE, Strings.SEVEN, Strings.EIGHT, Strings.FOUR,
 		Strings.FOUR, Strings.NINE, Strings.EIGHT, Strings.LOWB, Strings.LOWB, Strings.LOWC, Strings.TWO,
 		Strings.LOWF, Strings.EIGHT, Strings.LOWB, Strings.LOWF, Strings.NINE, Strings.EIGHT, Strings.FOUR,

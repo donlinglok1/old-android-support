@@ -1,5 +1,7 @@
 package android.support.v4.lang;
 
+import android.n.NString;
+
 public class It {
     public static boolean isNull(final Object object) {
 	return null == object || NString.parse(object).length() == 0;

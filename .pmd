@@ -43,7 +43,7 @@
         </rule>
         <rule>
             <name>CollapsibleIfStatements</name>
-            <ruleset>Basic</ruleset>
+            <ruleset>Basic Velocity</ruleset>
         </rule>
         <rule>
             <name>ClassCastExceptionWithToArray</name>
@@ -431,7 +431,7 @@
         </rule>
         <rule>
             <name>AssignmentInOperand</name>
-            <ruleset>Basic Ecmascript</ruleset>
+            <ruleset>Controversial</ruleset>
         </rule>
         <rule>
             <name>UnreachableCode</name>
@@ -539,7 +539,7 @@
         </rule>
         <rule>
             <name>AssignmentInOperand</name>
-            <ruleset>Basic Ecmascript</ruleset>
+            <ruleset>Controversial</ruleset>
         </rule>
         <rule>
             <name>AtLeastOneConstructor</name>
@@ -563,10 +563,6 @@
         </rule>
         <rule>
             <name>DefaultPackage</name>
-            <ruleset>Controversial</ruleset>
-        </rule>
-        <rule>
-            <name>BooleanInversion</name>
             <ruleset>Controversial</ruleset>
         </rule>
         <rule>
@@ -671,11 +667,11 @@
         </rule>
         <rule>
             <name>AvoidDeeplyNestedIfStmts</name>
-            <ruleset>Design</ruleset>
+            <ruleset>Basic Velocity</ruleset>
         </rule>
         <rule>
             <name>CollapsibleIfStatements</name>
-            <ruleset>Basic</ruleset>
+            <ruleset>Basic Velocity</ruleset>
         </rule>
         <rule>
             <name>ExcessiveTemplateLength</name>
@@ -683,7 +679,7 @@
         </rule>
         <rule>
             <name>AvoidReassigningParameters</name>
-            <ruleset>Design</ruleset>
+            <ruleset>Basic Velocity</ruleset>
         </rule>
         <rule>
             <name>EmptyIfStmt</name>
@@ -1071,11 +1067,11 @@
         </rule>
         <rule>
             <name>AvoidDeeplyNestedIfStmts</name>
-            <ruleset>Design</ruleset>
+            <ruleset>Basic Velocity</ruleset>
         </rule>
         <rule>
             <name>AvoidReassigningParameters</name>
-            <ruleset>Design</ruleset>
+            <ruleset>Basic Velocity</ruleset>
         </rule>
         <rule>
             <name>SwitchDensity</name>
@@ -1199,10 +1195,6 @@
         </rule>
         <rule>
             <name>NonThreadSafeSingleton</name>
-            <ruleset>Design</ruleset>
-        </rule>
-        <rule>
-            <name>UncommentedEmptyMethod</name>
             <ruleset>Design</ruleset>
         </rule>
         <rule>

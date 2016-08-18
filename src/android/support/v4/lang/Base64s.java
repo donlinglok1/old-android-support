@@ -17,6 +17,7 @@ import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.DESKeySpec;
 
 import android.graphics.Bitmap;
+import android.n.NString;
 import android.support.v4.graphics.Bitmaps;
 import android.support.v4.util.Tools;
 import android.util.Base64OutputStream;
@@ -51,7 +52,7 @@ public class Base64s {
 	return result;
     }
 
-    private static String DES = NString.parse(Strings.UPPD, Strings.UPPE, Strings.UPPS);
+    private static String DES = NString.add(Strings.UPPD, Strings.UPPE, Strings.UPPS);
 
     public static String encrypt(final String data, final String key) {
 	String result = data;

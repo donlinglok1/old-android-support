@@ -13,8 +13,8 @@ import java.util.zip.ZipOutputStream;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.n.NString;
 import android.os.Environment;
-import android.support.v4.lang.NString;
 import android.support.v4.lang.Strings;
 import android.support.v4.util.Tools;
 
@@ -28,7 +28,7 @@ import android.support.v4.util.Tools;
  */
 public class Files {
     public static final String getTempFolderPath(final Context context) {
-	return NString.parse(NString.parse(Environment.getExternalStorageDirectory()), Strings.SLASH, Strings.UPPA,
+	return NString.add(NString.parse(Environment.getExternalStorageDirectory()), Strings.SLASH, Strings.UPPA,
 		Strings.LOWN, Strings.LOWD, Strings.LOWR, Strings.LOWO, Strings.LOWI, Strings.LOWD, Strings.SLASH,
 		Strings.LOWD, Strings.LOWA, Strings.LOWT, Strings.LOWA, Strings.SLASH, context.getPackageName(),
 		Strings.SLASH);

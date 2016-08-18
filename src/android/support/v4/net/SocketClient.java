@@ -14,11 +14,11 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.RejectedExecutionException;
 
+import android.n.NDate;
+import android.n.NString;
 import android.support.v4.lang.Base64s;
 import android.support.v4.lang.It;
-import android.support.v4.lang.NString;
 import android.support.v4.lang.Strings;
-import android.support.v4.util.Dates;
 import android.support.v4.util.Tools;
 import net.minidev.json.JSONObject;
 import net.minidev.json.JSONStyle;
@@ -143,8 +143,8 @@ public class SocketClient {
 	    try {
 		socket.send(message);
 		if (isLog && !Sockets.KEEPALIVE.equals(message)) {
-		    System.out.println(
-			    "[" + Dates.now() + "]" + "_SocketClientSend-->" + message + "_" + socket.getProperties());
+		    System.out.println("[" + NDate.getDate() + "]" + "_SocketClientSend-->" + message + "_"
+			    + socket.getProperties());
 		}
 	    } catch (final IOException exception) {
 		Tools.exceptionToJSONObject(exception);
@@ -158,8 +158,8 @@ public class SocketClient {
     public static final int PRIORITY_HIG = 1;
 
     private transient String lastMsgCode = Strings.EMPTY;
-    private transient final ArrayList<JSONObject> queryListLOW = new ArrayList<JSONObject>();
-    private transient final ArrayList<JSONObject> queryListHIG = new ArrayList<JSONObject>();
+    private final transient ArrayList<JSONObject> queryListLOW = new ArrayList<JSONObject>();
+    private final transient ArrayList<JSONObject> queryListHIG = new ArrayList<JSONObject>();
 
     public void addMessage(final JSONObject jObject, final int priority) {
 	if (!It.isNull(jObject.get(Sockets.ACTION))) {
@@ -174,7 +174,7 @@ public class SocketClient {
 		}
 	    }
 
-	    jObject.put(Sockets.MSG_CODE, Dates.getDate("HHmmssSSS", new Date()));
+	    jObject.put(Sockets.MSG_CODE, NDate.toString("HHmmssSSS", new Date(), +8));
 	    if (PRIORITY_HIG == priority) {
 		queryListHIG.add(jObject);
 	    } else {
@@ -256,8 +256,8 @@ public class SocketClient {
 
     public void readMessage(final String message) {
 	if (isLog && !Sockets.KEEPALIVE_REACTION.equals(message)) {
-	    System.out
-		    .println("[" + Dates.now() + "]" + "_SocketClientRead-->" + message + "_" + socket.getProperties());
+	    System.out.println(
+		    "[" + NDate.getDate() + "]" + "_SocketClientRead-->" + message + "_" + socket.getProperties());
 	}
 	removeMessage(message);
 	if (null != callback) {

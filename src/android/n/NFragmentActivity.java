@@ -1,4 +1,4 @@
-package android.support.v4.n;
+package android.n;
 
 import java.lang.reflect.Field;
 
@@ -103,6 +103,10 @@ public class NFragmentActivity extends FragmentActivity {
 	}
     }
 
+    public void setVClick(final View view, final Callback callback) {
+	view.setOnTouchListener(new VibrateListener(appContext, callback));
+    }
+
     public View setIcon(final TextView view, final Drawable left, final Drawable top, final Drawable right,
 	    final Drawable bottom) {
 	view.setCompoundDrawablesWithIntrinsicBounds(left, top, right, bottom);
@@ -110,20 +114,28 @@ public class NFragmentActivity extends FragmentActivity {
     }
 
     public View setIconPadding(final TextView view, final int dp) {
-	view.setCompoundDrawablePadding(Drawables.dp2px(dp));
+	view.setCompoundDrawablePadding(dp);
 	return view;
     }
 
-    public void setVClick(final View view, final Callback callback) {
-	view.setOnTouchListener(new VibrateListener(appContext, callback));
+    public Drawable getImage(final int resId, final int dp) {
+	return getImage(resId, dp, dp);
     }
 
-    public Drawable getImage(final int resId, final int size) {
-	return getImage(resId, size, size);
+    public Drawable getImage(final int resId, final int dp, final int dp2) {
+	return Drawables.get(appContext, resId, Drawables.dp2px(dp), Drawables.dp2px(dp2));
     }
 
-    public Drawable getImage(final int resId, final int size, final int size2) {
-	return Drawables.get(appContext, resId, size, size2);
+    public Drawable getImageByPx(final int resId, final int px) {
+	return getImageByPx(resId, px, px);
+    }
+
+    public Drawable getImageByPx(final int resId, final int px, final int px2) {
+	return Drawables.get(appContext, resId, px, px2);
+    }
+
+    public int getRColor(final int resId) {
+	return appContext.getResources().getColor(resId);
     }
 
     private final void setConfigCallback(final WindowManager windowManager) {

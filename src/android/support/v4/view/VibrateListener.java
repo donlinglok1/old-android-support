@@ -19,9 +19,9 @@ public class VibrateListener implements View.OnTouchListener {
     public static final String IS_VIBRATE = "isVibrate";
     public static final int VIBRATE_TIME = 50;
 
-    private transient final Context baseContext;
+    private final transient Context baseContext;
 
-    private transient final Callback callback;
+    private final transient Callback callback;
 
     public interface Callback {
 	void onClick(View view);
@@ -32,8 +32,8 @@ public class VibrateListener implements View.OnTouchListener {
 	this.callback = callback;
     }
 
-    private transient final Handler handler = new Handler();
-    private transient final Runnable vibrateRunnable = new Runnable() {
+    private final transient Handler handler = new Handler();
+    private final transient Runnable vibrateRunnable = new Runnable() {
 	@Override
 	public void run() {
 	    if (Preferences.get(baseContext, IS_VIBRATE, 1) == 0) {

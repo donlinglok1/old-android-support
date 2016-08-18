@@ -1,4 +1,6 @@
-package android.support.v4.lang;
+package android.n;
+
+import android.support.v4.lang.It;
 
 /*
  * Copyright (c) 2014 Kenneth Tu <don.ling.lok@gmail.com>
@@ -104,7 +106,7 @@ public class NString {
     public static String OP_SQBRACK = new String(new char[] { 91 });
     public static String BACKSLASH = new String(new char[] { 92 });
 
-    public static String parse(final Object... words) {
+    public static String add(final Object... words) {
 	final StringBuilder queryBuffer = new StringBuilder();
 	for (final Object word : words) {
 	    queryBuffer.append(word);

@@ -1,4 +1,4 @@
-package android.support.v4.content.SharedPreferences;
+package android.n;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +22,7 @@ import android.support.v4.lang.Base64s;
  * @author kennetht
  *
  */
-public class Preferences {
+public class NStorage {
     public static final String NAME = "SharedPreference";
 
     public static final String DEVICEHEIGHT = "bRezEqe8";

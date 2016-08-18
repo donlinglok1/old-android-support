@@ -5,11 +5,11 @@ import java.io.IOException;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.n.NString;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.support.v4.lang.NString;
 import android.support.v4.util.Tools;
 
 /*
@@ -22,12 +22,12 @@ import android.support.v4.util.Tools;
  */
 /**
  * give the signal, say no more and take my image path.
- * 
+ *
  * @author kennetht
  *
  */
 public class ImageCaptureSupport extends Activity {
-    private transient Activity activiry;
+    private transient Activity activity;
 
     public static final String IMAGE_PATH = "image_path";
     private static final String TEMP_PATH = "ImageFilePath";
@@ -37,14 +37,14 @@ public class ImageCaptureSupport extends Activity {
     @Override
     public void onCreate(final Bundle savedInstanceState) {
 	super.onCreate(savedInstanceState);
-	activiry = this;
+	activity = this;
 
 	if (savedInstanceState == null) {
-	    String filePath = "/Android/data/" + activiry.getPackageName() + "/temp/ImageCaptureSupport/";
+	    String filePath = "/Android/data/" + activity.getPackageName() + "/temp/ImageCaptureSupport/";
 	    if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
 		filePath = NString.parse(Environment.getExternalStorageDirectory().getAbsolutePath(), filePath);
 	    } else {
-		filePath = NString.parse(activiry.getCacheDir().getAbsolutePath() + filePath);
+		filePath = NString.parse(activity.getCacheDir().getAbsolutePath() + filePath);
 	    }
 	    final File file = new File(filePath);
 	    if (!file.exists()) {
@@ -82,9 +82,9 @@ public class ImageCaptureSupport extends Activity {
 	if (TEMP_CODE == requestCode && resultCode == Activity.RESULT_OK) {
 	    final Intent intent2 = new Intent();
 	    intent2.putExtra(IMAGE_PATH, tempFilePath);
-	    activiry.setResult(Activity.RESULT_OK, intent2);
+	    activity.setResult(Activity.RESULT_OK, intent2);
 	}
-	activiry.finish();
+	activity.finish();
     }
 
     @Override

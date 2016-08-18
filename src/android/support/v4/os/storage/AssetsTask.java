@@ -9,8 +9,8 @@ import java.util.ArrayList;
 
 import android.content.Context;
 import android.content.res.AssetManager;
+import android.n.NString;
 import android.os.AsyncTask;
-import android.support.v4.lang.NString;
 import android.support.v4.lang.Strings;
 import android.support.v4.util.Tools;
 
@@ -23,7 +23,7 @@ import android.support.v4.util.Tools;
  * @version 1.0.0
  */
 public class AssetsTask extends AsyncTask<Void, Void, String> {
-    private transient final Context context;
+    private final transient Context context;
     private transient AssetsCallback callback;
     private transient String[] dontCopyStrings = { "fonts", "images", "sounds", "webkit",
 	    "crashlytics-build.properties", "googlemap", "offlinemap", "icudt46l.zip", "icudtl.dat",

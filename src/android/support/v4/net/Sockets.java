@@ -10,8 +10,8 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.net.SocketImpl;
 
+import android.n.NString;
 import android.support.v4.lang.Base64s;
-import android.support.v4.lang.NString;
 import android.support.v4.lang.Strings;
 import net.minidev.json.JSONObject;
 
@@ -56,7 +56,7 @@ public class Sockets extends Socket {
 	return propertiesObject;
     }
 
-    private transient String encryptionKey = NString.parse(Strings.UPPK, Strings.LOWE, Strings.LOWN, Strings.LOWN,
+    private transient String encryptionKey = NString.add(Strings.UPPK, Strings.LOWE, Strings.LOWN, Strings.LOWN,
 	    Strings.LOWN, Strings.LOWE, Strings.LOWT, Strings.LOWH);
 
     public void setEncryptionKey(final String encryptionKey) {
@@ -94,18 +94,18 @@ public class Sockets extends Socket {
 	}
     }
 
-    public static final String SENDER = NString.parse(Strings.LOWS, Strings.UPPE, Strings.LOWN);
-    public static final String RECEIVER = NString.parse(Strings.LOWR, Strings.UPPE, Strings.LOWC, Strings.UPPV);
-    public static final String MSG_CODE = NString.parse(Strings.LOWC, Strings.LOWO, Strings.LOWD, Strings.LOWE);
-    public static final String ACTION = NString.parse(Strings.UPPA, Strings.UPPC, Strings.UPPT, Strings.UPPI,
+    public static final String SENDER = NString.add(Strings.LOWS, Strings.UPPE, Strings.LOWN);
+    public static final String RECEIVER = NString.add(Strings.LOWR, Strings.UPPE, Strings.LOWC, Strings.UPPV);
+    public static final String MSG_CODE = NString.add(Strings.LOWC, Strings.LOWO, Strings.LOWD, Strings.LOWE);
+    public static final String ACTION = NString.add(Strings.UPPA, Strings.UPPC, Strings.UPPT, Strings.UPPI,
 	    Strings.UPPO, Strings.UPPN);
-    public static final String RETURN = NString.parse(Strings.UPPR, Strings.UPPE, Strings.UPPT, Strings.UPPU,
+    public static final String RETURN = NString.add(Strings.UPPR, Strings.UPPE, Strings.UPPT, Strings.UPPU,
 	    Strings.UPPR, Strings.UPPN);
 
     public static final String KEEPALIVE = Strings.LOWK;
     public static final String KEEPALIVE_REACTION = Strings.LOWT;
-    public static final String DISCONNECT = NString.parse(Strings.UPPD, Strings.UPPI, Strings.UPPS, Strings.UPPC,
+    public static final String DISCONNECT = NString.add(Strings.UPPD, Strings.UPPI, Strings.UPPS, Strings.UPPC,
 	    Strings.UPPO, Strings.UPPN);
-    public static final String DUPLICATE_LOGIN = NString.parse(Strings.UPPD, Strings.UPPU, Strings.UPPP, Strings.UPPL,
+    public static final String DUPLICATE_LOGIN = NString.add(Strings.UPPD, Strings.UPPU, Strings.UPPP, Strings.UPPL,
 	    Strings.UPPO, Strings.UPPG);
 }

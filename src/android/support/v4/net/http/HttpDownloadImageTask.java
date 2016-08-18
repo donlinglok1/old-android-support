@@ -13,10 +13,9 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
 import android.graphics.BitmapFactory;
+import android.n.NString;
 import android.os.AsyncTask;
 import android.os.Environment;
-import android.support.v4.lang.NString;
-import android.support.v4.lang.Strings;
 
 public class HttpDownloadImageTask extends AsyncTask<String, Integer, String> {
     final private transient Context context;
@@ -70,7 +69,7 @@ public class HttpDownloadImageTask extends AsyncTask<String, Integer, String> {
     @Override
     protected String doInBackground(final String... arg0) {
 	try {
-	    final File file = new File(NString.parse(NString.parse(Environment.getExternalStorageDirectory()),
+	    final File file = new File(NString.add(NString.parse(Environment.getExternalStorageDirectory()),
 		    "/Android/data/", context.getPackageName(), "/"));
 	    file.mkdirs();
 	    final File outputFile = new File(file, output);

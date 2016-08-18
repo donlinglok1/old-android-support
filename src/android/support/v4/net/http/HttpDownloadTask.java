@@ -11,10 +11,9 @@ import java.net.URL;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.n.NString;
 import android.os.AsyncTask;
 import android.os.Environment;
-import android.support.v4.lang.NString;
-import android.support.v4.lang.Strings;
 
 /*
  * Copyright (c) 2014 Kenneth Tu <don.ling.lok@gmail.com>
@@ -76,7 +75,7 @@ public class HttpDownloadTask extends AsyncTask<String, Integer, String> {
     @Override
     protected String doInBackground(final String... arg0) {
 	try {
-	    final File file = new File(NString.parse(NString.parse(Environment.getExternalStorageDirectory()),
+	    final File file = new File(NString.add(NString.parse(Environment.getExternalStorageDirectory()),
 		    "/Android/data/", context.getPackageName(), "/"));
 	    file.mkdirs();
 	    final File outputFile = new File(file, output);
