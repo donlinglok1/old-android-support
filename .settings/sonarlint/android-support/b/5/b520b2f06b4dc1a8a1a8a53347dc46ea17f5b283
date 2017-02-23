@@ -1,0 +1,12 @@
+
+jsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(ôøÖ†
+jsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(‡Ûµë
+osquid:ModifiersOrderCheck#"EReorder the modifiers to comply with the Java Language Specification.(ã·žâüÿÿÿÿ
+osquid:ModifiersOrderCheck$"EReorder the modifiers to comply with the Java Language Specification.(§†‚Çûÿÿÿÿ
+Tsquid:S1213#"8Move this variable to comply with Java Code Conventions.(ã·žâüÿÿÿÿ
+Tsquid:S1213$"8Move this variable to comply with Java Code Conventions.(§†‚Çûÿÿÿÿ
+Osquid:S1213-"8Move this variable to comply with Java Code Conventions.(ýž›Œ
+šsquid:S1609"~Annotate the "Callback" interface with the @FunctionalInterface annotation (sonar.java.source not set. Assuming 8 or greater.)(»–ö™ýÿÿÿÿ
+xsquid:S1604$"\Make this anonymous inner class a lambda (sonar.java.source not set. Assuming 8 or greater.)(§†‚Çûÿÿÿÿ
+…squid:S11517"iReduce this switch case number of lines from 8 to at most 5, for example by extracting code into methods.(£ê„€ýÿÿÿÿ
+…squid:S1151@"iReduce this switch case number of lines from 8 to at most 5, for example by extracting code into methods.(¨é×öýÿÿÿÿ

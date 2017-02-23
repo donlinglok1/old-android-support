@@ -14,20 +14,20 @@ import java.net.SocketImpl;
  * @version 1.0.0
  */
 public class ServerSockets extends ServerSocket {
-    public ServerSockets(final int serverport) throws IOException {
-	super(serverport);
-    }
+	public ServerSockets(final int serverport) throws IOException {
+		super(serverport);
+	}
 
-    @Override
-    public Sockets accept() throws IOException {
-	if (isClosed()) {
-	    throw new SocketException("Socket is closed");
+	@Override
+	public Sockets accept() throws IOException {
+		if (isClosed()) {
+			throw new SocketException("Socket is closed");
+		}
+		if (!isBound()) {
+			throw new SocketException("Socket is not bound yet");
+		}
+		final Sockets socket = new Sockets((SocketImpl) null);
+		implAccept(socket);
+		return socket;
 	}
-	if (!isBound()) {
-	    throw new SocketException("Socket is not bound yet");
-	}
-	final Sockets socket = new Sockets((SocketImpl) null);
-	implAccept(socket);
-	return socket;
-    }
 }

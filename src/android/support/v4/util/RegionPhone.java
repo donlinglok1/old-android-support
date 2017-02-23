@@ -15,24 +15,24 @@ import android.support.v4.net.http.HttpDownloadTask.HttpDownloadTaskCallback;
  * @version 1.0.0
  */
 public class RegionPhone {
-    public interface RegionPhoneCallback {
-	void onSuccess(File outputFile);
+	public static abstract interface RegionPhoneCallback {
+		public abstract void onSuccess(File outputFile);
 
-	void onFail(Exception exception);
-    }
+		public abstract void onFail(Exception exception);
+	}
 
-    public void init(final Context context, final RegionPhoneCallback callback) {
-	new HttpDownloadTask(context, new HttpDownloadTaskCallback() {
-	    @Override
-	    public void onSuccess(final File outputFile) {
-		callback.onSuccess(outputFile);
-	    }
+	public final void init(final Context context, final RegionPhoneCallback callback) {
+		new HttpDownloadTask(context, new HttpDownloadTaskCallback() {
+			@Override
+			public void onSuccess(final File outputFile) {
+				callback.onSuccess(outputFile);
+			}
 
-	    @Override
-	    public void onFail(final Exception exception) {
-		callback.onFail(exception);
-	    }
-	}, "https://raw.githubusercontent.com/mledoze/countries/master/countries.json", "RegionPhone.json", false)
-		.execute();
-    }
+			@Override
+			public void onFail(final Exception exception) {
+				callback.onFail(exception);
+			}
+		}, "https://raw.githubusercontent.com/mledoze/countries/master/countries.json", "RegionPhone.json", false)
+				.execute();
+	}
 }

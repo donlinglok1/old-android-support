@@ -1,0 +1,27 @@
+
+Lsquid:EmptyStatementUsageCheck"Remove this empty statement.(ôŸìúÿÿÿÿ
+Q"squid:SwitchLastCaseIsDefaultCheckè""Add a default case to this switch.(™Šø„
+V"squid:SwitchLastCaseIsDefaultCheckš""Add a default case to this switch.(Éš† ûÿÿÿÿ
+Q"squid:SwitchLastCaseIsDefaultCheckÕ""Add a default case to this switch.(ÜŸ•
+Psquid:S1213ò"8Move this variable to comply with Java Code Conventions.(¤ÌêÏ
+Psquid:S1213ó"8Move this variable to comply with Java Code Conventions.(¢Æç§
+Psquid:S1213Å"8Move this variable to comply with Java Code Conventions.(ôü©í
+Psquid:S1213Æ"8Move this variable to comply with Java Code Conventions.(´úÎé
+hsquid:S1301š"KReplace this "switch" statement by "if" statements to increase readability.(Éš† ûÿÿÿÿ
+gsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(Í›¸ıÿÿÿÿ
+R
+squid:S106Ğ";Replace this usage of System.out or System.err by a logger.(¹öÇ©
+Zsquid:S1244Å"=Equality tests should not be made with floating point values.(ÙÃüÍùÿÿÿÿ
+"squid:ClassVariableVisibilityCheckÉ"PMake type a static final constant or non-public and provide accessors if needed.(ûöå©
+†"squid:ClassVariableVisibilityCheckÌ"RMake string a static final constant or non-public and provide accessors if needed.(ªëËÿÿÿÿÿ
+„"squid:ClassVariableVisibilityCheckÏ"PMake data a static final constant or non-public and provide accessors if needed.(ÅÖÔ´ùÿÿÿÿ
+‹"squid:ClassVariableVisibilityCheckÕ"WMake assetCookie a static final constant or non-public and provide accessors if needed.(¦†Ÿæøÿÿÿÿ
+Š"squid:ClassVariableVisibilityCheckÚ"VMake resourceId a static final constant or non-public and provide accessors if needed.(‚óõüÿÿÿÿ
+‘"squid:ClassVariableVisibilityCheckà"bMake changingConfigurations a static final constant or non-public and provide accessors if needed.(‚ˆÉˆ
+‡"squid:ClassVariableVisibilityCheckæ"SMake density a static final constant or non-public and provide accessors if needed.(›Ğ§¶øÿÿÿÿ
+‘ squid:MethodCyclomaticComplexityç"dThe Cyclomatic Complexity of this method "applyDimension" is 13 which is greater than 10 authorized.(ÊÌÌÇ
+– squid:MethodCyclomaticComplexityÔ"dThe Cyclomatic Complexity of this method "coerceToString" is 24 which is greater than 10 authorized.(¼ÂÈÃùÿÿÿÿ
+ssquid:S00115£"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(»ğéª
+ssquid:S00115¥"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(óØì‚
+ssquid:S00115§"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(„¡‰»
+ssquid:S00115©"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(ÇÅš

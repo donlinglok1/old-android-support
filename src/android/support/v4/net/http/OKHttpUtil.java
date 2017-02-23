@@ -12,33 +12,33 @@ import okhttp3.Response;
  * OKHTTP Controller
  */
 public class OKHttpUtil {
-    private static final OkHttpClient OKHTTPCLIENT;
+	private static final OkHttpClient OKHTTPCLIENT;
 
-    static {
-	OKHTTPCLIENT = new OkHttpClient.Builder().connectTimeout(10, TimeUnit.SECONDS)
-		.writeTimeout(10, TimeUnit.SECONDS).readTimeout(30, TimeUnit.SECONDS).build();
-    }
+	static {
+		OKHTTPCLIENT = new OkHttpClient.Builder().connectTimeout(10, TimeUnit.SECONDS)
+				.writeTimeout(10, TimeUnit.SECONDS).readTimeout(30, TimeUnit.SECONDS).build();
+	}
 
-    private OKHttpUtil() {
+	private OKHttpUtil() {
 
-    }
+	}
 
-    /**
-     *
-     * @param request
-     * @return
-     * @throws IOException
-     */
-    public static Response execute(final Request request) throws IOException {
-	return OKHTTPCLIENT.newCall(request).execute();
-    }
+	/**
+	 *
+	 * @param request
+	 * @return
+	 * @throws IOException
+	 */
+	public static final Response execute(final Request request) throws IOException {
+		return OKHTTPCLIENT.newCall(request).execute();
+	}
 
-    /**
-     *
-     * @param request
-     * @param responseCallback
-     */
-    public static void enqueue(final Request request, final Callback responseCallback) {
-	OKHTTPCLIENT.newCall(request).enqueue(responseCallback);
-    }
+	/**
+	 *
+	 * @param request
+	 * @param responseCallback
+	 */
+	public static final void enqueue(final Request request, final Callback responseCallback) {
+		OKHTTPCLIENT.newCall(request).enqueue(responseCallback);
+	}
 }
