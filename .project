@@ -2,37 +2,28 @@
 <projectDescription>
 	<name>android-support</name>
 	<comment></comment>
-	<projects>
-	</projects>
+	<projects/>
+	<natures>
+		<nature>org.eclipse.jdt.core.javanature</nature>
+		<nature>com.android.ide.eclipse.adt.AndroidNature</nature>
+	</natures>
 	<buildSpec>
 		<buildCommand>
+			<name>org.eclipse.jdt.core.javabuilder</name>
+			<arguments/>
+		</buildCommand>
+		<buildCommand>
 			<name>com.android.ide.eclipse.adt.ResourceManagerBuilder</name>
-			<arguments>
-			</arguments>
+			<arguments/>
 		</buildCommand>
 		<buildCommand>
 			<name>com.android.ide.eclipse.adt.PreCompilerBuilder</name>
-			<arguments>
-			</arguments>
-		</buildCommand>
-		<buildCommand>
-			<name>org.eclipse.jdt.core.javabuilder</name>
-			<arguments>
-			</arguments>
+			<arguments/>
 		</buildCommand>
 		<buildCommand>
 			<name>com.android.ide.eclipse.adt.ApkBuilder</name>
-			<arguments>
-			</arguments>
-		</buildCommand>
-		<buildCommand>
-			<name>org.sonarlint.eclipse.core.sonarlintBuilder</name>
-			<arguments>
-			</arguments>
+			<arguments/>
 		</buildCommand>
 	</buildSpec>
-	<natures>
-		<nature>com.android.ide.eclipse.adt.AndroidNature</nature>
-		<nature>org.eclipse.jdt.core.javanature</nature>
-	</natures>
+	<linkedResources/>
 </projectDescription>

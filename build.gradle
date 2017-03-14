@@ -1,0 +1,152 @@
+buildscript {
+    repositories {
+        jcenter()
+    	mavenCentral()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:2.2.3'
+     	classpath 'me.tatarka:gradle-retrolambda:3.+'
+    }
+}
+
+apply plugin: 'com.android.library'
+apply plugin: 'maven'
+apply plugin: 'eclipse'
+apply plugin: 'me.tatarka.retrolambda'
+
+def app_name = 'android-support'
+
+repositories {
+    mavenCentral()
+    maven {
+    	url System.getenv("ANDROID_HOME")+"/extras/android/m2repository/"
+    }
+    maven { url "https://jitpack.io" }
+    maven { url 'https://oss.jfrog.org/libs-snapshot' }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: '*.jar')
+
+    compile 'com.android.support:support-v4:25.+'
+    compile('com.android.support:appcompat-v7:25.+') {
+    	exclude module: 'support-v4'
+   	}
+
+    compile project(":Ndroid")
+    compile 'io.reactivex.rxjava2:rxjava:2.0.0-DP0-SNAPSHOT'
+}
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.2"
+
+    defaultConfig {
+        minSdkVersion 9
+        //targetSdkVersion 19
+        //versionCode 1
+        //versionName "1.0"
+        //applicationId  // (was packageName )
+        //applicationIdSuffix
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+
+    compileOptions {
+    	sourceCompatibility JavaVersion.VERSION_1_8
+   		targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    sourceSets {
+        main {
+            manifest.srcFile 'AndroidManifest.xml'
+            java.srcDirs = ['src']
+            resources.srcDirs = ['src']
+            aidl.srcDirs = ['src']
+            renderscript.srcDirs = ['src']
+            res.srcDirs = ['res']
+            assets.srcDirs = ['assets']
+        }
+
+        debug.setRoot('build-types/debug')
+        release.setRoot('build-types/release')
+    }
+}
+
+task setProject{
+	eclipse.classpath.file {
+	  withXml {
+	    def node = it.asNode()
+	    node.appendNode('classpathentry kind="src" path="src"')
+	    //node.appendNode('classpathentry kind="src" path="src/main/java"')
+	   	//node.appendNode('classpathentry kind="src" path="src/test/java"')
+	    node.appendNode('classpathentry kind="src" path="gen"')
+	    node.appendNode('classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"')
+	    node.appendNode('classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"')
+	    node.appendNode('classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"')
+	  }
+	}
+
+	eclipse.project {
+	  name = app_name
+
+	  //natures 'org.eclipse.jdt.core.javanature'
+	  natures 'com.android.ide.eclipse.adt.AndroidNature'
+
+	  buildCommand 'org.eclipse.jdt.core.javabuilder'
+	  buildCommand 'com.android.ide.eclipse.adt.ResourceManagerBuilder'
+	  buildCommand 'com.android.ide.eclipse.adt.PreCompilerBuilder'
+	  buildCommand 'com.android.ide.eclipse.adt.ApkBuilder'
+	}
+}
+
+//dependencies to jar
+task dps2jar {
+    doLast {
+		FileTree tree = fileTree(dir: 'build/intermediates/exploded-aar')
+		tree.include '**/*.jar'
+		tree.each {File jfile  ->
+			println jfile
+			String jar = jfile.getName();
+			if(jar.equals("classes.jar")){
+				jar = jfile.getParentFile().getParentFile().toString().replace(jfile.getParentFile().getParentFile().getParentFile().getParentFile().getParentFile().toString(),"").replace("\\","_")+".jar"
+			}
+			println jar
+		    file(jfile).renameTo(file( "libs/"+jar))
+		}
+    }
+}
+
+task binJar {
+    FileTree tree = fileTree(dir: 'build/intermediates/classes/')
+	tree.include '**/*.jar'
+	tree.each {File jfile  ->
+		println jfile
+	    file(jfile).renameTo(file( "bin/"+app_name+'.jar'))
+	}
+}
+
+task run {
+	dependsOn 'androidDependencies'
+	dependsOn 'clean'
+	dependsOn 'cleanEclipse'
+	dependsOn 'build'
+	dependsOn 'dps2jar'
+	dependsOn 'eclipse'
+	dependsOn 'setProject'
+	//dependsOn 'assembleAndroidTest'
+	dependsOn 'binJar'
+	tasks.findByName('clean').mustRunAfter 'androidDependencies'
+	tasks.findByName('cleanEclipse').mustRunAfter 'clean'
+	tasks.findByName('build').mustRunAfter 'cleanEclipse'
+	tasks.findByName('dps2jar').mustRunAfter 'build'
+	tasks.findByName('eclipse').mustRunAfter 'dps2jar'
+	tasks.findByName('setProject').mustRunAfter 'eclipse'
+	tasks.findByName('assembleAndroidTest').mustRunAfter 'setProject'
+	tasks.findByName('binJar').mustRunAfter 'assembleAndroidTest'
+}
+
+defaultTasks 'run'
