@@ -1,0 +1,4 @@
+rootProject.name = 'android-support'
+
+include 'Ndroid'
+project(':Ndroid').projectDir = new File('../Ndroid')

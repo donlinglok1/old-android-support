@@ -1,0 +1,25 @@
+
+9
+	bin/R.txt,a\2\a2dd9aad6a1d91dc7f60a98f72845dd780a9d8a4
+G
+bin/android-support.jar,0\b\0bddae308c35ddb2817161abd966bf686ab5d72b
+A
+bin/jarlist.cache,f\5\f5bcc57cf788165e250a868abf32b4add1964955
+c
+3src/android/support/v4/app/ImageCaptureSupport.java,7\2\722f194cd3fc2fab2134f8a15d345bc6313d0be0
+C
+AndroidManifest.xml,1\7\17cbdb4db1263196ffb1948cb14cc72183579351
+G
+bin/AndroidManifest.xml,9\1\916d2c84c772496ce1ae11d17659e8f3d416cdca
+`
+0src/android/support/v4/view/VibrateListener.java,b\5\b520b2f06b4dc1a8a1a8a53347dc46ea17f5b283
+c
+3src/android/support/v4/app/ImageEditorActivity.java,5\4\542d434dc9a1b00126ab11b3f0fff555b64d13bd
+^
+.src/android/support/v4/widget/JSONAdapter.java,7\4\748d215a01eac768c1048466d28eae7b149a9a0e
+B
+project.properties,7\5\75cff21b7360156f57ee4fe83edc2df9798552fb
+S
+#src/android/support/v4/app/Set.java,0\a\0a0e31a7d65c15de65ca9f8c510267f650824747
+^
+.src/android/support/v4/widget/TypedValues.java,f\c\fc95831828175b1944dc9f5a2b2aab74601c22eb

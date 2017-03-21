@@ -1,0 +1,10 @@
+
+]
+squid:S899\"BDo something with the "boolean" value returned by "createNewFile".(ý½Ðïÿÿÿÿÿ
+:squid:S1148D"#Use a logger to log this exception.(òçøì
+:squid:S1148j"#Use a logger to log this exception.(òçøì
+Asquid:S1166C"%Either log or rethrow this exception.(ôÐ’ºùÿÿÿÿ
+5squid:S2095d"Close this "FileOutputStream".(ó×ûÆ
+<squid:S1166]"%Either log or rethrow this exception.(Ð¾Ö˜
+<squid:S1166i"%Either log or rethrow this exception.(Ð¾Ö˜
+:squid:S1148^"#Use a logger to log this exception.(òçøì
