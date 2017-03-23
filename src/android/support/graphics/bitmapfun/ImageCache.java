@@ -41,7 +41,6 @@ import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.StatFs;
-import android.support.graphics.bitmapfun.ImageCache.ImageCacheParams;
 import android.support.util.Versions;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -51,10 +50,10 @@ import android.util.Log;
 /**
  * This class handles disk and memory caching of bitmaps in conjunction with the
  * {@link ImageWorker} class and its subclasses. Use
- * {@link ImageCache#getInstance(android.support.app.FragmentManager, ImageCacheParams)}
+ * {@link ImageCache#getInstance(android.support.app.FragmentManager, ImageCache.ImageCacheParams)}
  * to get an instance of this class, although usually a cache should be added
  * directly to an {@link ImageWorker} by calling
- * {@link ImageWorker#addImageCache(android.support.app.FragmentManager, ImageCacheParams)}
+ * {@link ImageWorker#addImageCache(android.support.app.FragmentManager, ImageCache.ImageCacheParams)}
  * .
  */
 public class ImageCache {
@@ -78,7 +77,7 @@ public class ImageCache {
 
 	private DiskLruCache mDiskLruCache;
 	private LruCache<String, BitmapDrawable> mMemoryCache;
-	private ImageCacheParams mCacheParams;
+	private ImageCache.ImageCacheParams mCacheParams;
 	private final Object mDiskCacheLock = new Object();
 	private boolean mDiskCacheStarting = true;
 
@@ -87,13 +86,13 @@ public class ImageCache {
 	/**
 	 * Create a new ImageCache object using the specified parameters. This
 	 * should not be called directly by other classes, instead use
-	 * {@link ImageCache#getInstance(android.support.app.FragmentManager, ImageCacheParams)}
+	 * {@link ImageCache#getInstance(android.support.app.FragmentManager, ImageCache.ImageCacheParams)}
 	 * to fetch an ImageCache instance.
 	 *
 	 * @param cacheParams
 	 *            The cache parameters to use to initialize the cache
 	 */
-	private ImageCache(final ImageCacheParams cacheParams) {
+	private ImageCache(final ImageCache.ImageCacheParams cacheParams) {
 		init(cacheParams);
 	}
 
@@ -111,7 +110,8 @@ public class ImageCache {
 	 * @return An existing retained ImageCache object or a new one if one did
 	 *         not exist
 	 */
-	public static ImageCache getInstance(final FragmentManager fragmentManager, final ImageCacheParams cacheParams) {
+	public static ImageCache getInstance(final FragmentManager fragmentManager,
+			final ImageCache.ImageCacheParams cacheParams) {
 
 		// Search for, or create an instance of the non-UI RetainFragment
 		final RetainFragment mRetainFragment = findOrCreateRetainFragment(fragmentManager);
@@ -134,14 +134,14 @@ public class ImageCache {
 	 * @param cacheParams
 	 *            The cache parameters to initialize the cache
 	 */
-	private void init(final ImageCacheParams cacheParams) {
+	private void init(final ImageCache.ImageCacheParams cacheParams) {
 		mCacheParams = cacheParams;
 
 		// BEGIN_INCLUDE(init_memory_cache)
 		// Set up memory cache
 		if (mCacheParams.memoryCacheEnabled) {
 			// if (BuildConfig.DEBUG) {
-				Log.d(TAG, "Memory cache created (size = " + mCacheParams.memCacheSize + ")");
+			Log.d(TAG, "Memory cache created (size = " + mCacheParams.memCacheSize + ")");
 			// }
 
 			// If we're running on Honeycomb or newer, create a set of reusable
@@ -187,7 +187,7 @@ public class ImageCache {
 							// bitmap
 							// to a SoftReference set for possible use with
 							// inBitmap later
-							mReusableBitmaps.add(new SoftReference<Bitmap>(oldValue.getBitmap()));
+							mReusableBitmaps.add(new SoftReference<>(oldValue.getBitmap()));
 						}
 					}
 				}
@@ -233,7 +233,7 @@ public class ImageCache {
 						try {
 							mDiskLruCache = DiskLruCache.open(diskCacheDir, 1, 1, mCacheParams.diskCacheSize);
 							// if (BuildConfig.DEBUG) {
-								Log.d(TAG, "Disk cache initialized");
+							Log.d(TAG, "Disk cache initialized");
 							// }
 						} catch (final IOException e) {
 							mCacheParams.diskCacheDir = null;
@@ -322,7 +322,7 @@ public class ImageCache {
 		}
 
 		// if (BuildConfig.DEBUG && memValue != null) {
-			Log.d(TAG, "Memory cache hit");
+		Log.d(TAG, "Memory cache hit");
 		// }
 
 		return memValue;
@@ -354,7 +354,7 @@ public class ImageCache {
 					final DiskLruCache.Snapshot snapshot = mDiskLruCache.get(key);
 					if (snapshot != null) {
 						// if (BuildConfig.DEBUG) {
-							Log.d(TAG, "Disk cache hit");
+						Log.d(TAG, "Disk cache hit");
 						// }
 						inputStream = snapshot.getInputStream(DISK_CACHE_INDEX);
 						if (inputStream != null) {
@@ -432,7 +432,7 @@ public class ImageCache {
 		if (mMemoryCache != null) {
 			mMemoryCache.evictAll();
 			// if (BuildConfig.DEBUG) {
-				Log.d(TAG, "Memory cache cleared");
+			Log.d(TAG, "Memory cache cleared");
 			// }
 		}
 
@@ -442,7 +442,7 @@ public class ImageCache {
 				try {
 					mDiskLruCache.delete();
 					// if (BuildConfig.DEBUG) {
-						Log.d(TAG, "Disk cache cleared");
+					Log.d(TAG, "Disk cache cleared");
 					// }
 				} catch (final IOException e) {
 					Log.e(TAG, "clearCache - " + e);
@@ -464,7 +464,7 @@ public class ImageCache {
 				try {
 					mDiskLruCache.flush();
 					// if (BuildConfig.DEBUG) {
-						Log.d(TAG, "Disk cache flushed");
+					Log.d(TAG, "Disk cache flushed");
 					// }
 				} catch (final IOException e) {
 					Log.e(TAG, "flush - " + e);
@@ -486,7 +486,7 @@ public class ImageCache {
 						mDiskLruCache.close();
 						mDiskLruCache = null;
 						// if (BuildConfig.DEBUG) {
-							Log.d(TAG, "Disk cache closed");
+						Log.d(TAG, "Disk cache closed");
 						// }
 					}
 				} catch (final IOException e) {
@@ -511,9 +511,9 @@ public class ImageCache {
 
 		/**
 		 * Create a set of image cache parameters that can be provided to
-		 * {@link ImageCache#getInstance(android.support.app.FragmentManager, ImageCacheParams)}
+		 * {@link ImageCache#getInstance(android.support.app.FragmentManager, ImageCache.ImageCacheParams)}
 		 * or
-		 * {@link ImageWorker#addImageCache(android.support.app.FragmentManager, ImageCacheParams)}
+		 * {@link ImageWorker#addImageCache(android.support.app.FragmentManager, ImageCache.ImageCacheParams)}
 		 * .
 		 *
 		 * @param context
@@ -618,7 +618,7 @@ public class ImageCache {
 				|| !isExternalStorageRemovable() ? getExternalCacheDir(context).getPath()
 						: context.getCacheDir().getPath();
 
-		return new File(cachePath + File.separator + uniqueName);
+				return new File(cachePath + File.separator + uniqueName);
 	}
 
 	/**
