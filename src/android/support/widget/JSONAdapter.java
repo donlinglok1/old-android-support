@@ -19,13 +19,13 @@ import net.minidev.json.JSONObject;
  * @version 1.0.0
  */
 public abstract class JSONAdapter extends NAdapter {
-	public final transient JSONArray listArray;
+	public transient JSONArray listArray;
 	public final transient Set set;
 
 	public JSONAdapter(final Activity activity, final JSONArray listArray) {
 		super(activity);
 		this.listArray = listArray;
-		this.set = new Set(activity);
+		set = new Set(activity);
 	}
 
 	@Override
@@ -58,6 +58,20 @@ public abstract class JSONAdapter extends NAdapter {
 	@Override
 	public View getView(final int position, final View convertView, final ViewGroup parent) {
 		return getView(position, convertView, parent, (JSONObject) getItem(position));
+	}
+
+	public void addItem(final JSONObject jObj) {
+		listArray.add(jObj);
+		notifyDataSetChanged();
+	}
+
+	public void setList(final JSONArray jArray) {
+		listArray = jArray;
+		notifyDataSetChanged();
+	}
+
+	public JSONArray getArray() {
+		return listArray;
 	}
 
 	public abstract View getView(final int position, final View convertView, final ViewGroup parent,
