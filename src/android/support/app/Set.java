@@ -23,14 +23,6 @@ public class Set {
 		appContext = activity.getApplicationContext();
 	}
 
-	public static final String string(final Object object) {
-		return NString.parse(object, "");
-	}
-
-	public static final String string(final Object object, final String defaultValue) {
-		return NString.parse(object, defaultValue);
-	}
-
 	private Toast toast;
 
 	public final void alert(final String msg) {
@@ -41,13 +33,15 @@ public class Set {
 		activity.runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
-				if (toast != null)
+				if (toast != null) {
 					toast.cancel();
+				}
 
 				for (int i = 0; i < second; i++) {
 					toast = Toast.makeText(appContext, msg, Toast.LENGTH_LONG);
-					if (!activity.isFinishing())
+					if (!activity.isFinishing()) {
 						toast.show();
+					}
 				}
 			}
 		});
@@ -57,18 +51,20 @@ public class Set {
 		activity.runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
-				if (toast != null)
+				if (toast != null) {
 					toast.cancel();
+				}
 
 				for (int i = 0; i < second; i++) {
 					toast = Toast.makeText(appContext, msg, Toast.LENGTH_LONG);
 					toast.setGravity(Gravity.CENTER, 0, 0);
-					// the default toast view group is a relativelayout
+
 					final ViewGroup toastLayout = (ViewGroup) toast.getView();
 					final TextView toastTV = (TextView) toastLayout.getChildAt(0);
 					toastTV.setTextSize(30);
-					if (!activity.isFinishing())
+					if (!activity.isFinishing()) {
 						toast.show();
+					}
 				}
 			}
 		});
@@ -79,28 +75,31 @@ public class Set {
 	}
 
 	public final View text(final View view, final Object object) {
-		if (view instanceof TextView)
+		if (view instanceof TextView) {
 			((TextView) view).setText(NString.parse(object));
-		else if (view instanceof Button)
+		} else if (view instanceof Button) {
 			((Button) view).setText(NString.parse(object));
+		}
 
 		return view;
 	}
 
 	public final View icon(final View view, final Drawable left, final Drawable top, final Drawable right,
 			final Drawable bottom) {
-		if (view instanceof TextView)
+		if (view instanceof TextView) {
 			((TextView) view).setCompoundDrawablesWithIntrinsicBounds(left, top, right, bottom);
-		else if (view instanceof Button)
+		} else if (view instanceof Button) {
 			((Button) view).setCompoundDrawablesWithIntrinsicBounds(left, top, right, bottom);
+		}
 		return view;
 	}
 
 	public final View iconPadding(final View view, final int dp) {
-		if (view instanceof TextView)
+		if (view instanceof TextView) {
 			((TextView) view).setCompoundDrawablePadding(Drawables.dp2px(dp));
-		else if (view instanceof Button)
+		} else if (view instanceof Button) {
 			((Button) view).setCompoundDrawablePadding(Drawables.dp2px(dp));
+		}
 		return view;
 	}
 
