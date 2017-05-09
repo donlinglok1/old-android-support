@@ -1,21 +1,20 @@
 package android.support.accessibility;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import android.accessibilityservice.AccessibilityService;
-import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.n.NString;
 import android.net.Uri;
 import android.os.Build;
 import android.util.Log;
 import android.view.accessibility.AccessibilityNodeInfo;
 
-@SuppressLint("NewApi")
+@TargetApi(30)
 public class AccessAction {
 	public final AccessibilityService service;
 
@@ -23,94 +22,103 @@ public class AccessAction {
 		this.service = service;
 	}
 
-	public void sleep(final int time) {
-		try {
-			Thread.sleep(time);
-		} catch (final InterruptedException e) {
-			e.printStackTrace();
-		}
+	public List<AccessibilityNodeInfo> finds(final String className, final String keyword) {
+		return findsOn(service.getRootInActiveWindow(), className, keyword);
 	}
 
-	public AccessibilityNodeInfo find(final String type, final String key, final boolean parent) {
-		return finds(service.getRootInActiveWindow(), type, key, parent).get(0);
+	public List<AccessibilityNodeInfo> findsOn(final AccessibilityNodeInfo nodeInfo, final String className,
+			final String keyword) {
+		return findToList(nodeInfo, className, keyword, new ArrayList<AccessibilityNodeInfo>());
 	}
 
-	public ArrayList<AccessibilityNodeInfo> finds(final String type, final String key, final boolean parent) {
-		return finds(service.getRootInActiveWindow(), type, key, parent);
-	}
+	private List<AccessibilityNodeInfo> findToList(final AccessibilityNodeInfo nodeInfo, final String className,
+			final String keyword, final List<AccessibilityNodeInfo> list) {
+		final int loopInt = nodeInfo.getChildCount();
+		for (int i = 0; i < loopInt; i++) {
+			final AccessibilityNodeInfo child = nodeInfo.getChild(i);
 
-	public ArrayList<AccessibilityNodeInfo> finds(final AccessibilityNodeInfo nodeInfo, final String type,
-			final String key, final boolean parent) {
-		final ArrayList<AccessibilityNodeInfo> findInList = findToList(nodeInfo, key, type, parent,
-				new ArrayList<AccessibilityNodeInfo>());
-
-		return findInList;
-	}
-
-	public ArrayList<AccessibilityNodeInfo> findToList(final AccessibilityNodeInfo nodeInfo, final String key,
-			final String className, final boolean parent, final ArrayList<AccessibilityNodeInfo> list) {
-		try {
-			final int loopInt = nodeInfo.getChildCount();
-
-			for (int i = 0; i < loopInt; i++) {
-				final AccessibilityNodeInfo child = nodeInfo.getChild(i);
-
-				String space = "";
-				for (int x = 0; x < i; x++) {
-					space = space + "-";
-				}
-
-				Log.i(getClass().getName(), space + child.getClassName() + "_" + child.getContentDescription() + "_"
-						+ child.getText() + "_" + child.getChildCount());
-
-				if (NString.parse(child.getClassName()).toLowerCase(Locale.US)
-						.contains(className.toLowerCase(Locale.US))) {
-					if (key.startsWith("!")) {
-						final String tmpkey = key.substring(1, key.length());
-						if (NString.parse(child.getContentDescription()).toLowerCase(Locale.US)
-								.equals(tmpkey.toLowerCase(Locale.US))
-								|| NString.parse(child.getText()).toLowerCase(Locale.US)
-										.equals(tmpkey.toLowerCase(Locale.US))) {
-
-							Log.e("", "found!");
-
-							if (parent) {
-								list.add(nodeInfo);
-							} else {
-								list.add(child);
-							}
-						}
-					} else {
-						if (NString.parse(child.getContentDescription()).toLowerCase(Locale.US)
-								.contains(key.toLowerCase(Locale.US))
-								|| NString.parse(child.getText()).toLowerCase(Locale.US)
-										.contains(key.toLowerCase(Locale.US))) {
-
-							Log.e("", "found!");
-
-							if (parent) {
-								list.add(nodeInfo);
-							} else {
-								list.add(child);
-							}
-						}
-					}
-				}
-
-				findToList(child, key, className, parent, list);
+			String space = "o";
+			for (int x = 0; x < i; x++) {
+				space = NString.add(space, "-");
 			}
-		} catch (final Exception e) {
-			// TODO: handle exception
+
+			Log.i(getClass().getName(),
+					NString.add(space, "\n getClassName ", child.getClassName(),
+							//
+							"\n getContentDescription ", child.getContentDescription(),
+							//
+							"\n getText ", child.getText(),
+							//
+							"\n getChildCount ", child.getChildCount(),
+							//
+							"\n getActionList ", child.getActionList(),
+							// "\n getClass ", child.getClass(),
+							// "\n getCollectionInfo ",
+							// child.getCollectionInfo(),
+							// "\n getCollectionItemInfo ",
+							// child.getCollectionItemInfo(),
+							// "\n getDrawingOrder ", child.getDrawingOrder(),
+							// "\n getError ", child.getError(),
+							// "\n getExtras ", child.getExtras(),
+							// "\n getInputType ", child.getInputType(),
+							// "\n getLabeledBy ", child.getLabeledBy(),
+							// "\n getLabelFor ", child.getLabelFor(),
+							// "\n getLiveRegion ", child.getLiveRegion(),
+							// "\n getMaxTextLength ", child.getMaxTextLength(),
+							// "\n getMovementGranularities ",
+							// child.getMovementGranularities(),
+							// "\n getPackageName ", child.getPackageName(),
+							// "\n getRangeInfo ", child.getRangeInfo(),
+							// "\n getText ", child.getText(),
+							// "\n getTextSelectionEnd ",
+							// child.getTextSelectionEnd(),
+							// "\n getTextSelectionStart ",
+							// child.getTextSelectionStart(),
+							// "\n getTraversalAfter ",
+							// child.getTraversalAfter(),
+							// "\n getTraversalBefore ",
+							// child.getTraversalBefore(),
+							// "\n getViewIdResourceName ",
+							// child.getViewIdResourceName(),
+							// "\n getWindow ", child.getWindow(),
+							// "\n getWindowId ", child.getWindowId(),
+							"\n", child, ""));
+
+			if (checkItem(child, className, keyword)) {
+				list.add(child);
+			}
+
+			findToList(child, className, keyword, list);
 		}
 
 		return list;
 	}
 
-	public boolean on(final int action, final AccessibilityNodeInfo nodeInfo) {
-		boolean result;
+	private boolean checkItem(final AccessibilityNodeInfo child, final String className, final String key) {
+		if (!NString.parse(child.getClassName()).contains(className)) {
+			return false;
+		}
 
-		// Log.e(getClass().getName(), nodeInfo.toString());
-		result = nodeInfo.performAction(action);
+		if (key.startsWith("!")) {
+			final String tmpkey = key.substring(1, key.length());
+			if (NString.parse(child.getContentDescription()).equalsIgnoreCase(tmpkey)
+					|| NString.parse(child.getText()).equalsIgnoreCase(tmpkey)) {
+				Log.e("", "found!");
+				return true;
+			}
+		}
+
+		if (NString.parse(child.getContentDescription()).toLowerCase(Locale.US).contains(key.toLowerCase(Locale.US))
+				|| NString.parse(child.getText()).toLowerCase(Locale.US).contains(key.toLowerCase(Locale.US))) {
+			Log.e("", "found!");
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean run(final int action, final AccessibilityNodeInfo nodeInfo) {
+		final boolean result = nodeInfo.performAction(action);
 
 		sleep(100);
 
@@ -119,7 +127,7 @@ public class AccessAction {
 
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	@SuppressWarnings("deprecation")
-	public void copyToClip(final String string) {
+	private void copyToClip(final String string) {
 		if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB) {
 			final android.text.ClipboardManager clipboard = (android.text.ClipboardManager) service
 					.getSystemService(Context.CLIPBOARD_SERVICE);
@@ -134,38 +142,45 @@ public class AccessAction {
 		sleep(100);
 	}
 
-	public void onText(final String type, final String key, final String text) {
-		on(AccessibilityNodeInfo.ACTION_FOCUS, find(type, key, false));
-		on(AccessibilityNodeInfo.ACTION_CLICK, find(type, key, false));
+	public void textOn(final String className, final String key, final String text) {
+		run(AccessibilityNodeInfo.ACTION_FOCUS, finds(className, key).get(0));
+		run(AccessibilityNodeInfo.ACTION_CLICK, finds(className, key).get(0));
 		copyToClip(text);
-		on(AccessibilityNodeInfo.ACTION_PASTE, find(type, key, false));
+		run(AccessibilityNodeInfo.ACTION_PASTE, finds(className, key).get(0));
+	}
+
+	public void sleep(final int time) {
+		try {
+			Thread.sleep(time);
+		} catch (final InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public void startapp(final String packageName) {
-		try {
-			final PackageManager pm = service.getPackageManager();
-			final Intent intent = pm.getLaunchIntentForPackage(packageName);
-			service.startActivity(intent);
+		final Intent intent = service.getPackageManager().getLaunchIntentForPackage(packageName);
+		service.startActivity(intent);
 
-			sleep(5000);
-		} catch (final Exception e) {
-			Log.e("", "未安裝");
-		}
+		sleep(5000);
 	}
 
 	public void back() {
 		service.performGlobalAction(AccessibilityService.GLOBAL_ACTION_BACK);
+
+		sleep(1000);
+	}
+
+	public void home() {
+		service.performGlobalAction(AccessibilityService.GLOBAL_ACTION_HOME);
+
 		sleep(1000);
 	}
 
 	public static final String SCHEME = "package";
-
 	public static final String APP_PKG_NAME_21 = "com.android.settings.ApplicationPkgName";
-
 	public static final String APP_PKG_NAME_22 = "pkg";
-
 	public static final String APP_DETAILS_PACKAGE_NAME = "com.android.settings";
-
 	public static final String APP_DETAILS_CLASS_NAME = "com.android.settings.InstalledAppDetails";
 
 	public static void showInstalledAppDetails(final Context context, final String packageName) {
